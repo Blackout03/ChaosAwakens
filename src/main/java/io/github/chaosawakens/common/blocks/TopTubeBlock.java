@@ -20,7 +20,7 @@ import java.util.Random;
 public class TopTubeBlock extends AbstractTopPlantBlock implements ILiquidContainer {
     public static final VoxelShape SHAPE = Block.box(2.0D, 0.0D, 2.0D, 14.0D, 14.0D, 14.0D);
 
-    public TopTubeBlock(AbstractBlock.Properties properties) {
+    public TopTubeBlock(Properties properties) {
         super(properties, Direction.UP, SHAPE, false, 0.1D);
     }
 

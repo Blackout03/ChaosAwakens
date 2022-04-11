@@ -10,7 +10,7 @@
       "tag": "forge:gems/diamond"
     },
     "X": {
-      "tag": "forge:gems/ruby"
+      "item": "chaosawakens:ruby"
     }
   },
   "result": {

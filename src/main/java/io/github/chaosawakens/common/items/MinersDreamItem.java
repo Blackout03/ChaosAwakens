@@ -40,7 +40,7 @@ public class MinersDreamItem extends Item {
         BlockPos breakPos = context.getClickedPos();
         int targetY = breakPos.getY() % 8;
         PlayerEntity playerIn = context.getPlayer();
-        ChaosAwakens.debug("AA", targetY);
+        ChaosAwakens.LOGGER.debug("AA:" + targetY);
         Vector3i facing = direction.getNormal();
 
         playerIn.playNotifySound(SoundEvents.GENERIC_EXPLODE, SoundCategory.PLAYERS, 1.0F, 1.5F);
@@ -53,7 +53,7 @@ public class MinersDreamItem extends Item {
                     int widthDelta = i * facing.getZ() + k * facing.getX();
                     BlockPos targetPos = breakPos.offset(lengthDelta, -targetY + j, widthDelta);
                     BlockState targetState = worldIn.getBlockState(targetPos);
-                    if (targetState.is(CATags.MINERS_DREAM_MINEABLE)) {
+                    if (targetState.is(CATags.Blocks.MINERS_DREAM_MINEABLE)) {
                         this.placeWoodPillars(worldIn, targetPos, i, j, k);
                     }
                 }

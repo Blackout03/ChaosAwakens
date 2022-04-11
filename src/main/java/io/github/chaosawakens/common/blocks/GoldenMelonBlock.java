@@ -3,7 +3,7 @@ package io.github.chaosawakens.common.blocks;
 import net.minecraft.block.*;
 
 public class GoldenMelonBlock extends StemGrownBlock {
-    public GoldenMelonBlock(AbstractBlock.Properties builder) {
+    public GoldenMelonBlock(Properties builder) {
         super(builder);
     }
 

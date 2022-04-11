@@ -10,7 +10,7 @@
       "tag": "forge:rods/wooden"
     },
     "X": {
-      "tag": "forge:lumps/silver"
+      "item": "chaosawakens:silver_lump"
     }
   },
   "result": {

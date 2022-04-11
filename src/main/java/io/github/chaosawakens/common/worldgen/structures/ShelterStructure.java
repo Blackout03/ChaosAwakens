@@ -32,7 +32,7 @@ public class ShelterStructure extends Structure<NoFeatureConfig> {
 
     @Override
     public IStartFactory<NoFeatureConfig> getStartFactory() {
-        return ShelterStructure.Start::new;
+        return Start::new;
     }
 
     @Override

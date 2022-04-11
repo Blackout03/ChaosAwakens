@@ -29,7 +29,7 @@ public class GoldenCakeBlock extends Block {
     public static final IntegerProperty BITES = BlockStateProperties.BITES;
     protected static final VoxelShape[] SHAPES = new VoxelShape[]{Block.box(1.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.box(3.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.box(5.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.box(7.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.box(9.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.box(11.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D), Block.box(13.0D, 0.0D, 1.0D, 15.0D, 8.0D, 15.0D)};
 
-    public GoldenCakeBlock(AbstractBlock.Properties properties) {
+    public GoldenCakeBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any().setValue(BITES, 0));
     }
@@ -57,7 +57,7 @@ public class GoldenCakeBlock extends Block {
         if (!player.canEat(false)) {
             return ActionResultType.PASS;
         } else {
-            player.addEffect(new EffectInstance(Effects.REGENERATION, 300, 0));
+            player.addEffect(new EffectInstance(Effects.POISON, 300, 0));
             player.awardStat(Stats.EAT_CAKE_SLICE);
             player.getFoodData().eat(4, 0.35F);
             int i = state.getValue(BITES);

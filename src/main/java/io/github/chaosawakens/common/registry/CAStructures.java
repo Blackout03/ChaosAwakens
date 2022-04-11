@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import io.github.chaosawakens.ChaosAwakens;
 import io.github.chaosawakens.common.worldgen.structures.SurfaceDungeonStructure;
+import io.github.chaosawakens.common.worldgen.structures.UltimateHouseDungeonStructure;
 import io.github.chaosawakens.common.worldgen.structures.WaspDungeonStructure;
 import net.minecraft.util.registry.WorldGenRegistries;
 import net.minecraft.world.gen.feature.NoFeatureConfig;
@@ -18,7 +19,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class CAStructures {
-
     public static final DeferredRegister<Structure<?>> STRUCTURES = DeferredRegister.create(ForgeRegistries.STRUCTURE_FEATURES, ChaosAwakens.MODID);
 
     public static final RegistryObject<Structure<NoFeatureConfig>> ACACIA_ENT_TREE = STRUCTURES.register("acacia_ent_tree", () -> (new SurfaceDungeonStructure(NoFeatureConfig.CODEC, "dungeon/ent_tree/acacia")));
@@ -32,6 +32,8 @@ public class CAStructures {
 
     public static final RegistryObject<Structure<NoFeatureConfig>> WASP_DUNGEON = STRUCTURES.register("wasp_dungeon", () -> (new WaspDungeonStructure(NoFeatureConfig.CODEC)));
 
+    public static final RegistryObject<Structure<NoFeatureConfig>> ULTIMATE_HOUSE = STRUCTURES.register("ultimate_house", () -> (new UltimateHouseDungeonStructure(NoFeatureConfig.CODEC)));
+
     public static void setupStructures() {
         setupMapSpacingAndLand(ACACIA_ENT_TREE.get(), new StructureSeparationSettings(27, 25, 32034987), true);
         setupMapSpacingAndLand(BIRCH_ENT_TREE.get(), new StructureSeparationSettings(27, 25, 32034987), true);
@@ -42,6 +44,7 @@ public class CAStructures {
         setupMapSpacingAndLand(SPRUCE_ENT_TREE.get(), new StructureSeparationSettings(27, 25, 32034987), true);
         setupMapSpacingAndLand(WARPED_ENT_TREE.get(), new StructureSeparationSettings(27, 25, 32034987), true);
         setupMapSpacingAndLand(WASP_DUNGEON.get(), new StructureSeparationSettings(21, 19, 159332311), false);
+        setupMapSpacingAndLand(ULTIMATE_HOUSE.get(), new StructureSeparationSettings(24, 23, 97388236), false);
     }
 
     public static <F extends Structure<?>> void setupMapSpacingAndLand(F structure, StructureSeparationSettings structureSeparationSettings, boolean transformSurroundingLand) {

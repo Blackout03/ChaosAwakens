@@ -4,8 +4,8 @@
   "scale": 0.5,
   "temperature": 0.2,
   "downfall": 0.3,
-  "precipitation": "rain",
-  "category": "extreme_hills",
+  "precipitation": "none",
+  "category": "none",
   "player_spawn_friendly": true,
   "effects": {
     "sky_color": 7907327,

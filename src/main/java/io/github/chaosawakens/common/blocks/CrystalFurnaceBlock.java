@@ -19,7 +19,7 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import java.util.Random;
 
 public class CrystalFurnaceBlock extends AbstractFurnaceBlock {
-    public CrystalFurnaceBlock(AbstractBlock.Properties properties) {
+    public CrystalFurnaceBlock(Properties properties) {
         super(properties);
     }
 

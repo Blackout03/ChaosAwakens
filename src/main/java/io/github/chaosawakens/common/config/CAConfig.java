@@ -5,17 +5,18 @@ import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import org.apache.commons.lang3.tuple.Pair;
 
 public class CAConfig {
-	
 	public static final ForgeConfigSpec COMMON_SPEC;
 	public static final Common COMMON;
-	
+
 	static {
 		final Pair<Common, ForgeConfigSpec> commonSpecPair = new ForgeConfigSpec.Builder().configure(Common::new);
 		COMMON_SPEC = commonSpecPair.getRight();
 		COMMON = commonSpecPair.getLeft();
 	}
-	
+
 	public static class Common {
+		public final ConfigValue<Integer> poppySwordDamage;
+
 		public final ConfigValue<Integer> ultimateSwordDamage;
 		public final ConfigValue<Integer> ultimateAxeDamage;
 		public final ConfigValue<Integer> ultimatePickaxeDamage;
@@ -91,30 +92,31 @@ public class CAConfig {
 		public final ConfigValue<Integer> mantisClawDamage;
 		public final ConfigValue<Integer> bigHammerDamage;
 		public final ConfigValue<Integer> prismaticReaperDamage;
-		
+
 		public final ConfigValue<Integer> thunderStaffExplosionSize;
 		public final ConfigValue<Integer> thunderStaffExplosionType;
 		public final ConfigValue<Boolean> thunderStaffExplosionFire;
 		public final ConfigValue<Integer> rayGunExplosionSize;
 		public final ConfigValue<Integer> rayGunExplosionType;
 		public final ConfigValue<Boolean> rayGunExplosionFire;
-		
+
 		public final ConfigValue<Boolean> enableAutoEnchanting;
-		
+
+		public final ConfigValue<Boolean> crystalWorldRequiresEmptyInventory;
 		public final ConfigValue<Boolean> enableBrownAntTeleport;
 		public final ConfigValue<Boolean> enableRainbowAntTeleport;
 		public final ConfigValue<Boolean> enableRedAntTeleport;
 		public final ConfigValue<Boolean> enableUnstableAntTeleport;
 		public final ConfigValue<Boolean> enableTermiteTeleport;
 		public final ConfigValue<Boolean> enableButterflyTeleport;
-		
+
 		public final ConfigValue<Boolean> enableOreGen;
 		public final ConfigValue<Boolean> enableFossilGen;
 		public final ConfigValue<Boolean> enableTrollOreGen;
 		public final ConfigValue<Boolean> enableDzMineralOreGen;
 		public final ConfigValue<Boolean> spawnDzOresInOverworld;
 		public final ConfigValue<Boolean> enableNestGen;
-		
+
 		public final ConfigValue<Boolean> enableOreRubyGen;
 		public final ConfigValue<Boolean> enableOreTigersEyeGen;
 		public final ConfigValue<Boolean> enableOreAmethystGen;
@@ -129,24 +131,27 @@ public class CAConfig {
 		public final ConfigValue<Boolean> enableOreSunstoneGen;
 		public final ConfigValue<Boolean> enableOreBloodstoneGen;
 		public final ConfigValue<Integer> battleAxeDamage;
-		
+
 		public final ConfigValue<Integer> berthaDamage;
-		
+
 		public final ConfigValue<Integer> queenAxeDamage;
-		
-		public final ConfigValue<Boolean> enableEnchantedGoldenAppleCowBreeding;
+
+		public final ConfigValue<Boolean> enableEnchantedAnimalBreeding;
 
 		public final ConfigValue<Boolean> holidayTextures;
-		
+
 		public final ConfigValue<Boolean> enableDragonEggRespawns;
 		public final ConfigValue<Boolean> mobHeadDrops;
-		
+
 		public final ConfigValue<Boolean> terraforgedCheckMsg;
-		
+
 		public final ConfigValue<Boolean> showUpdateMessage;
 		public final ConfigValue<Boolean> enableTooltips;
-		
+
 		Common(ForgeConfigSpec.Builder builder) {
+			builder.push("April Fools");
+			poppySwordDamage = builder.define("Damage of the Poppy Sword", 10);
+			builder.pop();
 			builder.push("Log messages");
 			terraforgedCheckMsg = builder.define("Terraforged check message active", true);
 			builder.pop();
@@ -296,6 +301,7 @@ public class CAConfig {
 			enableAutoEnchanting = builder.comment("If disabled, auto-enchanted items will be able to be enchanted manually.").define("Auto-enchant specific tools and weapons", true);
 			builder.pop();
 			builder.push("Dimensions");
+			crystalWorldRequiresEmptyInventory = builder.comment("Disable the requirement of needing an empty inventory to enter the Crystal World (Termite Dimension)?").define("Crystal World Requires Empty Inventory", true);
 			enableBrownAntTeleport = builder.comment("Will the Brown Ant teleport you to its Dimension?").define("Brown Ant Teleport", true);
 			enableRainbowAntTeleport = builder.comment("Will the Rainbow Ant teleport you to its Dimension?").define("Rainbow Ant Teleport", true);
 			enableRedAntTeleport = builder.comment("Will the Red Ant teleport you to its Dimension?").define("Red Ant Teleport", true);
@@ -304,7 +310,7 @@ public class CAConfig {
 			enableButterflyTeleport = builder.comment("Will the Butterfly teleport you to its Dimension?").define("Butterfly Teleport", true);
 			builder.pop();
 			builder.push("Breeding");
-			enableEnchantedGoldenAppleCowBreeding = builder.comment("Will the Enchanted Golden Apple Cow be Breedable?").define("Enchanted Golden Apple Cow Breedable", false);
+			enableEnchantedAnimalBreeding = builder.comment("Will Enchanted Animals be Breedable?").define("Enchanted Animal Breeding", false);
 			builder.pop();
 			builder.push("Textures");
 			holidayTextures = builder.comment("Will holiday special textures be obtainable?").define("Obtainable Holiday Textures", true);

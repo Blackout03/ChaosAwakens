@@ -58,8 +58,8 @@ public class EnchantedGoldenCakeBlock extends Block {
         if (!player.canEat(false)) {
             return ActionResultType.PASS;
         } else {
-            player.addEffect(new EffectInstance(Effects.REGENERATION, 1200, 1));
-            player.addEffect(new EffectInstance(Effects.DAMAGE_BOOST, 1800, 0));
+            player.addEffect(new EffectInstance(Effects.POISON, 1200, 1));
+            player.addEffect(new EffectInstance(Effects.WEAKNESS, 1800, 0));
             player.awardStat(Stats.EAT_CAKE_SLICE);
             ItemEntity entityToSpawn = new ItemEntity(worldIn, pos.getX(), pos.getY(), pos.getZ(), new ItemStack(Items.GOLD_INGOT, 1));
             worldIn.addFreshEntity(entityToSpawn);

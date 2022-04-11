@@ -32,7 +32,7 @@ public class WaspDungeonStructure extends Structure<NoFeatureConfig> {
 
     @Override
     public IStartFactory<NoFeatureConfig> getStartFactory() {
-        return WaspDungeonStructure.Start::new;
+        return Start::new;
     }
 
     @Override

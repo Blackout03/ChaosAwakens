@@ -28,7 +28,7 @@ public class AnimatableMoveToTargetGoal extends AnimatableMovableGoal {
         this.entity = entity;
         this.speedMultiplier = speedMultiplier;
         this.checkRate = checkRate;
-        this.setFlags(EnumSet.of(Goal.Flag.MOVE, Goal.Flag.LOOK));
+        this.setFlags(EnumSet.of(Flag.MOVE, Flag.LOOK));
     }
 
     @Override

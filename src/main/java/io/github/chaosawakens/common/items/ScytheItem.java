@@ -24,7 +24,7 @@ public class ScytheItem extends SwordItem implements IVanishable {
      */
     private final Multimap<Attribute, AttributeModifier> attributeModifiers;
 
-    public ScytheItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Item.Properties builderIn) {
+    public ScytheItem(IItemTier tier, int attackDamageIn, float attackSpeedIn, Properties builderIn) {
         super(tier, attackDamageIn, attackSpeedIn, builderIn);
         float attackDamage = (float) attackDamageIn + tier.getAttackDamageBonus();
         ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();

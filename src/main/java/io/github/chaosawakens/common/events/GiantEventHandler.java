@@ -19,15 +19,13 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 
 @EventBusSubscriber
 public class GiantEventHandler {
-	
 	public static void onEntityJoin(EntityJoinWorldEvent event) {
 		World world = event.getWorld();
 		Entity entity = event.getEntity();
 		
-		if (world.isClientSide || !(entity instanceof GiantEntity))return;
+		if (world.isClientSide || !(entity instanceof GiantEntity)) return;
 		
 		GiantEntity giant = (GiantEntity) entity;
-		
 		giant.goalSelector.addGoal(8, new LookAtGoal(giant, PlayerEntity.class, 24.0F));
 		giant.goalSelector.addGoal(8, new LookRandomlyGoal(giant));
 		

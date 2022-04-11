@@ -6,6 +6,7 @@ import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.effect.LightningBoltEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
@@ -16,11 +17,20 @@ import net.minecraft.util.*;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
+import software.bernie.geckolib3.core.IAnimatable;
+import software.bernie.geckolib3.core.PlayState;
+import software.bernie.geckolib3.core.builder.AnimationBuilder;
+import software.bernie.geckolib3.core.controller.AnimationController;
+import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
+import software.bernie.geckolib3.core.manager.AnimationData;
+import software.bernie.geckolib3.core.manager.AnimationFactory;
 
-public class GoldenAppleCowEntity extends AnimalEntity {
+public class GoldenAppleCowEntity extends AnimalEntity implements IAnimatable {
+    private final AnimationFactory factory = new AnimationFactory(this);
 
     public GoldenAppleCowEntity(EntityType<? extends GoldenAppleCowEntity> type, World worldIn) {
         super(type, worldIn);
+        this.noCulling = true;
     }
 
     public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
@@ -28,6 +38,18 @@ public class GoldenAppleCowEntity extends AnimalEntity {
                 .add(Attributes.MAX_HEALTH, 10)
                 .add(Attributes.MOVEMENT_SPEED, 0.2D)
                 .add(Attributes.FOLLOW_RANGE, 10);
+    }
+
+    private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
+        if (event.isMoving()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.apple_cow.walking_animation", true));
+            return PlayState.CONTINUE;
+        }
+        if (!event.isMoving()) {
+            event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.apple_cow.idle_animation", true));
+            return PlayState.CONTINUE;
+        }
+        return PlayState.CONTINUE;
     }
 
     @Override
@@ -87,5 +109,36 @@ public class GoldenAppleCowEntity extends AnimalEntity {
 
     protected float getStandingEyeHeight(Pose poseIn, EntitySize sizeIn) {
         return this.isBaby() ? sizeIn.height * 0.95F : 1.3F;
+    }
+
+//    public void thunderHit(ServerWorld serverWorld, LightningBoltEntity lightningBoltEntity) {
+//        if (net.minecraftforge.event.ForgeEventFactory.canLivingConvert(this, CAEntityTypes.GOLDEN_CARROT_PIG.get(), (timer) -> {})) {
+//            GoldenCarrotPigEntity goldenCarrotPigEntity = CAEntityTypes.GOLDEN_CARROT_PIG.get().create(serverWorld);
+//            assert goldenCarrotPigEntity != null;
+//            goldenCarrotPigEntity.moveTo(this.getX(), this.getY(), this.getZ(), this.yRot, this.xRot);
+//            goldenCarrotPigEntity.setNoAi(this.isNoAi());
+//            goldenCarrotPigEntity.setBaby(this.isBaby());
+//            if (this.hasCustomName()) {
+//                goldenCarrotPigEntity.setCustomName(this.getCustomName());
+//                goldenCarrotPigEntity.setCustomNameVisible(this.isCustomNameVisible());
+//            }
+//
+//            goldenCarrotPigEntity.setPersistenceRequired();
+//            net.minecraftforge.event.ForgeEventFactory.onLivingConvert(this, goldenCarrotPigEntity);
+//            serverWorld.addFreshEntity(goldenCarrotPigEntity);
+//            this.remove();
+//        } else {
+//            super.thunderHit(serverWorld, lightningBoltEntity);
+//        }
+//    }
+
+    @Override
+    public void registerControllers(AnimationData data) {
+        data.addAnimationController(new AnimationController<>(this, "goldenapplecowcontroller", 0, this::predicate));
+    }
+
+    @Override
+    public AnimationFactory getFactory() {
+        return this.factory;
     }
 }

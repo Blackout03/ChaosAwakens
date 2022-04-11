@@ -10,7 +10,7 @@
       "tag": "forge:rods/wooden"
     },
     "X": {
-      "tag": "forge:lumps/tin"
+      "item": "chaosawakens:tin_lump"
     }
   },
   "result": {

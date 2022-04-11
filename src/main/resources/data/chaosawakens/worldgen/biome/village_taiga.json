@@ -5,7 +5,7 @@
       "sound": "minecraft:ambient.cave",
       "tick_delay": 6000,
       "block_search_extent": 8,
-      "offset": 2.0
+      "offset": 2
     },
     "sky_color": 8233983,
     "fog_color": 12638463,
@@ -174,9 +174,9 @@
   },
   "spawn_costs": {},
   "player_spawn_friendly": true,
-  "precipitation": "rain",
+  "precipitation": "none",
   "temperature": 0.25,
   "downfall": 0.8,
-  "category": "taiga",
+  "category": "none",
   "depth": 0.2
 }

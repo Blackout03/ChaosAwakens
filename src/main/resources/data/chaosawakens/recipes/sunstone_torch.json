@@ -9,7 +9,7 @@
       "tag": "forge:rods/wooden"
     },
     "X": {
-      "tag": "forge:gems/sunstone"
+      "item": "chaosawakens:sunstone"
     }
   },
   "result": {

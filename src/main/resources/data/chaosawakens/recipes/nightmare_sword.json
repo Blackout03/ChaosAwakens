@@ -10,7 +10,7 @@
       "item": "chaosawakens:nightmare_scale"
     },
     "T": {
-      "tag": "forge:ingots/titanium"
+      "item": "chaosawakens:titanium_ingot"
     },
     "R": {
       "tag": "forge:dusts/redstone"
@@ -19,7 +19,7 @@
       "tag": "forge:gems/diamond"
     },
     "I": {
-      "tag": "chaosawakens:ultimate_gear_handles"
+      "item": "chaosawakens:platinum_lump"
     }
   },
   "result": {

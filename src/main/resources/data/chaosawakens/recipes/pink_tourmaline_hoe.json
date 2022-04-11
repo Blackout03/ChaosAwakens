@@ -10,7 +10,7 @@
       "tag": "forge:rods/crystal"
     },
     "X": {
-      "tag": "forge:ingots/pink_tourmaline"
+      "item": "chaosawakens:pink_tourmaline_ingot"
     }
   },
   "result": {

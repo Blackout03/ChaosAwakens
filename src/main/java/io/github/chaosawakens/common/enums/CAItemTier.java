@@ -28,6 +28,8 @@ public enum CAItemTier implements IItemTier {
 
     TOOL_ULTIMATE(5, 3000, 15, 36, 64, () -> Ingredient.of(CAItems.TITANIUM_INGOT.get(), CAItems.URANIUM_INGOT.get())),
 
+    TOOL_POPPY(50, 30000, 100, 40, 100, () -> Ingredient.of(Blocks.POPPY)),
+
     TOOL_NIGHTMARE(3, 1800, 12, 26, 24, () -> Ingredient.of(CAItems.NIGHTMARE_SCALE.get())),
 
     TOOL_COPPER(1, 150, 4, 2, 6, () -> Ingredient.of(CAItems.COPPER_LUMP.get())),

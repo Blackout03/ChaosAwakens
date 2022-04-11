@@ -31,7 +31,7 @@ import java.util.Objects;
 public class EnchantedBlockItem extends Item {
     private final Block block;
 
-    public EnchantedBlockItem(Block blockIn, Item.Properties builder) {
+    public EnchantedBlockItem(Block blockIn, Properties builder) {
         super(builder);
         this.block = blockIn;
     }

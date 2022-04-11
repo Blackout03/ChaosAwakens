@@ -7,7 +7,7 @@
   ],
   "key": {
     "X": {
-      "tag": "forge:ingots/cats_eye"
+      "item": "chaosawakens:cats_eye_ingot"
     }
   },
   "result": {

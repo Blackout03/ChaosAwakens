@@ -29,8 +29,8 @@ public class LootFunctionEnchant extends LootFunction {
         this.enchantments = enchantments;
     }
 
-    public static LootFunctionEnchant.Builder builder() {
-        return new LootFunctionEnchant.Builder();
+    public static Builder builder() {
+        return new Builder();
     }
 
     @Override
@@ -50,14 +50,14 @@ public class LootFunctionEnchant extends LootFunction {
         return stack;
     }
 
-    public static class Builder extends LootFunction.Builder<LootFunctionEnchant.Builder> {
+    public static class Builder extends LootFunction.Builder<Builder> {
         private final Map<IRegistryDelegate<Enchantment>, Short> enchants = Maps.newHashMap();
 
-        protected LootFunctionEnchant.Builder getThis() {
+        protected Builder getThis() {
             return this;
         }
 
-        public LootFunctionEnchant.Builder apply(Enchantment p_216077_1_, Integer p_216077_2_) {
+        public Builder apply(Enchantment p_216077_1_, Integer p_216077_2_) {
             this.enchants.put(p_216077_1_.delegate, p_216077_2_.shortValue());
             return this;
         }

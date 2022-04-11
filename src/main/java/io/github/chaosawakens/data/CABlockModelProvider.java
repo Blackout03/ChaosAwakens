@@ -24,6 +24,15 @@ public class CABlockModelProvider extends BlockModelProvider {
 	@Override
 	protected void registerModels() {
 		// TODO Automate the data generators
+		this.cubeAll("fossilised_acacia_ent", chaosRL("fossilised_acacia_ent"));
+		this.cubeAll("fossilised_birch_ent", chaosRL("fossilised_birch_ent"));
+		this.cubeAll("fossilised_dark_oak_ent", chaosRL("fossilised_dark_oak_ent"));
+		this.cubeAll("fossilised_jungle_ent", chaosRL("fossilised_jungle_ent"));
+		this.cubeAll("fossilised_oak_ent", chaosRL("fossilised_oak_ent"));
+		this.cubeAll("fossilised_spruce_ent", chaosRL("fossilised_spruce_ent"));
+		this.cubeAll("fossilised_crimson_ent", chaosRL("fossilised_crimson_ent"));
+		this.cubeAll("fossilised_warped_ent", chaosRL("fossilised_warped_ent"));
+
 		this.cubeColumn("apple_log", chaosRL("apple_log"), chaosRL("apple_log_top"));
 		this.cubeColumnHorizontal("apple_log", chaosRL("apple_log"), chaosRL("apple_log_top"));
 		this.cubeColumn("stripped_apple_log", chaosRL("stripped_apple_log"), chaosRL("stripped_apple_log_top"));
@@ -56,7 +65,9 @@ public class CABlockModelProvider extends BlockModelProvider {
 		this.cross("peach_sapling", chaosRL("peach_sapling"));
 		this.cubeAll("duplication_planks", chaosRL("duplication_planks"));
 		this.cubeAll("duplication_leaves", chaosRL("duplication_leaves"));
-		
+
+		this.cubeAll("cherry_cobblestone", chaosRL("cherry_cobblestone"));
+
 		this.cubeAll("mining_lamp", chaosRL("mining_lamp"));
 	}
 	
@@ -71,7 +82,7 @@ public class CABlockModelProvider extends BlockModelProvider {
 	
 	@Override
 	public BlockModelBuilder cubeColumn(String name, ResourceLocation side, ResourceLocation end) {
-		ChaosAwakens.debug("DATAGEN", side.getPath());
+		ChaosAwakens.LOGGER.debug("DATAGEN:" + side.getPath());
 		return withExistingParent(name, BLOCK_FOLDER).texture("side", side).texture("end", end);
 	}
 	

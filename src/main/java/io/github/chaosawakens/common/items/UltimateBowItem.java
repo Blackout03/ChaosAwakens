@@ -22,7 +22,6 @@ import net.minecraftforge.event.ForgeEventFactory;
 import java.util.function.Predicate;
 
 public class UltimateBowItem extends BowItem implements IVanishable, IAutoEnchantable {
-
     private final EnchantmentData[] enchantments;
 
     public UltimateBowItem(Properties builderIn, EnchantmentData[] enchantments) {

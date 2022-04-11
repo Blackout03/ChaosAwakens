@@ -25,7 +25,7 @@ import javax.annotation.Nullable;
 import static io.github.chaosawakens.common.blocks.TopTubeBlock.SHAPE;
 
 public class TubeBlock extends AbstractBodyPlantBlock implements ILiquidContainer {
-    public TubeBlock(AbstractBlock.Properties properties) {
+    public TubeBlock(Properties properties) {
         super(properties, Direction.UP, SHAPE, false);
     }
 

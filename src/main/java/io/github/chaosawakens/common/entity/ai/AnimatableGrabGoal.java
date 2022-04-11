@@ -24,7 +24,7 @@ public class AnimatableGrabGoal<G extends AnimatableMonsterEntity & IGrabber> ex
     public AnimatableGrabGoal(G entity, int avrgNumHits) {
         this.entity = entity;
         this.avrgNumHits = avrgNumHits;
-        this.setFlags(EnumSet.of(Goal.Flag.LOOK));
+        this.setFlags(EnumSet.of(Flag.LOOK));
     }
 
     @Override

@@ -8,7 +8,7 @@
       "item": "minecraft:coal"
     },
     {
-      "tag": "forge:gems/sunstone"
+      "item": "chaosawakens:sunstone"
     }
   ],
   "result": {

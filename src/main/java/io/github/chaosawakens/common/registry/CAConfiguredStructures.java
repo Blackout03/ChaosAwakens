@@ -9,7 +9,6 @@ import net.minecraft.world.gen.feature.IFeatureConfig;
 import net.minecraft.world.gen.feature.StructureFeature;
 
 public class CAConfiguredStructures {
-
     public static StructureFeature<?, ?> CONFIGURED_ACACIA_ENT_TREE = CAStructures.ACACIA_ENT_TREE.get().configured(IFeatureConfig.NONE);
     public static StructureFeature<?, ?> CONFIGURED_BIRCH_ENT_TREE = CAStructures.BIRCH_ENT_TREE.get().configured(IFeatureConfig.NONE);
     public static StructureFeature<?, ?> CONFIGURED_CRIMSON_ENT_TREE = CAStructures.CRIMSON_ENT_TREE.get().configured(IFeatureConfig.NONE);
@@ -20,6 +19,8 @@ public class CAConfiguredStructures {
     public static StructureFeature<?, ?> CONFIGURED_WARPED_ENT_TREE = CAStructures.WARPED_ENT_TREE.get().configured(IFeatureConfig.NONE);
 
     public static StructureFeature<?, ?> CONFIGURED_WASP_DUNGEON = CAStructures.WASP_DUNGEON.get().configured(IFeatureConfig.NONE);
+
+    public static StructureFeature<?, ?> CONFIGURED_ULTIMATE_HOUSE = CAStructures.ULTIMATE_HOUSE.get().configured(IFeatureConfig.NONE);
 
     public static void registerConfiguredStructures() {
         Registry<StructureFeature<?, ?>> registry = WorldGenRegistries.CONFIGURED_STRUCTURE_FEATURE;
@@ -34,6 +35,8 @@ public class CAConfiguredStructures {
 
         Registry.register(registry, new ResourceLocation(ChaosAwakens.MODID, "configured_wasp_dungeon"), CONFIGURED_WASP_DUNGEON);
 
+        Registry.register(registry, new ResourceLocation(ChaosAwakens.MODID, "configured_ultimate_house"), CONFIGURED_ULTIMATE_HOUSE);
+
 
         FlatGenerationSettings.STRUCTURE_FEATURES.put(CAStructures.ACACIA_ENT_TREE.get(), CONFIGURED_ACACIA_ENT_TREE);
         FlatGenerationSettings.STRUCTURE_FEATURES.put(CAStructures.BIRCH_ENT_TREE.get(), CONFIGURED_BIRCH_ENT_TREE);
@@ -45,5 +48,7 @@ public class CAConfiguredStructures {
         FlatGenerationSettings.STRUCTURE_FEATURES.put(CAStructures.WARPED_ENT_TREE.get(), CONFIGURED_WARPED_ENT_TREE);
 
         FlatGenerationSettings.STRUCTURE_FEATURES.put(CAStructures.WASP_DUNGEON.get(), CONFIGURED_WASP_DUNGEON);
+
+        FlatGenerationSettings.STRUCTURE_FEATURES.put(CAStructures.ULTIMATE_HOUSE.get(), CONFIGURED_ULTIMATE_HOUSE);
     }
 }

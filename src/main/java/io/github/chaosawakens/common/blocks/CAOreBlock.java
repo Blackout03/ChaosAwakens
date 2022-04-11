@@ -14,7 +14,7 @@ public class CAOreBlock extends Block {
 
     private Function<Random, Integer> expFormula = (rand) -> 0;
 
-    public CAOreBlock(AbstractBlock.Properties properties) {
+    public CAOreBlock(Properties properties) {
         super(properties);
     }
 

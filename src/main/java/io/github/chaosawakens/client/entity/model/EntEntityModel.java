@@ -11,7 +11,7 @@ import software.bernie.geckolib3.model.provider.data.EntityModelData;
 
 public class EntEntityModel extends AnimatedGeoModel<EntEntity> {
 
-    private final EntEntity.Types entType;
+    private final Types entType;
 
     public EntEntityModel(Types entType) {
         super();
@@ -34,10 +34,13 @@ public class EntEntityModel extends AnimatedGeoModel<EntEntity> {
     }
 
     @Override
-    public void setLivingAnimations(EntEntity entity, Integer uniqueID, @SuppressWarnings("rawtypes") AnimationEvent customPredicate) {
+    public void setLivingAnimations(EntEntity entity, Integer uniqueID, AnimationEvent customPredicate) {
         super.setLivingAnimations(entity, uniqueID, customPredicate);
-
+        IBone root = this.getAnimationProcessor().getBone("root");
         IBone head = this.getAnimationProcessor().getBone("Head");
+        root.setScaleX(0.1f);
+        root.setScaleY(0.1f);
+        root.setScaleZ(0.1f);
         EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
         head.setRotationX((extraData.headPitch) * ((float) Math.PI / 180F));
         head.setRotationY((extraData.netHeadYaw) * ((float) Math.PI / 270F));

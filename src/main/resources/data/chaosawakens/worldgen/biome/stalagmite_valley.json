@@ -4,8 +4,8 @@
   "scale": 0.12,
   "temperature": 0.2,
   "downfall": 0.15,
-  "precipitation": "rain",
-  "category": "plains",
+  "precipitation": "none",
+  "category": "none",
   "player_spawn_friendly": true,
   "effects": {
     "sky_color": 7907327,

@@ -37,7 +37,7 @@ public class SurfaceDungeonStructure extends Structure<NoFeatureConfig> {
 	
 	@Override
 	public IStartFactory<NoFeatureConfig> getStartFactory() {
-		return SurfaceDungeonStructure.Start::new;
+		return Start::new;
 	}
 	
 	@Override

@@ -18,7 +18,7 @@ public class AggressiveAntEntityRender extends GeoEntityRenderer<AggressiveAntEn
     public AggressiveAntEntityRender(EntityRendererManager renderManager, String textureName) {
         super(renderManager, new AggressiveAntEntityModel(textureName));
         this.textureName = textureName;
-        this.shadowRadius = 0.2F;
+        this.shadowRadius = 1.5F;
     }
 
     @Override

@@ -29,13 +29,11 @@ public class EntEntity extends AnimatableMonsterEntity implements IAnimatable {
 
     public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
         return MobEntity.createLivingAttributes()
-                .add(Attributes.MAX_HEALTH, 150)
-                .add(Attributes.ARMOR, 3)
-                .add(Attributes.MOVEMENT_SPEED, 0.15D)
-                .add(Attributes.KNOCKBACK_RESISTANCE, 0.5D)
+                .add(Attributes.MAX_HEALTH, 15)
+                .add(Attributes.MOVEMENT_SPEED, 0.3D)
                 .add(Attributes.ATTACK_SPEED, 10)
-                .add(Attributes.ATTACK_DAMAGE, 25)
-                .add(Attributes.ATTACK_KNOCKBACK, 3.5D)
+                .add(Attributes.ATTACK_DAMAGE, 2.5D)
+                .add(Attributes.ATTACK_KNOCKBACK, 0.35D)
                 .add(Attributes.FOLLOW_RANGE, 24);
     }
 

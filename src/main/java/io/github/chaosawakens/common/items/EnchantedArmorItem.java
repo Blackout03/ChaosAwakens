@@ -11,7 +11,7 @@ public class EnchantedArmorItem extends ArmorItem implements IAutoEnchantable {
 
     private final EnchantmentData[] enchantments;
 
-    public EnchantedArmorItem(IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties builderIn, EnchantmentData[] enchantments) {
+    public EnchantedArmorItem(IArmorMaterial materialIn, EquipmentSlotType slot, Properties builderIn, EnchantmentData[] enchantments) {
         super(materialIn, slot, builderIn);
         this.enchantments = enchantments;
     }

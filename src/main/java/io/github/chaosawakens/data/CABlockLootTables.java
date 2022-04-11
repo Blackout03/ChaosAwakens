@@ -7,17 +7,15 @@ import net.minecraft.block.Block;
 import net.minecraft.data.loot.BlockLootTables;
 import net.minecraft.item.Item;
 import net.minecraft.item.Items;
-import net.minecraft.loot.ItemLootEntry;
-import net.minecraft.loot.LootPool;
-import net.minecraft.loot.LootTable;
-import net.minecraft.loot.RandomValueRange;
+import net.minecraft.loot.*;
 import net.minecraft.loot.conditions.BlockStateProperty;
+import net.minecraft.loot.functions.SetCount;
 import net.minecraft.state.properties.BlockStateProperties;
 import net.minecraft.util.IItemProvider;
 import net.minecraftforge.fml.RegistryObject;
 
 public class CABlockLootTables extends BlockLootTables {
-	
+
 	protected static LootTable.Builder randomDropping(IItemProvider item, float random1, float random2) {
 		return LootTable.lootTable().withPool(applyExplosionCondition(item, LootPool.lootPool().setRolls(RandomValueRange.between(random1, random2))).add(ItemLootEntry.lootTableItem(item)));
 	}
@@ -48,7 +46,7 @@ public class CABlockLootTables extends BlockLootTables {
 		add(CABlocks.TOMATO_TOP_BLOCK.get(), (plant) -> randomDropping(CAItems.TOMATO_SEEDS.get(), 1, 3));
 		add(CABlocks.TOMATO_BODY_BLOCK.get(), (plant) -> cropBodyBlock(CAItems.TOMATO.get(), CAItems.TOMATO_SEEDS.get()));
 		add(CABlocks.STRAWBERRY_PLANT.get(), (plant) -> createCropDrops(plant, CAItems.STRAWBERRY.get(), CAItems.STRAWBERRY_SEEDS.get(), BlockStateProperty.hasBlockStateProperties(plant).setProperties(StatePropertiesPredicate.Builder.properties().hasProperty(BlockStateProperties.AGE_3, 3))));
-		
+
 		dropOther(CABlocks.MOLDY_PLANKS.get(), Items.AIR);
 		dropOther(CABlocks.MOLDY_SLAB.get(), Items.AIR);
 		dropOther(CABlocks.MOLDY_FENCE.get(), Items.AIR);
@@ -59,6 +57,12 @@ public class CABlockLootTables extends BlockLootTables {
 		dropOther(CABlocks.DUPLICATION_LOG.get(), CABlocks.DEAD_DUPLICATION_LOG.get());
 		dropOther(CABlocks.DUPLICATION_LEAVES.get(), Items.AIR);
 		
+		dropSelf(CABlocks.CHERRY_COBBLESTONE.get());
+		add(CABlocks.CHERRY_FIRE.get(), noDrop());
+		add(CABlocks.CHERRY_CAMPFIRE.get(), (p_218538_0_) -> createSilkTouchDispatchTable(p_218538_0_, applyExplosionCondition(p_218538_0_, ItemLootEntry.lootTableItem(CABlocks.CHERRY_COBBLESTONE.get()).apply(SetCount.setCount(ConstantRange.exactly(1))))));
+		dropSelf(CABlocks.CHERRY_LANTERN.get());
+		add(CABlocks.CHERRY_TORCH.get(), (block) -> createSingleItemTable(CABlocks.CHERRY_TORCH.get()));
+
 		dropSelf(CABlocks.APPLE_SAPLING.get());
 		dropSelf(CABlocks.CHERRY_SAPLING.get());
 		dropSelf(CABlocks.PEACH_SAPLING.get());
@@ -87,7 +91,14 @@ public class CABlockLootTables extends BlockLootTables {
 		dropSelf(CABlocks.ENDER_EYE_BLOCK.get());
 		dropSelf(CABlocks.ENDER_PEARL_BLOCK.get());
 		dropSelf(CABlocks.FOSSILISED_EMERALD_GATOR.get());
-		dropSelf(CABlocks.FOSSILISED_ENT.get());
+		dropSelf(CABlocks.FOSSILISED_ACACIA_ENT.get());
+		dropSelf(CABlocks.FOSSILISED_BIRCH_ENT.get());
+		dropSelf(CABlocks.FOSSILISED_DARK_OAK_ENT.get());
+		dropSelf(CABlocks.FOSSILISED_JUNGLE_ENT.get());
+		dropSelf(CABlocks.FOSSILISED_OAK_ENT.get());
+		dropSelf(CABlocks.FOSSILISED_SPRUCE_ENT.get());
+		dropSelf(CABlocks.FOSSILISED_CRIMSON_ENT.get());
+		dropSelf(CABlocks.FOSSILISED_WARPED_ENT.get());
 		dropSelf(CABlocks.FOSSILISED_HERCULES_BEETLE.get());
 		dropSelf(CABlocks.FOSSILISED_RUBY_BUG.get());
 		dropSelf(CABlocks.FOSSILISED_WTF.get());
@@ -141,7 +152,7 @@ public class CABlockLootTables extends BlockLootTables {
 	protected Iterable<Block> getKnownBlocks() {
 		return CABlocks.BLOCKS.getEntries().stream().map(RegistryObject::get)::iterator;
 	}
-	
+
 	private LootTable.Builder cropBodyBlock(Item fruit, Item seed) {
 		return LootTable.lootTable()
 			.withPool(applyExplosionCondition(fruit, 

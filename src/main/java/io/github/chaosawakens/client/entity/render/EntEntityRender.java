@@ -17,7 +17,7 @@ public class EntEntityRender extends GeoEntityRenderer<EntEntity> {
 
     public EntEntityRender(EntityRendererManager renderManager, EntEntity.Types entType) {
         super(renderManager, new EntEntityModel(entType));
-        this.shadowRadius = 2.0F;
+        this.shadowRadius = 0.2F;
         this.entType = entType;
     }
 

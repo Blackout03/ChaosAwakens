@@ -10,7 +10,7 @@
       "tag": "forge:rods/wooden"
     },
     "X": {
-      "tag": "forge:gems/amethyst"
+      "item": "chaosawakens:amethyst"
     }
   },
   "result": {

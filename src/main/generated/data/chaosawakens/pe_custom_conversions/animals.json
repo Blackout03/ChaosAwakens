@@ -1,0 +1,12 @@
+{
+  "values": {
+    "before": {
+      "#chaosawakens:fish": 96,
+      "chaosawakens:lava_eel": 128,
+      "chaosawakens:peacock_leg": 128,
+      "chaosawakens:crab_meat": 128,
+      "chaosawakens:peacock_feather": 144,
+      "chaosawakens:dead_stink_bug": 192
+    }
+  }
+}

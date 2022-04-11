@@ -18,7 +18,7 @@ public class AntEntityRender extends GeoEntityRenderer<AntEntity> {
     public AntEntityRender(EntityRendererManager renderManager, String textureName) {
         super(renderManager, new AntEntityModel(textureName));
         this.textureName = textureName;
-        this.shadowRadius = 0.2F;
+        this.shadowRadius = 1.5F;
     }
 
     @Override
