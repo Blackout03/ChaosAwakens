@@ -40,7 +40,6 @@ import io.github.chaosawakens.client.entity.render.ThunderStaffProjectileRendere
 import io.github.chaosawakens.client.entity.render.TreeFrogEntityRenderer;
 import io.github.chaosawakens.client.entity.render.UltimateAppleCowEntityRenderer;
 import io.github.chaosawakens.client.entity.render.UltimateArrowProjectileRenderer;
-import io.github.chaosawakens.client.entity.render.UltimateCrossbowArrowProjectileRenderer;
 import io.github.chaosawakens.client.entity.render.UltimateBobberProjectileRenderer;
 import io.github.chaosawakens.client.entity.render.WaspEntityRenderer;
 import io.github.chaosawakens.client.entity.render.WhaleEntityRenderer;
@@ -51,7 +50,6 @@ import io.github.chaosawakens.common.entity.HerculesBeetleEntity;
 import io.github.chaosawakens.common.entity.nonliving.CAScreenShakeEntity;
 import io.github.chaosawakens.common.entity.projectile.CALeafyChickenEggEntity;
 import io.github.chaosawakens.common.items.EnderScaleArmorItem;
-import io.github.chaosawakens.common.items.UltimateCrossbowItem;
 import io.github.chaosawakens.common.items.UltimateFishingRodItem;
 import io.github.chaosawakens.common.particles.FartParticle.FartParticleProvider;
 import io.github.chaosawakens.common.particles.RoboSparkParticle.RoboSparkParticleProvider;
@@ -73,7 +71,6 @@ import net.minecraft.client.renderer.tileentity.SignTileEntityRenderer;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemModelsProperties;
-import net.minecraft.item.Items;
 import net.minecraft.particles.ParticleTypes;
 import net.minecraft.potion.Effects;
 import net.minecraft.tags.FluidTags;
@@ -261,8 +258,6 @@ public class ClientSetupEvent {
 			Atlases.addWoodType(CABlocks.PEACH);
 			Atlases.addWoodType(CABlocks.SKYWOOD);
 			Atlases.addWoodType(CABlocks.GINKGO);
-			Atlases.addWoodType(CABlocks.MESOZOIC);
-			Atlases.addWoodType(CABlocks.DENSEWOOD);
 		});
 
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.HERCULES_BEETLE.get(), (manager) -> new HerculesBeetleEntityRenderer(manager, HerculesBeetleEntity.Type.MODERN));
@@ -280,7 +275,6 @@ public class ClientSetupEvent {
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.SPRUCE_ENT.get(), (manager) -> new EntEntityRenderer(manager, EntEntity.Types.SPRUCE));
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.CRIMSON_ENT.get(), (manager) -> new EntEntityRenderer(manager, EntEntity.Types.CRIMSON));
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.WARPED_ENT.get(), (manager) -> new EntEntityRenderer(manager, EntEntity.Types.WARPED));
-		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.GINKGO_ENT.get(), (manager) -> new EntEntityRenderer(manager, EntEntity.Types.GINKGO));
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.RED_ANT.get(), (manager) -> new AggressiveAntEntityRenderer(manager, CAEntityTypes.RED_ANT.getId().getPath()));
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.BROWN_ANT.get(), (manager) -> new AntEntityRenderer(manager, CAEntityTypes.BROWN_ANT.getId().getPath()));
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.RAINBOW_ANT.get(), (manager) -> new AntEntityRenderer(manager, CAEntityTypes.RAINBOW_ANT.getId().getPath()));
@@ -288,7 +282,6 @@ public class ClientSetupEvent {
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.TERMITE.get(), (manager) -> new AggressiveAntEntityRenderer(manager, CAEntityTypes.TERMITE.getId().getPath()));
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.TREE_FROG.get(), TreeFrogEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.ULTIMATE_ARROW.get(), UltimateArrowProjectileRenderer::new);
-		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.ULTIMATE_CROSSBOW_ARROW.get(), UltimateCrossbowArrowProjectileRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.IRUKANDJI_ARROW.get(), IrukandjiArrowProjectileRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.THUNDER_BALL.get(), ThunderStaffProjectileRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.EXPLOSIVE_BALL.get(), RayGunProjectileRenderer::new);
@@ -325,7 +318,7 @@ public class ClientSetupEvent {
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.FALLING_BLOCK.get(), CAFallingBlockRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.SCREEN_SHAKE.get(), CAEmptyRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.LEAFY_CHICKEN_EGG.get(), (manager) -> new SpriteRenderer<CALeafyChickenEggEntity>(manager, Minecraft.getInstance().getItemRenderer()));
-		
+
 		RenderTypeLookup.setRenderLayer(CABlocks.TUBE_WORM.get(), RenderType.cutoutMipped());
 		RenderTypeLookup.setRenderLayer(CABlocks.TUBE_WORM_PLANT.get(), RenderType.cutoutMipped());
 
@@ -339,18 +332,9 @@ public class ClientSetupEvent {
 		RenderTypeLookup.setRenderLayer(CABlocks.TERMITE_NEST.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.CRYSTAL_TERMITE_NEST.get(), RenderType.cutout());
 
-		RenderTypeLookup.setRenderLayer(CABlocks.DENSE_GRASS.get(), RenderType.cutoutMipped());
-		RenderTypeLookup.setRenderLayer(CABlocks.DENSE_GRASS_BLOCK.get(), RenderType.cutoutMipped());
-		RenderTypeLookup.setRenderLayer(CABlocks.TALL_DENSE_GRASS.get(), RenderType.cutoutMipped());
-		RenderTypeLookup.setRenderLayer(CABlocks.DENSE_RED_ANT_NEST.get(), RenderType.cutoutMipped());
+		RenderTypeLookup.setRenderLayer(CABlocks.DENSE_GRASS.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(CABlocks.TALL_DENSE_GRASS.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.THORNY_SUN.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.ALSTROEMERIAT.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.DENSE_ORCHID.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.SMALL_BUSH.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.SMALL_CARNIVOROUS_PLANT.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.BIG_CARNIVOROUS_PLANT.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.MESOZOIC_VINES.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.MESOZOIC_VINES_PLANT.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.BLUE_BULB.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.PINK_BULB.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.PURPLE_BULB.get(), RenderType.cutout());
@@ -358,16 +342,11 @@ public class ClientSetupEvent {
 		RenderTypeLookup.setRenderLayer(CABlocks.CYAN_ROSE.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.RED_ROSE.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.PAEONIA.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.SWAMP_MILKWEED.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.DAISY.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.PRIMROSE.get(), RenderType.cutout());
 
 		RenderTypeLookup.setRenderLayer(CABlocks.APPLE_TRAPDOOR.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.CHERRY_TRAPDOOR.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.DUPLICATION_TRAPDOOR.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.GINKGO_TRAPDOOR.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.MESOZOIC_TRAPDOOR.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.DENSEWOOD_TRAPDOOR.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.PEACH_TRAPDOOR.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.SKYWOOD_TRAPDOOR.get(), RenderType.cutout());
 		
@@ -375,8 +354,6 @@ public class ClientSetupEvent {
 		RenderTypeLookup.setRenderLayer(CABlocks.CHERRY_DOOR.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.DUPLICATION_DOOR.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.GINKGO_DOOR.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.MESOZOIC_DOOR.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.DENSEWOOD_DOOR.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.PEACH_DOOR.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.SKYWOOD_DOOR.get(), RenderType.cutout());
 		
@@ -385,9 +362,6 @@ public class ClientSetupEvent {
 		RenderTypeLookup.setRenderLayer(CABlocks.APPLE_SAPLING.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.CHERRY_SAPLING.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.PEACH_SAPLING.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.GINKGO_SAPLING.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.MESOZOIC_SAPLING.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.DENSEWOOD_SAPLING.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.RED_CRYSTAL_SAPLING.get(), RenderType.cutoutMipped());
 		RenderTypeLookup.setRenderLayer(CABlocks.GREEN_CRYSTAL_SAPLING.get(), RenderType.cutoutMipped());
 		RenderTypeLookup.setRenderLayer(CABlocks.YELLOW_CRYSTAL_SAPLING.get(), RenderType.cutoutMipped());
@@ -416,25 +390,15 @@ public class ClientSetupEvent {
 		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_BLUE_BULB.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_PINK_BULB.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_PURPLE_BULB.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_DENSE_ORCHID.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_SWAMP_MILKWEED.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_SMALL_BUSH.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_SMALL_CARNIVOROUS_PLANT.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_BIG_CARNIVOROUS_PLANT.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_PRIMROSE.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_DAISY.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_APPLE_SAPLING.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_CHERRY_SAPLING.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_PEACH_SAPLING.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_GINKGO_SAPLING.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_MESOZOIC_SAPLING.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_DENSEWOOD_SAPLING.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_RED_CRYSTAL_SAPLING.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_GREEN_CRYSTAL_SAPLING.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_YELLOW_CRYSTAL_SAPLING.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_PINK_CRYSTAL_SAPLING.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_BLUE_CRYSTAL_SAPLING.get(), RenderType.cutout());
-		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_ORANGE_CRYSTAL_SAPLING.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(CABlocks.ORANGE_CRYSTAL_SAPLING.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_RED_CRYSTAL_FLOWER.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_BLUE_CRYSTAL_FLOWER.get(), RenderType.cutout());
 		RenderTypeLookup.setRenderLayer(CABlocks.POTTED_GREEN_CRYSTAL_FLOWER.get(), RenderType.cutout());
@@ -453,8 +417,6 @@ public class ClientSetupEvent {
 		RenderTypeLookup.setRenderLayer(CABlocks.CHERRY_LEAVES.get(), RenderType.cutoutMipped());
 		RenderTypeLookup.setRenderLayer(CABlocks.DUPLICATION_LEAVES.get(), RenderType.cutoutMipped());
 		RenderTypeLookup.setRenderLayer(CABlocks.GINKGO_LEAVES.get(), RenderType.cutoutMipped());
-		RenderTypeLookup.setRenderLayer(CABlocks.DENSEWOOD_LEAVES.get(), RenderType.cutoutMipped());
-		RenderTypeLookup.setRenderLayer(CABlocks.MESOZOIC_LEAVES.get(), RenderType.cutoutMipped());
 		RenderTypeLookup.setRenderLayer(CABlocks.PEACH_LEAVES.get(), RenderType.cutoutMipped());
 		RenderTypeLookup.setRenderLayer(CABlocks.SKYWOOD_LEAVES.get(), RenderType.cutoutMipped());
 
@@ -462,8 +424,6 @@ public class ClientSetupEvent {
 		RenderTypeLookup.setRenderLayer(CABlocks.CHERRY_LEAF_CARPET.get(), RenderType.cutoutMipped());
 		RenderTypeLookup.setRenderLayer(CABlocks.DUPLICATION_LEAF_CARPET.get(), RenderType.cutoutMipped());
 		RenderTypeLookup.setRenderLayer(CABlocks.GINKGO_LEAF_CARPET.get(), RenderType.cutoutMipped());
-		RenderTypeLookup.setRenderLayer(CABlocks.MESOZOIC_LEAF_CARPET.get(), RenderType.cutoutMipped());
-		RenderTypeLookup.setRenderLayer(CABlocks.DENSEWOOD_LEAF_CARPET.get(), RenderType.cutoutMipped());
 		RenderTypeLookup.setRenderLayer(CABlocks.PEACH_LEAF_CARPET.get(), RenderType.cutoutMipped());
 		RenderTypeLookup.setRenderLayer(CABlocks.SKYWOOD_LEAF_CARPET.get(), RenderType.cutoutMipped());
 
@@ -527,22 +487,18 @@ public class ClientSetupEvent {
 						return living.getUseItem() != stack ? 0.0F : (float) (stack.getUseDuration() - living.getUseItemRemainingTicks()) / 8.0F;
 					}
 				});
-		ItemModelsProperties.register(CAItems.ULTIMATE_CROSSBOW.get(), new ResourceLocation("pull"),
+/*		ItemModelsProperties.register(CAItems.ULTIMATE_CROSSBOW.get(), new ResourceLocation("pull"),
 				(stack, world, living) -> {
 					if (living == null) {
 						return 0.0F;
 					} else {
-						return UltimateCrossbowItem.isCharged(stack) ? 0.0F : (float)(stack.getUseDuration() - living.getUseItemRemainingTicks()) / (float)UltimateCrossbowItem.getChargeDuration(stack);
+						return living.getUseItem() != stack ? 0.0F : (float) (stack.getUseDuration() - living.getUseItemRemainingTicks()) / 8.0F;
 					}
-				});
+				});*/
 		ItemModelsProperties.register(CAItems.ULTIMATE_BOW.get(), new ResourceLocation("pulling"),
 				(stack, world, living) -> living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F);
-		ItemModelsProperties.register(CAItems.ULTIMATE_CROSSBOW.get(), new ResourceLocation("pulling"),
-				(stack, world, living) -> living != null && living.isUsingItem() && living.getUseItem() == stack && !UltimateCrossbowItem.isCharged(stack) ? 1.0F : 0.0F);
-		ItemModelsProperties.register(CAItems.ULTIMATE_CROSSBOW.get(), new ResourceLocation("charged"),
-				(stack, world, living) -> living != null && UltimateCrossbowItem.isCharged(stack) ? 1.0F : 0.0F);
-		ItemModelsProperties.register(CAItems.ULTIMATE_CROSSBOW.get(), new ResourceLocation("firework"),
-				(stack, world, living) -> living != null && UltimateCrossbowItem.isCharged(stack) && UltimateCrossbowItem.containsChargedProjectile(stack, Items.FIREWORK_ROCKET) ? 1.0F : 0.0F);
+/*		ItemModelsProperties.register(CAItems.ULTIMATE_CROSSBOW.get(), new ResourceLocation("pulling"),
+				(stack, world, living) -> living != null && living.isUsingItem() && living.getUseItem() == stack ? 1.0F : 0.0F);*/
 		ItemModelsProperties.register(CAItems.SKATE_STRING_BOW.get(), new ResourceLocation("pull"),
 				(stack, world, living) -> {
 					if (living == null) {

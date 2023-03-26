@@ -1,19 +1,16 @@
 buildscript {
 	repositories {
 		maven { url = "https://maven.minecraftforge.net/" }
-		maven { url = 'https://maven.parchmentmc.org' }
 		maven { url = "https://repo.spongepowered.org/maven" }
 		mavenCentral()
 	}
 	dependencies {
 		classpath(group: 'net.minecraftforge.gradle', name: 'ForgeGradle', version: '5.1.+', changing: true)
-		classpath 'org.parchmentmc:librarian:1.+'
 		classpath group: 'org.spongepowered', name: 'mixingradle', version: '0.7-SNAPSHOT'
 	}
 }
 
 apply plugin: "net.minecraftforge.gradle"
-apply plugin: 'org.parchmentmc.librarian.forgegradle'
 apply plugin: "org.spongepowered.mixin"
 apply plugin: "eclipse"
 apply plugin: "maven-publish"
@@ -25,8 +22,7 @@ archivesBaseName = project.modId
 java.toolchain.languageVersion = JavaLanguageVersion.of 8
 
 minecraft {
-//	mappings channel: "official", version: "${project.minecraftVersion}"
-	mappings channel: 'parchment', version: "${project.parchmentMappingsVersion}"
+	mappings channel: "official", version: "${project.minecraftVersion}"
 
 	accessTransformer = file("src/main/resources/META-INF/accesstransformer.cfg")
 
@@ -93,9 +89,7 @@ dependencies {
 
 	implementation fg.deobf("curse.maven:projecte-226410:${project.projecte}")
 	implementation fg.deobf("curse.maven:patchouli-306770:${project.patchouli}")
-	
-	//implementation fg.deobf("curse.maven:advanced-xray-256256:3205011")
-	
+
 	implementation fg.deobf("mezz.jei:jei-1.16.5:${project.jei}:api")
 	implementation fg.deobf("mezz.jei:jei-1.16.5:${project.jei}")
 	implementation fg.deobf("curse.maven:just-enough-resources-jer-240630:${project.jer}")

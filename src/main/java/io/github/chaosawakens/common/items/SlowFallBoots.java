@@ -1,7 +1,5 @@
 package io.github.chaosawakens.common.items;
 
-import java.util.function.Supplier;
-
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.inventory.EquipmentSlotType;
@@ -12,7 +10,7 @@ import net.minecraft.potion.Effects;
 import net.minecraft.world.World;
 
 public class SlowFallBoots extends EnchantedArmorItem {
-	public SlowFallBoots(IArmorMaterial materialIn, Properties builderIn, Supplier<EnchantmentData[]> enchantments) {
+	public SlowFallBoots(IArmorMaterial materialIn, Properties builderIn, EnchantmentData[] enchantments) {
 		super(materialIn, EquipmentSlotType.FEET, builderIn, enchantments);
 	}
 

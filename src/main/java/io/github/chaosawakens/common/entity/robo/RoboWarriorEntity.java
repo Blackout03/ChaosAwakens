@@ -13,7 +13,6 @@ import net.minecraft.world.World;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
@@ -45,18 +44,18 @@ public class RoboWarriorEntity extends RoboRangedEntity implements IRangedAttack
 
 		if (this.getAttacking()) {
 			if (event.isMoving()) {
-				event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_warrior.walking_shooting_animation", ILoopType.EDefaultLoopTypes.LOOP));
+				event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_warrior.walking_shooting_animation", true));
 				return PlayState.CONTINUE;
 			}
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_warrior.shooting_animation", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_warrior.shooting_animation", true));
 			return PlayState.CONTINUE;
 		}
 
 		if (event.isMoving()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_warrior.walking_animation", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_warrior.walking_animation", true));
 			return PlayState.CONTINUE;
 		}
-		event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_warrior.idle_animation", ILoopType.EDefaultLoopTypes.LOOP));
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_warrior.idle_animation", true));
 		return PlayState.CONTINUE;
 	}
 

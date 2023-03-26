@@ -1,10 +1,8 @@
 {
-  "parent": "minecraft:block/grass_block",
+  "parent": "minecraft:block/cube_bottom_top",
   "textures": {
-    "particle": "chaosawakens:block/dense_dirt",
-    "bottom": "chaosawakens:block/dense_dirt",
-    "top": "chaosawakens:block/dense_red_ant_nest",
     "side": "chaosawakens:block/dense_grass_block_side",
-    "overlay": "chaosawakens:block/dense_grass_block_side_overlay"
+    "bottom": "chaosawakens:block/dense_dirt",
+    "top": "chaosawakens:block/dense_red_ant_nest"
   }
 }

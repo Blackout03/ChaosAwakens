@@ -1,6 +1,7 @@
 package io.github.chaosawakens.data;
 
 import io.github.chaosawakens.ChaosAwakens;
+
 import io.github.chaosawakens.common.items.UltimatePickaxeItem;
 import io.github.chaosawakens.common.registry.CAItems;
 import io.github.chaosawakens.common.registry.CALootModifiers;

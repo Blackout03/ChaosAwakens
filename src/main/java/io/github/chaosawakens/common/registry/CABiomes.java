@@ -11,12 +11,8 @@ import net.minecraftforge.registries.ForgeRegistries;
 public class CABiomes {
 	public static final DeferredRegister<Biome> BIOMES = DeferredRegister.create(ForgeRegistries.BIOMES, ChaosAwakens.MODID);
 
-	public static RegistryObject<Biome> DENSE_PLAINS = BIOMES.register("dense_plains", BiomeMaker::theVoidBiome);
-	public static RegistryObject<Biome> DENSE_FOREST = BIOMES.register("dense_forest", BiomeMaker::theVoidBiome);
-	public static RegistryObject<Biome> DENSE_GINKGO_FOREST = BIOMES.register("dense_ginkgo_forest", BiomeMaker::theVoidBiome);
-	public static RegistryObject<Biome> DENSE_MOUNTAINS = BIOMES.register("dense_mountains", BiomeMaker::theVoidBiome);
+	public static RegistryObject<Biome> DENSE_MOUNTAIN = BIOMES.register("dense_mountain", BiomeMaker::theVoidBiome);
 	public static RegistryObject<Biome> STALAGMITE_VALLEY = BIOMES.register("stalagmite_valley", BiomeMaker::theVoidBiome);
-	public static RegistryObject<Biome> MESOZOIC_JUNGLE = BIOMES.register("mesozoic_jungle", BiomeMaker::theVoidBiome);
 	public static RegistryObject<Biome> VILLAGE_PLAINS = BIOMES.register("village_plains", BiomeMaker::theVoidBiome);
 	public static RegistryObject<Biome> VILLAGE_SAVANNA = BIOMES.register("village_savanna", BiomeMaker::theVoidBiome);
 	public static RegistryObject<Biome> VILLAGE_TAIGA = BIOMES.register("village_taiga", BiomeMaker::theVoidBiome);
@@ -28,12 +24,8 @@ public class CABiomes {
 
 	public static final class Type {
 		public static final BiomeDictionary.Type MINING_PARADISE = BiomeDictionary.Type.getType("MINING_PARADISE");
-		public static final BiomeDictionary.Type DENSE_PLAINS = BiomeDictionary.Type.getType("DENSE_PLAINS");
-		public static final BiomeDictionary.Type DENSE_FOREST = BiomeDictionary.Type.getType("DENSE_FOREST");
-		public static final BiomeDictionary.Type DENSE_GINKGO_FOREST = BiomeDictionary.Type.getType("DENSE_GINKGO_FOREST");
-		public static final BiomeDictionary.Type DENSE_MOUNTAINS = BiomeDictionary.Type.getType("DENSE_MOUNTAINS");
+		public static final BiomeDictionary.Type DENSE_MOUNTAIN = BiomeDictionary.Type.getType("DENSE_MOUNTAIN");
 		public static final BiomeDictionary.Type STALAGMITE_VALLEY = BiomeDictionary.Type.getType("STALAGMITE_VALLEY");
-		public static final BiomeDictionary.Type MESOZOIC_JUNGLE = BiomeDictionary.Type.getType("MESOZOIC_JUNGLE");
 
 		public static final BiomeDictionary.Type VILLAGE_MANIA = BiomeDictionary.Type.getType("VILLAGE_MANIA");
 		public static final BiomeDictionary.Type VILLAGE_PLAINS = BiomeDictionary.Type.getType("VILLAGE_PLAINS");

@@ -1,11 +1,12 @@
 package io.github.chaosawakens.data;
 
-import java.util.function.BiConsumer;
-
 import io.github.chaosawakens.ChaosAwakens;
+
 import net.minecraft.data.loot.GiftLootTables;
 import net.minecraft.loot.LootTable;
 import net.minecraft.util.ResourceLocation;
+
+import java.util.function.BiConsumer;
 
 public class CAGiftLootTable extends GiftLootTables {
 	public String getName() {

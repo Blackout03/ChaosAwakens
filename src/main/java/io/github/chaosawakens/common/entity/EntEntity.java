@@ -74,7 +74,6 @@ import software.bernie.geckolib3.core.AnimationState;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
@@ -114,7 +113,7 @@ public class EntEntity extends AnimatableMonsterEntity implements IEntityAdditio
 	public <E extends IAnimatable> PlayState deathPredicate(AnimationEvent<E> event) {
 		if (this.isDeadOrDying() || (this.getAttacking() && this.isDeadOrDying()) || this.getHealth() <= 0) {
 			if (getAttackID() != (byte) 0) setAttackID((byte) 0);
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ent.death_animation", ILoopType.EDefaultLoopTypes.HOLD_ON_LAST_FRAME));		
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ent.death_animation", true));		
 			event.getController().setAnimationSpeed(0.8D);
 			return PlayState.CONTINUE;
 		}
@@ -124,18 +123,18 @@ public class EntEntity extends AnimatableMonsterEntity implements IEntityAdditio
 	@Override
 	public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		if (this.getAttacking() && this.getAttackID() == PUNCH_ATTACK) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ent.attacking_animation", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ent.attacking_animation", true));
 			return PlayState.CONTINUE;
 		}
 		if (this.getAttacking() && this.getAttackID() == SMASH_ATTACK) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ent.smash_attack", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ent.smash_attack", false));
 			return PlayState.CONTINUE;
 		}
 		if (event.isMoving()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ent.walking_animation", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ent.walking_animation", true));
 			return PlayState.CONTINUE;
 		}
-		event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ent.idle_animation", ILoopType.EDefaultLoopTypes.LOOP));
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ent.idle_animation", true));
 		return PlayState.CONTINUE;
 	}
 	
@@ -250,7 +249,7 @@ public class EntEntity extends AnimatableMonsterEntity implements IEntityAdditio
     		}*/
   //  	}
     	
-  //  	if (getTarget() == null) setAttackID((byte) 0);
+    	
     }
     
     @Override
@@ -547,7 +546,7 @@ public class EntEntity extends AnimatableMonsterEntity implements IEntityAdditio
 	}
 
 	public enum Types {
-		OAK("oak"), APPLE("apple"), ACACIA("acacia"), DARK_OAK("dark_oak"), JUNGLE("jungle"), SPRUCE("spruce"), BIRCH("birch"), CRIMSON("crimson"), WARPED("warped"), PEACH("peach"), CHERRY("cherry"), SKYWOOD("skywood"), GINKGO("ginkgo");
+		OAK("oak"), APPLE("apple"), ACACIA("acacia"), DARK_OAK("dark_oak"), JUNGLE("jungle"), SPRUCE("spruce"), BIRCH("birch"), CRIMSON("crimson"), WARPED("warped"), PEACH("peach"), CHERRY("cherry"), SKYWOOD("skywood");
 
 		private final String name;
 
@@ -565,7 +564,7 @@ public class EntEntity extends AnimatableMonsterEntity implements IEntityAdditio
 	}
 
 	@Override
-	protected SoundEvent getHurtSound(DamageSource damageSource) {
+	protected SoundEvent getHurtSound(DamageSource p_184601_1_) {
 		if (this.getEntType() == Types.ACACIA) return CASoundEvents.ACACIA_ENT_HURT.get();
 		else if (this.getEntType() != Types.BIRCH) return CASoundEvents.BIRCH_ENT_HURT.get();
 		else if (this.getEntType() == Types.CRIMSON) return CASoundEvents.CRIMSON_ENT_HURT.get();
@@ -591,9 +590,11 @@ public class EntEntity extends AnimatableMonsterEntity implements IEntityAdditio
 	}
 
 	@Override
-	protected void playStepSound(BlockPos blockPos, BlockState blockState) {
-		if (!blockState.getMaterial().isLiquid()) this.playSound(CASoundEvents.ENT_WALK.get(), this.getVoicePitch() * 0.30F, this.getSoundVolume() * 1);
+	protected void playStepSound(BlockPos p_180429_1_, BlockState p_180429_2_) {
+		if (!p_180429_2_.getMaterial().isLiquid()) this.playSound(CASoundEvents.ENT_WALK.get(), this.getVoicePitch() * 0.30F, this.getSoundVolume() * 1);
 	}
+	
+	
 
 	@Override
 	protected float getVoicePitch() {

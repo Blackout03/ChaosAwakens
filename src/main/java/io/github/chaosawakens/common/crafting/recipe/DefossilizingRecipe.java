@@ -1,9 +1,6 @@
 package io.github.chaosawakens.common.crafting.recipe;
 
-import javax.annotation.Nullable;
-
 import com.google.gson.JsonObject;
-
 import io.github.chaosawakens.common.registry.CARecipes;
 import net.minecraft.inventory.IInventory;
 import net.minecraft.item.ItemStack;
@@ -16,6 +13,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.ForgeRegistryEntry;
+
+import javax.annotation.Nullable;
 
 public class DefossilizingRecipe extends AbstractDefossilizingRecipe {
 	public DefossilizingRecipe(ResourceLocation recipeId, Ingredient ingredient1, Ingredient ingredient2, Ingredient ingredient3, ItemStack result, float experience, int defossilizingTime, String defossilizerType) {

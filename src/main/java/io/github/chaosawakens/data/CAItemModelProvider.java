@@ -6,19 +6,12 @@ import javax.annotation.Nonnull;
 
 import io.github.chaosawakens.ChaosAwakens;
 import io.github.chaosawakens.common.blocks.CrystalBushBlock;
-import io.github.chaosawakens.common.blocks.CrystalEnergyBlock;
 import io.github.chaosawakens.common.blocks.DenseBushBlock;
-import io.github.chaosawakens.common.blocks.DoubleCrystalPlantBlock;
-import io.github.chaosawakens.common.blocks.DoubleDensePlantBlock;
 import io.github.chaosawakens.common.blocks.LeafCarpetBlock;
-import io.github.chaosawakens.common.blocks.MesozoicVinesTopBlock;
+import io.github.chaosawakens.common.items.MobestiaryItem;
 import io.github.chaosawakens.common.registry.CABlocks;
 import io.github.chaosawakens.common.registry.CAItems;
-import net.minecraft.block.AbstractButtonBlock;
 import net.minecraft.block.Block;
-import net.minecraft.block.FenceBlock;
-import net.minecraft.block.FlowerBlock;
-import net.minecraft.block.SaplingBlock;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.item.ArmorItem;
 import net.minecraft.item.BlockItem;
@@ -171,7 +164,9 @@ public class CAItemModelProvider extends ItemModelProvider {
 	            .override().predicate(zombieRL, 1.0F).model(zombie).end();
             } else if (item.getId().getPath().contains("_spawn_egg")) {
 				getBuilder(item.getId().getPath()).parent(parentGenerated).texture("layer0", ItemModelProvider.ITEM_FOLDER + "/spawn_eggs/" + name.replaceAll("_spawn_egg", ""));
-            } else if (item.getId().getPath().contains("boat")) {
+            } else if (item.get() instanceof MobestiaryItem) {
+				getBuilder(item.getId().getPath()).parent(parentGenerated).texture("layer0", ItemModelProvider.ITEM_FOLDER + "/book_" + name);
+			} else if (item.getId().getPath().contains("boat")) {
             	getBuilder(item.getId().getPath()).parent(parentGenerated).texture("layer0", ItemModelProvider.ITEM_FOLDER + "/boats/" + name.replaceAll("_boat", ""));
             } else {
                 if (!existingFileHelper.exists(getItemResourceLocation(name), TEXTURE) || existingFileHelper.exists(getItemResourceLocation(name), MODEL)) continue;
@@ -193,26 +188,25 @@ public class CAItemModelProvider extends ItemModelProvider {
 			 * assets/chaosawakens/models/block or already have an existing item model at
 			 * assets/chaosawakens/models/item
 			 */
-			
+
 			if (item.getId().getPath().contains("_wall")) {
 				withExistingParent(name, getBlockResourceLocation(name + "_inventory"));
 			} else if (item.getId().getPath().contains("_trapdoor")) {
 				withExistingParent(name, getBlockResourceLocation(name + "_bottom"));			
 			} else if (item.getId().getPath().contains("_door")) {
 				singleTextureLayer0(name, ITEM_GENERATED, getItemResourceLocation(name));
-			} else if(block instanceof SaplingBlock || block instanceof FlowerBlock || block instanceof CrystalEnergyBlock) {
-				singleTextureLayer0(name, ITEM_GENERATED, getBlockResourceLocation(name));
-			} else if (block instanceof CrystalBushBlock || block instanceof DenseBushBlock || block instanceof MesozoicVinesTopBlock) {
-				if (block instanceof DoubleDensePlantBlock || block instanceof DoubleCrystalPlantBlock) {
+			} else if ((block instanceof CrystalBushBlock || block instanceof DenseBushBlock) && (item.getId().getPath().contains("_grass") || item.getId().getPath().contains("_sun"))) {
+				if (item.getId().getPath().contains("tall_") || item.getId().getPath().contains("thorny_")) {
 					singleTextureLayer0(name, ITEM_GENERATED, getBlockResourceLocation(name + "_top"));
 				} else {
 					singleTextureLayer0(name, ITEM_GENERATED, getBlockResourceLocation(name));
 				}
-			} else if (block instanceof LeafCarpetBlock || block instanceof FenceBlock || block instanceof AbstractButtonBlock) {
+			} else if (block instanceof LeafCarpetBlock) {
 				withExistingParent(name, getBlockResourceLocation(name + "_inventory"));
 			} else {
-				if (!existingFileHelper.exists(getBlockResourceLocation(name), MODEL) || existingFileHelper.exists(getItemResourceLocation(name), MODEL))
+				if (!existingFileHelper.exists(getBlockResourceLocation(name), MODEL) || existingFileHelper.exists(getItemResourceLocation(name), MODEL)) {
 					continue;
+				}
 				withExistingParent(name, getBlockResourceLocation(name));
 			}
 		}

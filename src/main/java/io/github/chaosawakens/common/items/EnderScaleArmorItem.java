@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
-import java.util.function.Supplier;
 
 import com.mojang.blaze3d.matrix.MatrixStack;
 import com.mojang.blaze3d.vertex.IVertexBuilder;
@@ -47,7 +46,7 @@ import net.minecraft.world.World;
 public class EnderScaleArmorItem extends EnchantedArmorItem {
 	public static final String ENDERELYTRA = ChaosAwakens.MODID + ":ElytraFullSetBonus";
 	
-	public EnderScaleArmorItem(IArmorMaterial materialIn, EquipmentSlotType slot, Properties builderIn, Supplier<EnchantmentData[]> enchantments) {
+	public EnderScaleArmorItem(IArmorMaterial materialIn, EquipmentSlotType slot, Properties builderIn, EnchantmentData[] enchantments) {
 		super(materialIn, slot, builderIn, enchantments);
 	}
 	

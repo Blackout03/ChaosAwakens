@@ -2,7 +2,9 @@ package io.github.chaosawakens.common.entity.ai.pathfinding;
 
 import java.util.Objects;
 
+import io.github.chaosawakens.ChaosAwakens;
 import io.github.chaosawakens.api.IUtilityHelper;
+import io.github.chaosawakens.common.entity.ai.CAWalkNodeProcessor;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.entity.MobEntity;
@@ -11,6 +13,7 @@ import net.minecraft.pathfinding.GroundPathNavigator;
 import net.minecraft.pathfinding.Path;
 import net.minecraft.pathfinding.PathFinder;
 import net.minecraft.pathfinding.PathNodeType;
+import net.minecraft.pathfinding.PathPoint;
 import net.minecraft.pathfinding.PathType;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockPos.Mutable;
@@ -156,7 +159,6 @@ public class CAStrictGroundPathNavigator extends GroundPathNavigator {
 	}
 	
 	// Improving on Mowzie's ground path nav
-	// TODO W.I.P
     protected boolean sweepThrough(Vector3d pathVec, Vector3d center, Vector3d max) {
         float l = 0.0F;
         float ml = (float) pathVec.length();

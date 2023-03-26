@@ -40,7 +40,6 @@ import software.bernie.geckolib3.core.AnimationState;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
@@ -134,7 +133,6 @@ public class SlayerChainsawItem extends AxeItem implements IVanishable, IAnimata
 					|| target.getEntity().getType() == CAEntityTypes.CRIMSON_ENT.get() || target.getEntity().getType() == CAEntityTypes.DARK_OAK_ENT.get()
 					|| target.getEntity().getType() == CAEntityTypes.JUNGLE_ENT.get() || target.getEntity().getType() == CAEntityTypes.OAK_ENT.get()
 					|| target.getEntity().getType() == CAEntityTypes.SPRUCE_ENT.get() || target.getEntity().getType() == CAEntityTypes.WARPED_ENT.get()
-					|| target.getEntity().getType() == CAEntityTypes.GINKGO_ENT.get()
 					&& !target.level.isClientSide) {
 				target.hurt(DamageSource.GENERIC, (attackDamage * 2));
 			}
@@ -168,7 +166,7 @@ public class SlayerChainsawItem extends AxeItem implements IVanishable, IAnimata
 
 	private <P extends Item & IAnimatable> PlayState predicate(AnimationEvent<P> event) {		
 		if (ACTIVATED) {				
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.slayer_chainsaw.use_animation", ILoopType.EDefaultLoopTypes.LOOP));				
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.slayer_chainsaw.use_animation", true));				
 			return PlayState.CONTINUE;
 		}
 		return PlayState.STOP;
@@ -215,7 +213,7 @@ public class SlayerChainsawItem extends AxeItem implements IVanishable, IAnimata
 					// Set the animation to open the JackInTheBoxItem which will start playing music
 					// and
 					// eventually do the actual animation. Also sets it to loop
-					controller.setAnimation(new AnimationBuilder().addAnimation("animation.slayer_chainsaw.use_animation", ILoopType.EDefaultLoopTypes.LOOP));
+					controller.setAnimation(new AnimationBuilder().addAnimation("animation.slayer_chainsaw.use_animation", true));
 				}
 			}
 		}

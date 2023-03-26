@@ -1,11 +1,5 @@
 package io.github.chaosawakens.common.integration.jei;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-
 import io.github.chaosawakens.ChaosAwakens;
 import io.github.chaosawakens.common.crafting.recipe.DefossilizingRecipe;
 import io.github.chaosawakens.common.registry.CABlocks;
@@ -19,6 +13,8 @@ import mezz.jei.api.ingredients.IIngredients;
 import mezz.jei.api.recipe.category.IRecipeCategory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+
+import java.util.*;
 
 public class DefossilizerRecipeCategory implements IRecipeCategory<DefossilizingRecipe> {
 	static final ResourceLocation ID = new ResourceLocation(CARecipes.DEFOSSILIZING_RECIPE_TYPE.toString());
@@ -96,10 +92,7 @@ public class DefossilizerRecipeCategory implements IRecipeCategory<Defossilizing
 			guiItemStacks.set(4, Arrays.asList(CABlocks.DEFOSSILIZER_BLOCKS.get(CABlocks.DefossilizerType.byId(CABlocks.DefossilizerType.COPPER.getId())).get().asItem().getDefaultInstance(),
 					CABlocks.DEFOSSILIZER_BLOCKS.get(CABlocks.DefossilizerType.byId(CABlocks.DefossilizerType.IRON.getId())).get().asItem().getDefaultInstance()));
 		} else if (Objects.equals(recipe.getDefossilizerType(), "iron")) {
-			guiItemStacks.set(4, Arrays.asList(CABlocks.DEFOSSILIZER_BLOCKS.get(CABlocks.DefossilizerType.byId(CABlocks.DefossilizerType.IRON.getId())).get().asItem().getDefaultInstance(),
-					CABlocks.DEFOSSILIZER_BLOCKS.get(CABlocks.DefossilizerType.byId(CABlocks.DefossilizerType.CRYSTAL.getId())).get().asItem().getDefaultInstance()));
-		} else if (Objects.equals(recipe.getDefossilizerType(), "crystal")) {
-			guiItemStacks.set(4, CABlocks.DEFOSSILIZER_BLOCKS.get(CABlocks.DefossilizerType.byId(CABlocks.DefossilizerType.CRYSTAL.getId())).get().asItem().getDefaultInstance());
+			guiItemStacks.set(4, CABlocks.DEFOSSILIZER_BLOCKS.get(CABlocks.DefossilizerType.byId(CABlocks.DefossilizerType.IRON.getId())).get().asItem().getDefaultInstance());
 		}
 	}
 }

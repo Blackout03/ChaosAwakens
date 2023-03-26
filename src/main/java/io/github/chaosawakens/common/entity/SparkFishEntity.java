@@ -3,11 +3,7 @@ package io.github.chaosawakens.common.entity;
 import io.github.chaosawakens.common.registry.CAEntityTypes;
 import io.github.chaosawakens.common.registry.CAItems;
 import net.minecraft.advancements.CriteriaTriggers;
-import net.minecraft.entity.EntitySize;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.MobEntity;
-import net.minecraft.entity.MoverType;
-import net.minecraft.entity.Pose;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.controller.MovementController;
@@ -24,18 +20,13 @@ import net.minecraft.pathfinding.PathNavigator;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.pathfinding.SwimmerPathNavigator;
 import net.minecraft.tags.FluidTags;
-import net.minecraft.util.ActionResultType;
-import net.minecraft.util.EntityPredicates;
-import net.minecraft.util.Hand;
-import net.minecraft.util.SoundEvent;
-import net.minecraft.util.SoundEvents;
+import net.minecraft.util.*;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
@@ -84,22 +75,22 @@ public class SparkFishEntity extends AbstractFishEntity implements IAnimatable {
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		if (event.isMoving()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.spark_fish.swim", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.spark_fish.swim", true));
 			return PlayState.CONTINUE;
 		}
 		if (!event.isMoving()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.spark_fish.swim", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.spark_fish.swim", true));
 			this.animationSpeed = 0.5F;
 			return PlayState.CONTINUE;
 		}
 		if (this.dead) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.spark_fish.flop", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.spark_fish.flop", true));
 		}
 		if (this.isSwimming()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.spark_fish.swim", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.spark_fish.swim", true));
 		}
 		if (this.isDeadOrDying()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.spark_fish.flop", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.spark_fish.flop", true));
 			return PlayState.CONTINUE;
 		}
 		return PlayState.CONTINUE;

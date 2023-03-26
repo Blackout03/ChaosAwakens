@@ -6,8 +6,8 @@ import java.util.List;
 import org.apache.commons.lang3.tuple.Pair;
 
 import io.github.chaosawakens.common.util.EnumUtils;
-import io.github.chaosawakens.common.util.EnumUtils.AITargetingSystemType;
 import io.github.chaosawakens.common.util.EnumUtils.ExplosionType;
+import io.github.chaosawakens.common.util.EnumUtils.AITargetingSystemType;
 import io.github.chaosawakens.common.util.EnumUtils.SurvivalSpawnerManipulationType;
 import net.minecraftforge.common.ForgeConfigSpec;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
@@ -516,7 +516,7 @@ public class CACommonConfig {
 							+ "BLOCK_CHAOS_AWAKENS - Only Spawn Eggs from Chaos Awakens will be blocked from being used on a Spawner in Survival."
 							+ "TAG_BLACKLISTED - Only Spawn Eggs which aren't tagged with the 'SPAWNER_SPAWN_EGG' tag can be used on a Spawner in Survival."
 							+ "TAG_WHITELISTED - Only Spawn Eggs which are tagged with the 'SPAWNER_SPAWN_EGG' tag can be used on a Spawner in Survival.")
-					.define("Spawn Eggs on Spawners in Survival?", SurvivalSpawnerManipulationType.BLOCK_ALL);
+					.define("Spawn Eggs on Spawners in Survival?", SurvivalSpawnerManipulationType.NO_BLOCKING);
 			builder.pop();
 			builder.pop();
 			builder.push("World Generation");

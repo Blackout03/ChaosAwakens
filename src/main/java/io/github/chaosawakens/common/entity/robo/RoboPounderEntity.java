@@ -5,6 +5,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.function.BiFunction;
 
+import io.github.chaosawakens.ChaosAwakens;
 import io.github.chaosawakens.api.IUtilityHelper;
 import io.github.chaosawakens.common.config.CACommonConfig;
 import io.github.chaosawakens.common.entity.ai.AnimatableGoal;
@@ -36,9 +37,11 @@ import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.passive.IronGolemEntity;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.ServerPlayerEntity;
 import net.minecraft.entity.projectile.ProjectileEntity;
 import net.minecraft.fluid.Fluid;
 import net.minecraft.fluid.FluidState;
+import net.minecraft.inventory.EquipmentSlotType;
 import net.minecraft.item.Items;
 import net.minecraft.item.TieredItem;
 import net.minecraft.network.IPacket;
@@ -62,6 +65,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.util.math.vector.Vector3i;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
@@ -74,7 +78,6 @@ import software.bernie.geckolib3.core.AnimationState;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
@@ -175,7 +178,7 @@ public class RoboPounderEntity extends RoboEntity implements IEntityAdditionalSp
 	
 	private <E extends IAnimatable> PlayState secondaryPredicate(AnimationEvent<E> event) {
 		if (getAttackID() != RAGE_CRASH && getAttackID() != RAGE_DISABLE && getAttackID() != RAGE_ENABLE && getAttackID() != RAGE_REVIVE && getAttackID() != RAGE_RUN_ATTACK && this.level.random.nextInt(5) == 0) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.ambient", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.ambient", false));
 			return PlayState.CONTINUE;
 		}
 		if (event.isMoving() && (this.isInWater() || this.isInLava()) && getAttackID() == 0 && this.isAlive()) {
@@ -188,7 +191,7 @@ public class RoboPounderEntity extends RoboEntity implements IEntityAdditionalSp
 	@Override
 	public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		if (this.isDeadOrDying() || this.getHealth() <= 0) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.death", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.death", false));
 			event.getController().setAnimationSpeed(0.09D);
 			// Always time the animation speed setters correctly, since animation transitioning ticks > 0
 			if (event.getController().getAnimationState() == AnimationState.Running) {
@@ -220,47 +223,47 @@ public class RoboPounderEntity extends RoboEntity implements IEntityAdditionalSp
 			return PlayState.CONTINUE;
 		}
 		if (this.getAttackID() == PUNCH_ATTACK) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.swing_arm_attack", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.swing_arm_attack", true));
 			event.getController().setAnimationSpeed(0.8D);
 			return PlayState.CONTINUE;
 		}
 		if (this.getAttackID() == PUNCH_ATTACK_MIRROR) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.swing_arm_attack_mirrored", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.swing_arm_attack_mirrored", true));
 			event.getController().setAnimationSpeed(0.8D);
 			return PlayState.CONTINUE;
 		}
 		if (this.getAttackID() == SIDE_SWEEP_ATTACK) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.second_swing_arm_attack", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.second_swing_arm_attack", true));
 			event.getController().setAnimationSpeed(1.25D);
 			return PlayState.CONTINUE;
 		}
 		if (this.getAttackID() == SIDE_SWEEP_ATTACK_MIRROR) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.second_swing_arm_attack_mirrrored", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.second_swing_arm_attack_mirrrored", true));
 			event.getController().setAnimationSpeed(1.25D);
 			return PlayState.CONTINUE;
 		}
 		if (getAttackID() == RAGE_ENABLE) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.rage_mode_enable", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.rage_mode_enable", false));
 			return PlayState.CONTINUE;
 		}
         if (getAttackID() == RAGE_DISABLE) {
-        	event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.rage_mode_disable", ILoopType.EDefaultLoopTypes.PLAY_ONCE)); 
+        	event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.rage_mode_disable", false)); 
         	return PlayState.CONTINUE;
         }
         if (getAttackID() == RAGE_CRASH) {
-        	event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.rage_crash", ILoopType.EDefaultLoopTypes.PLAY_ONCE)); 
+        	event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.rage_crash", false)); 
         	return PlayState.CONTINUE;
         }
         if (getAttackID() == RAGE_REVIVE) {
-        	event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.rage_revive", ILoopType.EDefaultLoopTypes.PLAY_ONCE)); 
+        	event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.rage_revive", false)); 
         	return PlayState.CONTINUE;
         }
 		if (getAttackID() == RAGE_RUN_ATTACK) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.rage_run", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.rage_run", true));
 			return PlayState.CONTINUE;
 		}
 		if (event.isMoving() && getAttackID() == (byte) 0) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.walk", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.robo_pounder.walk", true));
 			
 			if (!isInWater() && !isInLava() && getAttackID() == (byte) 0) {
 				event.getController().setAnimationSpeed(1.0D);
@@ -422,8 +425,6 @@ public class RoboPounderEntity extends RoboEntity implements IEntityAdditionalSp
 				}
 			}
 		}
-		
-//		if (getTarget() == null) setAttackID((byte) 0);
 	}
 
 	@Override
@@ -1503,7 +1504,7 @@ public class RoboPounderEntity extends RoboEntity implements IEntityAdditionalSp
 				if (entity instanceof RoboPounderEntity) return false;
 			}*/
 			
-			if (horizontalCollision && !ForgeEventFactory.getMobGriefingEvent(level, entity)) setRageDamage(100);
+			if (horizontalCollision && !ForgeEventFactory.getMobGriefingEvent(level, entity)) return false;
 	//		if (getHorizontalDeltaMovement() <= 0.22235792875289917D && rageRunTime > 60) return false;
 			
 			if (getTarget() != null) {

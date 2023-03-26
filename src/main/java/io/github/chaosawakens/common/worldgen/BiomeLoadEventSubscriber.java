@@ -1,11 +1,7 @@
 package io.github.chaosawakens.common.worldgen;
 
-import java.util.Objects;
-import java.util.function.Consumer;
-
 import io.github.chaosawakens.common.config.CACommonConfig;
 import io.github.chaosawakens.common.registry.CABiomes;
-import io.github.chaosawakens.common.registry.CAConfiguredCarvers;
 import io.github.chaosawakens.common.registry.CAConfiguredFeatures;
 import io.github.chaosawakens.common.registry.CAConfiguredStructures;
 import io.github.chaosawakens.common.registry.CAEntityTypes;
@@ -19,6 +15,9 @@ import net.minecraftforge.common.world.BiomeGenerationSettingsBuilder;
 import net.minecraftforge.common.world.MobSpawnInfoBuilder;
 import net.minecraftforge.event.world.BiomeLoadingEvent;
 import net.minecraftforge.registries.ForgeRegistries;
+
+import java.util.Objects;
+import java.util.function.Consumer;
 
 public class BiomeLoadEventSubscriber {
 	public static void onBiomeLoadingEvent(final BiomeLoadingEvent event) {
@@ -84,16 +83,11 @@ public class BiomeLoadEventSubscriber {
 		};
 		
 		private static final Consumer<MobSpawnInfoBuilder> STALAGMITE_VALLEY_MOBS = (builder) -> {
-			builder.addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(CAEntityTypes.DIMETRODON.get(), 1, 1, 3));
+			builder.addSpawn(EntityClassification.AMBIENT, new MobSpawnInfo.Spawners(CAEntityTypes.DIMETRODON.get(), 1, 1, 3));
 			builder.addSpawn(EntityClassification.AMBIENT, new MobSpawnInfo.Spawners(CAEntityTypes.EMERALD_GATOR.get(), 1, 1, 4));
 		};
 		
-		private static final Consumer<MobSpawnInfoBuilder> MESOZOIC_JUNGLE_MOBS = (builder) -> {
-			builder.addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(CAEntityTypes.DIMETRODON.get(), 1, 1, 3));
-			builder.addSpawn(EntityClassification.AMBIENT, new MobSpawnInfo.Spawners(CAEntityTypes.BIRD.get(), 1, 1, 4));
-		};
-		
-		private static final Consumer<MobSpawnInfoBuilder> DENSE_MOUNTAINS_MOBS = (builder) -> {
+		private static final Consumer<MobSpawnInfoBuilder> DENSE_MOUNTAIN_MOBS = (builder) -> {
 			builder.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(CAEntityTypes.HERCULES_BEETLE.get(), 35, 1, 4));
 		};
 
@@ -138,10 +132,8 @@ public class BiomeLoadEventSubscriber {
 						VILLAGE_MANIA_MOBS.accept(spawnInfoBuilder);
 					if (BiomeDictionary.hasType(biome, CABiomes.Type.STALAGMITE_VALLEY))
 						STALAGMITE_VALLEY_MOBS.accept(spawnInfoBuilder);
-					if (BiomeDictionary.hasType(biome, CABiomes.Type.DENSE_MOUNTAINS))
-						DENSE_MOUNTAINS_MOBS.accept(spawnInfoBuilder);
-					if (BiomeDictionary.hasType(biome, CABiomes.Type.MESOZOIC_JUNGLE))
-						MESOZOIC_JUNGLE_MOBS.accept(spawnInfoBuilder);
+					if (BiomeDictionary.hasType(biome, CABiomes.Type.DENSE_MOUNTAIN))
+						DENSE_MOUNTAIN_MOBS.accept(spawnInfoBuilder);
 					if ((BiomeDictionary.hasType(biome, BiomeDictionary.Type.MOUNTAIN) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.SAVANNA) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.MESA) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.JUNGLE)) || (BiomeDictionary.hasType(biome, BiomeDictionary.Type.MOUNTAIN) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.MODIFIED) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.SAVANNA) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.MESA) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.JUNGLE)) || (BiomeDictionary.hasType(biome, BiomeDictionary.Type.MOUNTAIN) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SNOWY) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.SAVANNA) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.MESA) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.JUNGLE)))
 						MOUNTAIN_MOBS.accept(spawnInfoBuilder);
 //					if (!BiomeDictionary.hasType(biome, BiomeDictionary.Type.OCEAN) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.RIVER)) OVERWORLD_MOBS.accept(spawnInfoBuilder);
@@ -321,54 +313,22 @@ public class BiomeLoadEventSubscriber {
 					//if (CACommonConfig.COMMON.generateWaspNest.get())					
 					gen.getStructures().add(() -> CAConfiguredStructures.CONFIGURED_MINING_WASP_DUNGEON);
 				}
-				
-				if (BiomeDictionary.hasType(biome, CABiomes.Type.DENSE_GINKGO_FOREST)) {
-					gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.DENSE_BULB_DEFAULT);
-					gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.TREES_DENSE_GINKGO);
-					gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.PATCH_DENSE_FLOWER);
-					gen.getStructures().add(() -> CAConfiguredStructures.CONFIGURED_GINKGO_ENT_TREE);
-				}
-				
-				if (BiomeDictionary.hasType(biome, CABiomes.Type.DENSE_PLAINS)) {
-					gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.TREES_DENSE_PLAINS);
-				}
-				
-				if (BiomeDictionary.hasType(biome, CABiomes.Type.DENSE_FOREST)) {
-					gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.DENSE_BULB_DEFAULT);
-					gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.TREES_DENSE_FOREST);
-				}
-				
-				if(BiomeDictionary.hasType(biome, CABiomes.Type.DENSE_MOUNTAINS)) {
-					gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.PATCH_THORNY_SUN);
-					gen.addFeature(GenerationStage.Decoration.SURFACE_STRUCTURES, CAConfiguredFeatures.MOUNTAINS_STALAGMITE);
-				}
-				
-				if (BiomeDictionary.hasType(biome, CABiomes.Type.MESOZOIC_JUNGLE)) {
-					gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.TREES_MESOZOIC);
-					gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, CAConfiguredFeatures.BLOB_TERRA_PRETA);
-					gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, CAConfiguredFeatures.BLOB_LATOSOL);
-					gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, CAConfiguredFeatures.BLOB_TAR);
-					gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.PATCH_MESO_PLANTS);
-				}
-				gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.PATCH_DENSE_GRASS);
-				gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.PATCH_ALSTROEMERIAT);
+
 				addGeneralRockGeneration(gen);
+				gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.PATCH_DENSE_GRASS);
+				gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.PATCH_TALL_DENSE_GRASS);
+				gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.PATCH_THORNY_SUN);
+				gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.DENSE_BULB_DEFAULT);
 			}
 
 			if (BiomeDictionary.hasType(biome, CABiomes.Type.VILLAGE_MANIA)) {
 				if (BiomeDictionary.hasType(biome, CABiomes.Type.VILLAGE_PLAINS)) {
 					gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.CORN_PATCH);
 					gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.TOMATO_PATCH);
-					gen.getStructures().add(() -> CAConfiguredStructures.CONFIGURED_OAK_ENT_TREE);
 				}
 				if (CACommonConfig.COMMON.enableOreGen.get())
 					addVillageManiaOres(gen);
-				
-				if(BiomeDictionary.hasType(biome, CABiomes.Type.VILLAGE_SNOWY) || BiomeDictionary.hasType(biome, CABiomes.Type.VILLAGE_TAIGA))
-					gen.getStructures().add(() -> CAConfiguredStructures.CONFIGURED_SPRUCE_ENT_TREE);
-				if(BiomeDictionary.hasType(biome, CABiomes.Type.VILLAGE_SAVANNA))
-					gen.getStructures().add(() -> CAConfiguredStructures.CONFIGURED_ACACIA_ENT_TREE);
-				
+
 				gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.TREES_APPLE);
 				gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.TREES_CHERRY);
 				gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.TREES_PEACH);
@@ -377,8 +337,7 @@ public class BiomeLoadEventSubscriber {
 			if (BiomeDictionary.hasType(biome, CABiomes.Type.CRYSTAL_WORLD)) {
 				if (CACommonConfig.COMMON.enableOreGen.get())
 					addCrystalWorldOres(gen);
-				gen.addCarver(GenerationStage.Carving.AIR, CAConfiguredCarvers.CRYSTAL_CAVE);
-				gen.addCarver(GenerationStage.Carving.AIR, CAConfiguredCarvers.CRYSTAL_CANYON);
+
 				gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.TREES_CRYSTAL_PLAINS);
 				gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.PATCH_CRYSTAL_GRASS);
 				gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.PATCH_TALL_CRYSTAL_GRASS);
@@ -392,11 +351,10 @@ public class BiomeLoadEventSubscriber {
 		}
 
 		private static void addOverworldOres(BiomeGenerationSettingsBuilder gen) {
-			gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, CAConfiguredFeatures.ORE_ALUMINUM);
 			if (CACommonConfig.COMMON.enableOreRubyGen.get())
 				gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, CAConfiguredFeatures.ORE_RUBY_LAVA);
 			if (CACommonConfig.COMMON.enableOreAmethystGen.get())
-				gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, CAConfiguredFeatures.GEODE_AMETHYST);
+				gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, CAConfiguredFeatures.ORE_AMETHYST);
 			if (CACommonConfig.COMMON.enableOreUraniumGen.get())
 				gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, CAConfiguredFeatures.ORE_URANIUM);
 			if (CACommonConfig.COMMON.enableOreTitaniumGen.get())

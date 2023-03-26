@@ -15,7 +15,6 @@ import net.minecraft.world.World;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
@@ -40,18 +39,18 @@ public class AttackSquidEntity extends SquidEntity implements IAnimatable, IRang
 	
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		if (this.isSwimming()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.attack_squid.swimming", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.attack_squid.swimming", true));
 			return PlayState.CONTINUE;
 		}
 		if (this.isDeadOrDying()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.attack_squid.death", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.attack_squid.death", false));
 			return PlayState.CONTINUE;
 		}
 		if (!this.isInWater()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.attack_squid.swimming", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.attack_squid.swimming", true));
 			return PlayState.CONTINUE;
 		}
-		event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.attack_squid.swimming", ILoopType.EDefaultLoopTypes.LOOP));
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.attack_squid.swimming", true));
 		return PlayState.CONTINUE;
 	}
 	

@@ -1,32 +1,12 @@
 package io.github.chaosawakens.common.entity;
 
-import java.util.UUID;
-
-import javax.annotation.Nullable;
-
 import io.github.chaosawakens.common.entity.base.AnimatableAnimalEntity;
 import io.github.chaosawakens.common.registry.CAEntityTypes;
 import io.github.chaosawakens.common.registry.CASoundEvents;
-import net.minecraft.entity.AgeableEntity;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityType;
-import net.minecraft.entity.IAngerable;
-import net.minecraft.entity.MobEntity;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
-import net.minecraft.entity.ai.goal.BreedGoal;
-import net.minecraft.entity.ai.goal.FollowParentGoal;
-import net.minecraft.entity.ai.goal.HurtByTargetGoal;
-import net.minecraft.entity.ai.goal.LeapAtTargetGoal;
-import net.minecraft.entity.ai.goal.LookAtGoal;
-import net.minecraft.entity.ai.goal.LookRandomlyGoal;
-import net.minecraft.entity.ai.goal.MeleeAttackGoal;
-import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
-import net.minecraft.entity.ai.goal.RandomWalkingGoal;
-import net.minecraft.entity.ai.goal.ResetAngerGoal;
-import net.minecraft.entity.ai.goal.SwimGoal;
-import net.minecraft.entity.ai.goal.TemptGoal;
-import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
+import net.minecraft.entity.ai.goal.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
@@ -48,11 +28,13 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+
+import javax.annotation.Nullable;
+import java.util.UUID;
 
 public class EmeraldGatorEntity extends AnimatableAnimalEntity implements IAngerable {
 	private static final DataParameter<Integer> ANGER_TIME = EntityDataManager.defineId(EmeraldGatorEntity.class, DataSerializers.INT);
@@ -84,18 +66,18 @@ public class EmeraldGatorEntity extends AnimatableAnimalEntity implements IAnger
 	
 	public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		if (event.isMoving()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.emerald_gator.walking_animation", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.emerald_gator.walking_animation", true));
 			return PlayState.CONTINUE;
 		}
 		if (this.getAttacking()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.emerald_gator.bite_animation", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.emerald_gator.bite_animation", true));
 			return PlayState.CONTINUE;
 		}
 		if (this.isSwimming()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.emerald_gator.swim_animation", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.emerald_gator.swim_animation", true));
 			return PlayState.CONTINUE;
 		}
-		event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.emerald_gator.idle_animation", ILoopType.EDefaultLoopTypes.LOOP));
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.emerald_gator.idle_animation", true));
 		return PlayState.CONTINUE;
 	}
 

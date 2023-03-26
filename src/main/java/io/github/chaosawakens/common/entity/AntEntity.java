@@ -1,7 +1,5 @@
 package io.github.chaosawakens.common.entity;
 
-import javax.annotation.Nullable;
-
 import io.github.chaosawakens.ChaosAwakens;
 import io.github.chaosawakens.api.HeightmapTeleporter;
 import net.minecraft.entity.AgeableEntity;
@@ -30,11 +28,12 @@ import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+
+import javax.annotation.Nullable;
 
 public class AntEntity extends AnimalEntity implements IAnimatable {
 	private final AnimationFactory factory = new AnimationFactory(this);
@@ -58,11 +57,11 @@ public class AntEntity extends AnimalEntity implements IAnimatable {
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		if (event.isMoving()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ant.walking_animation", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ant.walking_animation", true));
 			return PlayState.CONTINUE;
 		}
 		if (!event.isMoving()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ant.idle_animation", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.ant.idle_animation", true));
 			return PlayState.CONTINUE;
 		}
 		return PlayState.CONTINUE;

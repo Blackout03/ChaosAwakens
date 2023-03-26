@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cube_all",
-  "textures": {
-    "all": "chaosawakens:block/bright_pink_petal_block"
-  }
-}

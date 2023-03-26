@@ -1,13 +1,6 @@
 package io.github.chaosawakens.common.blocks;
 
-import java.util.Random;
-
-import io.github.chaosawakens.common.registry.CATags;
-import net.minecraft.block.AbstractTopPlantBlock;
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.Blocks;
-import net.minecraft.block.IGrowable;
+import net.minecraft.block.*;
 import net.minecraft.fluid.Fluids;
 import net.minecraft.state.IntegerProperty;
 import net.minecraft.state.StateContainer;
@@ -20,19 +13,16 @@ import net.minecraft.world.IWorldReader;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeHooks;
-import net.minecraftforge.fml.RegistryObject;
 
-public class CropTopPlantBlock extends AbstractTopPlantBlock implements IGrowable {
+import java.util.Random;
+
+public abstract class CropTopPlantBlock extends AbstractTopPlantBlock implements IGrowable {
 	public static final IntegerProperty GROWTH = IntegerProperty.create("growth", 0, 3);
 	private final double growPerTickProbability;
-	private final int maxHeight;
-	private final RegistryObject<? extends Block> bodyBlock;
-	
-	public CropTopPlantBlock(Properties properties, Direction direction, VoxelShape shape, double growPerTickProbability, int maxHeight, RegistryObject<? extends Block> bodyBlock) {
+
+	public CropTopPlantBlock(Properties properties, Direction direction, VoxelShape shape, double growPerTickProbability) {
 		super(properties, direction, shape, false, growPerTickProbability);
 		this.growPerTickProbability = growPerTickProbability;
-		this.maxHeight = maxHeight;
-		this.bodyBlock = bodyBlock;
 		this.registerDefaultState(this.stateDefinition.any().setValue(GROWTH, 0).setValue(AGE, 0));
 	}
 
@@ -95,7 +85,7 @@ public class CropTopPlantBlock extends AbstractTopPlantBlock implements IGrowabl
 		BlockState downState = worldIn.getBlockState(downPos);
 		Block block = downState.getBlock();
 
-		return block == this.getHeadBlock() || block == this.getBodyBlock() || downState.is(CATags.Blocks.FARMABLE);
+		return block == this.getHeadBlock() || block == this.getBodyBlock() || downState.is(Blocks.FARMLAND);
 	}
 
 	@Override
@@ -128,12 +118,8 @@ public class CropTopPlantBlock extends AbstractTopPlantBlock implements IGrowabl
 		return 0;
 	}
 
-	protected int getMaxHeight() {
-		return this.maxHeight;
-	}
+	abstract protected int getMaxHeight();
 
 	@Override
-	protected Block getBodyBlock() {
-		return this.bodyBlock.get();
-	}
+	abstract protected Block getBodyBlock();
 }

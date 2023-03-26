@@ -128,20 +128,6 @@
           }
         ]
       }
-    },
-    "ginkgo_ent": {
-      "trigger": "minecraft:player_killed_entity",
-      "conditions": {
-        "entity": [
-          {
-            "condition": "minecraft:entity_properties",
-            "predicate": {
-              "type": "chaosawakens:ginkgo_ent"
-            },
-            "entity": "this"
-          }
-        ]
-      }
     }
   },
   "requirements": [
@@ -168,9 +154,6 @@
     ],
     [
       "warped_ent"
-    ],
-    [
-      "ginkgo_ent"
     ]
   ]
 }

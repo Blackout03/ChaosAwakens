@@ -59,5 +59,6 @@ public class AdvancementCompleteTrigger extends AbstractCriterionTrigger<Advance
         	AdvancementLocationPredicate advCompletePredicate = new AdvancementLocationPredicate(advId);
             return of(advCompletePredicate);
         }
+		
 	}
 }

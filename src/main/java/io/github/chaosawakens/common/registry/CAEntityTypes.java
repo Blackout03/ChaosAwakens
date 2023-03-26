@@ -44,7 +44,6 @@ import io.github.chaosawakens.common.entity.projectile.RayGunProjectileEntity;
 import io.github.chaosawakens.common.entity.projectile.RoboLaserEntity;
 import io.github.chaosawakens.common.entity.projectile.ThunderStaffProjectileEntity;
 import io.github.chaosawakens.common.entity.projectile.UltimateArrowEntity;
-import io.github.chaosawakens.common.entity.projectile.UltimateCrossbowArrowEntity;
 import io.github.chaosawakens.common.entity.projectile.UltimateFishingBobberEntity;
 import io.github.chaosawakens.common.entity.robo.RoboEntity;
 import io.github.chaosawakens.common.entity.robo.RoboPounderEntity;
@@ -114,10 +113,6 @@ public class CAEntityTypes {
 			() -> EntityType.Builder.of((IFactory<EntEntity>) (type, world) -> new EntEntity(type, world, EntEntity.Types.WARPED), EntityClassification.MONSTER)
 					.sized(2.5f, 3.125f).fireImmune()
 					.build(new ResourceLocation(ChaosAwakens.MODID, "warped_ent").toString()));
-	public static final RegistryObject<EntityType<EntEntity>> GINKGO_ENT = ENTITY_TYPES.register("ginkgo_ent",
-			() -> EntityType.Builder.of((IFactory<EntEntity>) (type, world) -> new EntEntity(type, world, EntEntity.Types.GINKGO), EntityClassification.MONSTER)
-					.sized(2.5f, 3.125f).fireImmune()
-					.build(new ResourceLocation(ChaosAwakens.MODID, "ginkgo_ent").toString()));
 
 	// Hercules Beetle
 	public static final RegistryObject<EntityType<HerculesBeetleEntity>> HERCULES_BEETLE = ENTITY_TYPES.register("hercules_beetle",
@@ -320,10 +315,6 @@ public class CAEntityTypes {
 			() -> EntityType.Builder.<UltimateArrowEntity>of(UltimateArrowEntity::new, EntityClassification.MISC)
 					.sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20)
 					.build(new ResourceLocation(ChaosAwakens.MODID, "ultimate_arrow").toString()));
-	public static final RegistryObject<EntityType<UltimateCrossbowArrowEntity>> ULTIMATE_CROSSBOW_ARROW = ENTITY_TYPES.register("ultimate_crossbow_arrow",
-			() -> EntityType.Builder.<UltimateCrossbowArrowEntity>of(UltimateCrossbowArrowEntity::new, EntityClassification.MISC)
-					.sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20)
-					.build(new ResourceLocation(ChaosAwakens.MODID, "ultimate_crossbow_arrow").toString()));
 	public static final RegistryObject<EntityType<IrukandjiArrowEntity>> IRUKANDJI_ARROW = ENTITY_TYPES.register("irukandji_arrow",
 			() -> EntityType.Builder.<IrukandjiArrowEntity>of(IrukandjiArrowEntity::new, EntityClassification.MISC)
 					.sized(0.5F, 0.5F).clientTrackingRange(4).updateInterval(20)
@@ -373,7 +364,6 @@ public class CAEntityTypes {
 		EntitySpawnPlacementRegistry.register(OAK_ENT.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::checkMonsterSpawnRules);
 		EntitySpawnPlacementRegistry.register(SPRUCE_ENT.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::checkMonsterSpawnRules);
 		EntitySpawnPlacementRegistry.register(WARPED_ENT.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::checkMonsterSpawnRules);
-		EntitySpawnPlacementRegistry.register(GINKGO_ENT.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MonsterEntity::checkMonsterSpawnRules);
 		EntitySpawnPlacementRegistry.register(TREE_FROG.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, MobEntity::checkMobSpawnRules);
 		EntitySpawnPlacementRegistry.register(BIRD.get(), EntitySpawnPlacementRegistry.PlacementType.ON_GROUND, Heightmap.Type.MOTION_BLOCKING, BirdEntity::checkBirdSpawnRules);
 		EntitySpawnPlacementRegistry.register(LAVA_EEL.get(), EntitySpawnPlacementRegistry.PlacementType.IN_LAVA, Heightmap.Type.MOTION_BLOCKING_NO_LEAVES, AbstractLavaEntity::checkLavaMobSpawnRules);

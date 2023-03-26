@@ -3,9 +3,6 @@ package io.github.chaosawakens;
 import java.util.Locale;
 import java.util.Optional;
 
-import net.minecraft.item.Items;
-import net.minecraft.util.NonNullList;
-import net.minecraftforge.api.distmarker.OnlyIn;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.apache.maven.artifact.versioning.ArtifactVersion;
@@ -25,13 +22,11 @@ import io.github.chaosawakens.common.integration.TheOneProbePlugin;
 import io.github.chaosawakens.common.registry.CAAttributes;
 import io.github.chaosawakens.common.registry.CABiomes;
 import io.github.chaosawakens.common.registry.CABlocks;
-import io.github.chaosawakens.common.registry.CACarvers;
 import io.github.chaosawakens.common.registry.CAContainerTypes;
 import io.github.chaosawakens.common.registry.CAEffects;
 import io.github.chaosawakens.common.registry.CAEnchantments;
 import io.github.chaosawakens.common.registry.CAEntityTypes;
 import io.github.chaosawakens.common.registry.CAFeatures;
-import io.github.chaosawakens.common.registry.CAFoliagePlacerTypes;
 import io.github.chaosawakens.common.registry.CAItems;
 import io.github.chaosawakens.common.registry.CALootModifiers;
 import io.github.chaosawakens.common.registry.CAPaintings;
@@ -41,7 +36,6 @@ import io.github.chaosawakens.common.registry.CASoundEvents;
 import io.github.chaosawakens.common.registry.CAStats;
 import io.github.chaosawakens.common.registry.CAStructures;
 import io.github.chaosawakens.common.registry.CATileEntities;
-import io.github.chaosawakens.common.registry.CATreeDecoratorTypes;
 import io.github.chaosawakens.common.registry.CAVanillaCompat;
 import io.github.chaosawakens.common.registry.CAVillagerTrades;
 import io.github.chaosawakens.common.registry.CAVillagers;
@@ -95,7 +89,6 @@ public class ChaosAwakens {
 	public ChaosAwakens() {
 		GeckoLibMod.DISABLE_IN_DEV = true;
 		GeckoLib.initialize();
-//		GeckoLibNetwork.initialize();
 		INSTANCE = this;
 
 		Optional<? extends ModContainer> opt = ModList.get().getModContainerById(MODID);
@@ -128,7 +121,7 @@ public class ChaosAwakens {
 		if (FMLEnvironment.dist == Dist.CLIENT) {
 			eventBus.addListener(ClientSetupEvent::onFMLClientSetupEvent);
 			eventBus.addListener(ClientEventsHelper::onParticleRegistrationEvent);
-			eventBus.addListener(ClientEventsHelper::onClientLoadComplete);
+			eventBus.addListener(EventPriority.NORMAL, ClientSetupEvent.ClientEventsHelper::onClientLoadComplete);
 			MinecraftForge.EVENT_BUS.addListener(ToolTipEventSubscriber::onToolTipEvent);
 			MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, ClientEventsHelper::onCameraSetup);
 	/*		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, ClientEventsHelper::onPreRenderPlayer);
@@ -163,13 +156,10 @@ public class ChaosAwakens {
 		CAStats.STAT_TYPES.register(eventBus);
 		CAStructures.STRUCTURES.register(eventBus);
 		CAFeatures.FEATURES.register(eventBus);
-		CACarvers.CARVERS.register(eventBus);
 		CASoundEvents.SOUND_EVENTS.register(eventBus);
 		CAVillagers.POI_TYPES.register(eventBus);
 		CAVillagers.PROFESSIONS.register(eventBus);
 		CALootModifiers.LOOT_MODIFIERS.register(eventBus);
-		CAFoliagePlacerTypes.FOLIAGE_PLACER_TYPES.register(eventBus);
-		CATreeDecoratorTypes.TREE_DECORATOR_TYPES.register(eventBus);
 		eventBus.addListener(EntitySetAttributeEventSubscriber::onEntityAttributeCreationEvent);
 
 		//TODO Armor set bonuses fix, merge extended items, merge other stuff
@@ -203,8 +193,6 @@ public class ChaosAwakens {
 		forgeBus.addListener(MiscEventHandler::onPlayerLoggedIn);
 		forgeBus.addListener(MiscEventHandler::onEntityJoin);
 		forgeBus.addListener(MiscEventHandler::onSleepFinished);
-		forgeBus.addListener(MiscEventHandler::onUseHoeOnDense);
-		forgeBus.addListener(MiscEventHandler::onHoplologyArmorUpdate);
 		forgeBus.addListener(EventPriority.NORMAL, CAVanillaCompat::registerFurnaceFuel);
 		forgeBus.register(this);
 
@@ -213,23 +201,6 @@ public class ChaosAwakens {
 				@Override
 				public ItemStack makeIcon() {
 					return new ItemStack(CAItems.DEV_ITEM1.get());
-				}   /**
-				 * Fills {@code items} with all items that are in this group.
-				 */
-
-				@OnlyIn(Dist.CLIENT)
-				public void fillItemList(NonNullList<ItemStack> items) {
-					items.add(Items.SPAWNER.getDefaultInstance());
-					items.add(Items.COMMAND_BLOCK.getDefaultInstance());
-					items.add(Items.REPEATING_COMMAND_BLOCK.getDefaultInstance());
-					items.add(Items.CHAIN_COMMAND_BLOCK.getDefaultInstance());
-					items.add(Items.STRUCTURE_BLOCK.getDefaultInstance());
-					items.add(Items.STRUCTURE_VOID.getDefaultInstance());
-					items.add(Items.BARRIER.getDefaultInstance());
-					items.add(Items.JIGSAW.getDefaultInstance());
-					items.add(Items.DEBUG_STICK.getDefaultInstance());
-
-					super.fillItemList(items);
 				}
 			};
 		}
@@ -280,5 +251,25 @@ public class ChaosAwakens {
 	 */
 	public static <D> void debug(String domain, D message) {
 		LOGGER.debug("[" + domain + "]: " + message != null ? message.toString() : message);
+	}
+
+	/**
+	 * For general info, can be left in releases
+	 * @param <I> Type of the message
+	 * @param domain Rather abstract, but basically where this is from
+	 * @param message What you want to be printed (duh)
+	 */
+	public static <I> void info(String domain, I message) {
+		LOGGER.info("[" + domain + "]: " + message != null ? message.toString() : message);
+	}
+
+	/**
+	 * For errors, warnings(duh), runtime problems and the like
+	 * @param <W> Type of the message
+	 * @param domain Rather abstract, but basically where this is from
+	 * @param message What you want to be printed (duh)
+	 */
+	public static <W> void warn(String domain, W message) {
+		LOGGER.warn("[" + domain + "]: " + message != null ? message.toString() : message);
 	}
 }

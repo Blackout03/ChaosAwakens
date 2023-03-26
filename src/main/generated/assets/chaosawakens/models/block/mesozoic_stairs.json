@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "side": "chaosawakens:block/mesozoic_planks",
-    "bottom": "chaosawakens:block/mesozoic_planks",
-    "top": "chaosawakens:block/mesozoic_planks"
-  }
-}

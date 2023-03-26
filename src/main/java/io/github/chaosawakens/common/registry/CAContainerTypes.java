@@ -3,8 +3,6 @@ package io.github.chaosawakens.common.registry;
 import io.github.chaosawakens.ChaosAwakens;
 import io.github.chaosawakens.common.blocks.tileentities.DefossilizerCopperContainer;
 import io.github.chaosawakens.common.blocks.tileentities.DefossilizerCopperScreen;
-import io.github.chaosawakens.common.blocks.tileentities.DefossilizerCrystalContainer;
-import io.github.chaosawakens.common.blocks.tileentities.DefossilizerCrystalScreen;
 import io.github.chaosawakens.common.blocks.tileentities.DefossilizerIronContainer;
 import io.github.chaosawakens.common.blocks.tileentities.DefossilizerIronScreen;
 import net.minecraft.client.gui.ScreenManager;
@@ -24,7 +22,6 @@ public class CAContainerTypes {
 
 	public static final RegistryObject<ContainerType<DefossilizerCopperContainer>> COPPER_DEFOSSILIZER = register("copper_defossilizer", DefossilizerCopperContainer::new);
 	public static final RegistryObject<ContainerType<DefossilizerIronContainer>> IRON_DEFOSSILIZER = register("iron_defossilizer", DefossilizerIronContainer::new);
-	public static final RegistryObject<ContainerType<DefossilizerCrystalContainer>> CRYSTAL_DEFOSSILIZER = register("crystal_defossilizer", DefossilizerCrystalContainer::new);
 
 	private static <T extends Container> RegistryObject<ContainerType<T>> register(String name, IContainerFactory<T> factory) {
 		return CONTAINERS.register(name, () -> IForgeContainerType.create(factory));
@@ -34,6 +31,5 @@ public class CAContainerTypes {
 	public static void registerScreens(FMLClientSetupEvent event) {
 		ScreenManager.register(COPPER_DEFOSSILIZER.get(), DefossilizerCopperScreen::new);
 		ScreenManager.register(IRON_DEFOSSILIZER.get(), DefossilizerIronScreen::new);
-		ScreenManager.register(CRYSTAL_DEFOSSILIZER.get(), DefossilizerCrystalScreen::new);
 	}
 }

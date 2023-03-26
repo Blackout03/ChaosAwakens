@@ -1,7 +1,6 @@
 package io.github.chaosawakens.data;
 
 import com.google.gson.JsonObject;
-
 import io.github.chaosawakens.ChaosAwakens;
 import net.minecraft.util.ResourceLocation;
 

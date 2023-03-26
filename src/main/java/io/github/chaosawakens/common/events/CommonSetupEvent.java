@@ -12,7 +12,6 @@ import com.mojang.serialization.Codec;
 
 import io.github.chaosawakens.ChaosAwakens;
 import io.github.chaosawakens.api.CAReflectionHelper;
-import io.github.chaosawakens.api.CarverWrapper;
 import io.github.chaosawakens.api.FeatureWrapper;
 import io.github.chaosawakens.common.config.CACommonConfig;
 import io.github.chaosawakens.common.integration.CAJER;
@@ -52,8 +51,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLLoadCompleteEvent;
 
 public class CommonSetupEvent {
 	public static List<FeatureWrapper> configFeatures = new ArrayList<>();
-	public static List<CarverWrapper> configCarvers = new ArrayList<>();
-	
+
 	private static Method codecMethod;
 
 	public static void onFMLCommonSetupEvent(FMLCommonSetupEvent event) {
@@ -62,7 +60,6 @@ public class CommonSetupEvent {
 		CAEffects.registerBrewingRecipes(); // Unused Currently, Here for FUTURE use.
 		Raid.WaveMember.create("illusioner", EntityType.ILLUSIONER, new int[]{0, 0, 0, 0, 1, 1, 0, 2});
 
-		ModList modList = ModList.get();
 		event.enqueueWork(() -> {
 			CAVanillaCompat.setup();
 			CAStructures.setupStructures();
@@ -77,24 +74,16 @@ public class CommonSetupEvent {
 			WoodType.register(CABlocks.PEACH);
 			WoodType.register(CABlocks.SKYWOOD);
 			WoodType.register(CABlocks.GINKGO);
-			WoodType.register(CABlocks.MESOZOIC);
-			WoodType.register(CABlocks.DENSEWOOD);
 			
 			CAReflectionHelper.classLoad("io.github.chaosawakens.common.registry.CAConfiguredFeatures");
-			CAReflectionHelper.classLoad("io.github.chaosawakens.common.registry.CAConfiguredCarvers");
 			configFeatures.forEach((wrapper) -> Registry.register(WorldGenRegistries.CONFIGURED_FEATURE, wrapper.getIdentifier(), wrapper.getFeatureType()));
-			configCarvers.forEach((wrapper) -> Registry.register(WorldGenRegistries.CONFIGURED_CARVER, wrapper.getIdentifier(), wrapper.getCarver()));
-			
-			if(modList.isLoaded("jeresources")) CAJER.init();
 		});
 
+		ModList modList = ModList.get();
+		if (modList.isLoaded("jeresources")) CAJER.init();
 
-		BiomeDictionary.addTypes(RegistryKey.create(Registry.BIOME_REGISTRY, CABiomes.DENSE_PLAINS.getId()), CABiomes.Type.MINING_PARADISE, CABiomes.Type.DENSE_PLAINS);
-		BiomeDictionary.addTypes(RegistryKey.create(Registry.BIOME_REGISTRY, CABiomes.DENSE_FOREST.getId()), CABiomes.Type.MINING_PARADISE, CABiomes.Type.DENSE_FOREST);
-		BiomeDictionary.addTypes(RegistryKey.create(Registry.BIOME_REGISTRY, CABiomes.DENSE_GINKGO_FOREST.getId()), CABiomes.Type.MINING_PARADISE, CABiomes.Type.DENSE_GINKGO_FOREST);
-		BiomeDictionary.addTypes(RegistryKey.create(Registry.BIOME_REGISTRY, CABiomes.DENSE_MOUNTAINS.getId()), CABiomes.Type.MINING_PARADISE, CABiomes.Type.DENSE_MOUNTAINS);
+		BiomeDictionary.addTypes(RegistryKey.create(Registry.BIOME_REGISTRY, CABiomes.DENSE_MOUNTAIN.getId()), CABiomes.Type.MINING_PARADISE, CABiomes.Type.DENSE_MOUNTAIN);
 		BiomeDictionary.addTypes(RegistryKey.create(Registry.BIOME_REGISTRY, CABiomes.STALAGMITE_VALLEY.getId()), CABiomes.Type.MINING_PARADISE, CABiomes.Type.STALAGMITE_VALLEY);
-		BiomeDictionary.addTypes(RegistryKey.create(Registry.BIOME_REGISTRY, CABiomes.MESOZOIC_JUNGLE.getId()), CABiomes.Type.MINING_PARADISE, CABiomes.Type.MESOZOIC_JUNGLE);
 		BiomeDictionary.addTypes(RegistryKey.create(Registry.BIOME_REGISTRY, CABiomes.VILLAGE_PLAINS.getId()), CABiomes.Type.VILLAGE_MANIA, CABiomes.Type.VILLAGE_PLAINS);
 		BiomeDictionary.addTypes(RegistryKey.create(Registry.BIOME_REGISTRY, CABiomes.VILLAGE_SAVANNA.getId()), CABiomes.Type.VILLAGE_MANIA, CABiomes.Type.VILLAGE_SAVANNA);
 		BiomeDictionary.addTypes(RegistryKey.create(Registry.BIOME_REGISTRY, CABiomes.VILLAGE_TAIGA.getId()), CABiomes.Type.VILLAGE_MANIA, CABiomes.Type.VILLAGE_TAIGA);
@@ -118,6 +107,7 @@ public class CommonSetupEvent {
     	 }
     }
 
+	@SuppressWarnings("unchecked")
 	public static void addDimensionalSpacing(final WorldEvent.Load event) {
 		if (!(event.getWorld() instanceof ServerWorld)) return;
 
@@ -126,7 +116,7 @@ public class CommonSetupEvent {
 
 		try {
 			if (codecMethod == null) codecMethod = ObfuscationReflectionHelper.findMethod(ChunkGenerator.class, "codec");
-			@SuppressWarnings("unchecked")
+			// TODO Fix this
 			ResourceLocation chunkGeneratorKey = Registry.CHUNK_GENERATOR.getKey((Codec<? extends ChunkGenerator>) codecMethod.invoke(chunkProvider.generator));
 			if (chunkGeneratorKey != null && chunkGeneratorKey.getNamespace().equals("terraforged")) return;
 		} catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
@@ -160,8 +150,6 @@ public class CommonSetupEvent {
 				DimensionStructuresSettings.DEFAULTS.get(CAStructures.SPRUCE_ENT_TREE.get()));
 		tempMap.putIfAbsent(CAStructures.WARPED_ENT_TREE.get(),
 				DimensionStructuresSettings.DEFAULTS.get(CAStructures.WARPED_ENT_TREE.get()));
-		tempMap.putIfAbsent(CAStructures.GINKGO_ENT_TREE.get(),
-				DimensionStructuresSettings.DEFAULTS.get(CAStructures.GINKGO_ENT_TREE.get()));
 		tempMap.putIfAbsent(CAStructures.WASP_DUNGEON.get(),
 				DimensionStructuresSettings.DEFAULTS.get(CAStructures.WASP_DUNGEON.get()));
 		tempMap.putIfAbsent(CAStructures.MINING_WASP_DUNGEON.get(),

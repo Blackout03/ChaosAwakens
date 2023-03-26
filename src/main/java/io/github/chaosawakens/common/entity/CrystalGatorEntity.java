@@ -60,7 +60,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
@@ -70,7 +69,7 @@ public class CrystalGatorEntity extends AnimatableAnimalEntity implements IAnger
 	private static final DataParameter<Integer> ANGER_TIME = EntityDataManager.defineId(CrystalGatorEntity.class, DataSerializers.INT);
 	private static final RangedInteger ANGER_TIME_RANGE = TickRangeConverter.rangeOfSeconds(20, 69);
 	private final AnimationFactory factory = new AnimationFactory(this);
-	private final AnimationController<?> controller = new AnimationController<IAnimatable>(this, "crystalgatorcontroller", animationInterval(), this::predicate);
+	private final AnimationController<?> controller = new AnimationController(this, "crystalgatorcontroller", animationInterval(), this::predicate);
 	private static final Ingredient FOOD_ITEMS = Ingredient.of(Items.COD, Items.PUFFERFISH, Items.SALMON, Items.TROPICAL_FISH);
 	private UUID persistentAngerTarget;
 	public static final DataParameter<Integer> DATA_TYPE_ID = EntityDataManager.defineId(CrystalGatorEntity.class, DataSerializers.INT);
@@ -98,18 +97,18 @@ public class CrystalGatorEntity extends AnimatableAnimalEntity implements IAnger
 	
 	public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		if (event.isMoving()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.emerald_gator.walking_animation", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.emerald_gator.walking_animation", true));
 			return PlayState.CONTINUE;
 		}
 		if (this.getAttacking()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.emerald_gator.bite_animation", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.emerald_gator.bite_animation", false));
 			return PlayState.CONTINUE;
 		}
 		if (this.isSwimming() || this.isInWater() && event.isMoving()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.emerald_gator.swim_animation", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.emerald_gator.swim_animation", true));
 			return PlayState.CONTINUE;
 		}
-		event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.emerald_gator.idle_animation", ILoopType.EDefaultLoopTypes.LOOP));
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.emerald_gator.idle_animation", true));
 		return PlayState.CONTINUE;
 	}
 	

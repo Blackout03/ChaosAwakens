@@ -37,7 +37,6 @@ import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.IAnimationTickable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
@@ -64,23 +63,23 @@ public class LeafyChickenEntity extends ChickenEntity implements IAnimatableEnti
 	
 	public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		if (!event.isMoving()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.leafy_chicken.idle", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.leafy_chicken.idle", true));
 			return PlayState.CONTINUE;
 		}
 		if (!isOnGround()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.leafy_chicken.falling", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.leafy_chicken.falling", true));
 			return PlayState.CONTINUE;
 		}
 		if (event.isMoving() && !getPanicking()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.leafy_chicken.walk", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.leafy_chicken.walk", true));
 			return PlayState.CONTINUE;
 		}
 		if (event.isMoving() && this.getPanicking()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.leafy_chicken.run", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.leafy_chicken.run", true));
 			return PlayState.CONTINUE;
 		}
 		if (this.getSitting() && !getPanicking() && !event.isMoving() || this.getSitting() && !getPanicking() && event.isMoving()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.leafy_chicken.sit", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.leafy_chicken.sit", true));
 			return PlayState.CONTINUE;
 		}
 		return PlayState.CONTINUE;
@@ -94,7 +93,7 @@ public class LeafyChickenEntity extends ChickenEntity implements IAnimatableEnti
 	@Override
 	public void aiStep() {
 		super.aiStep();
-		if (!this.level.isClientSide && this.isAlive() && !this.isBaby() && !this.isChickenJockey() && this.eggTime <= 1) {	    
+		if (!this.level.isClientSide && this.isAlive() && !this.isBaby() && !this.isChickenJockey() && this.eggTime <= 0) {	    
 			this.playSound(SoundEvents.CHICKEN_EGG, 1.0F, (this.random.nextFloat() - this.random.nextFloat()) * 0.2F + 1.0F);	    
 			this.spawnAtLocation(CAItems.LEAFY_CHICKEN_EGG.get());
 			this.eggTime = this.random.nextInt(6000) + 6000;   

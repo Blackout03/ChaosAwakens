@@ -1,8 +1,5 @@
 package io.github.chaosawakens.common.blocks;
 
-import java.util.function.Supplier;
-
-import io.github.chaosawakens.common.registry.CATags;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.SweetBerryBushBlock;
 import net.minecraft.entity.Entity;
@@ -18,6 +15,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.BlockRayTraceResult;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
+
+import java.util.function.Supplier;
 
 public class StrawberryBushBlock extends SweetBerryBushBlock {
 	private final Supplier<? extends Item> seedItem;
@@ -50,12 +49,9 @@ public class StrawberryBushBlock extends SweetBerryBushBlock {
 		}
 		return super.use(state, worldIn, pos, player, handIn, hit);
 	}
-	
-	@Override
-	protected boolean mayPlaceOn(BlockState pState, IBlockReader pLevel, BlockPos pPos) {
-		return pState.is(CATags.Blocks.FARMABLE) || super.mayPlaceOn(pState, pLevel, pPos);
-	}
 
 	@Override
-	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {}
+	public void entityInside(BlockState state, World worldIn, BlockPos pos, Entity entityIn) {
+
+	}
 }

@@ -11,18 +11,10 @@ import io.github.chaosawakens.common.util.EnumUtils.StalagmiteBlockGenType;
 import io.github.chaosawakens.common.worldgen.feature.CrystalBranchConfig;
 import io.github.chaosawakens.common.worldgen.feature.GeodeFeatureConfig;
 import io.github.chaosawakens.common.worldgen.feature.StalagmiteFeatureConfig;
-import io.github.chaosawakens.common.worldgen.foliageplacer.ConiferousFoliagePlacer;
-import io.github.chaosawakens.common.worldgen.foliageplacer.CubicSkipFoliagePlacer;
-import io.github.chaosawakens.common.worldgen.foliageplacer.SpheroidFoliagePlacer;
 import io.github.chaosawakens.common.worldgen.placement.DoubleCrystalPlantBlockPlacer;
 import io.github.chaosawakens.common.worldgen.placement.DoubleDensePlantBlockPlacer;
 import io.github.chaosawakens.common.worldgen.placement.OceanBedPlacement;
-import io.github.chaosawakens.common.worldgen.treedecorator.LeafCarpetTreeDecorator;
-import io.github.chaosawakens.common.worldgen.treedecorator.VinesBelowLeavesTreeDecorator;
 import io.github.chaosawakens.common.worldgen.trunkplacer.CrystalTrunkPlacer;
-import io.github.chaosawakens.common.worldgen.trunkplacer.DirtlessGiantTrunkPlacer;
-import io.github.chaosawakens.common.worldgen.trunkplacer.GiantConiferTrunkPlacer;
-import io.github.chaosawakens.common.worldgen.trunkplacer.ThinGiantTrunkPlacer;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.Blocks;
 import net.minecraft.block.SweetBerryBushBlock;
@@ -57,20 +49,17 @@ import net.minecraft.world.gen.placement.TopSolidRangeConfig;
 import net.minecraft.world.gen.treedecorator.BeehiveTreeDecorator;
 import net.minecraft.world.gen.trunkplacer.FancyTrunkPlacer;
 import net.minecraft.world.gen.trunkplacer.StraightTrunkPlacer;
-import net.minecraftforge.common.Tags;
 
 public class CAConfiguredFeatures {
 	// ORES
 	// GENERIC
 	public static final ConfiguredFeature<?, ?> ORE_RUBY_LAVA = register("ore_ruby", Feature.NO_SURFACE_ORE.configured(new OreFeatureConfig(RuleTests.BASE_LAVA, States.RUBY_ORE, 8)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(6, 12))).squared().count(3));
-	public static final ConfiguredFeature<?, ?> GEODE_AMETHYST = register("geode_amethyst", CAFeatures.GEODE.get().configured( new GeodeFeatureConfig(States.AMETHYST_ORE, States.MARBLE, FeatureSpread.of(6, 4), FeatureSpread.fixed(10))).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(16, 8))).chance(20));
+	public static final ConfiguredFeature<?, ?> ORE_AMETHYST = register("ore_amethyst", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.AMETHYST_ORE, 4)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(18, 16))).squared().count(4));
 	public static final ConfiguredFeature<?, ?> ORE_URANIUM = register("ore_uranium", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.URANIUM_ORE, 4)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(1, 12))).squared().count(3));
 	public static final ConfiguredFeature<?, ?> ORE_TITANIUM = register("ore_titanium", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.TITANIUM_ORE, 4)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(1, 12))).squared().count(3));
 	public static final ConfiguredFeature<?, ?> ORE_TIGERS_EYE = register("ore_tigers_eye", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.TIGERS_EYE_ORE, 7)).decorated(Placement.RANGE_BIASED.configured(new TopSolidRangeConfig(1, 24, 48))).squared().count(5));
 	public static final ConfiguredFeature<?, ?> ORE_SALT = register("ore_salt", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.SALT_ORE, 8)).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(32, 64, 128))).squared().count(14));
-	
-	
-	public static final ConfiguredFeature<?, ?> ORE_ALUMINUM = register("ore_aluminum", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.ALUMINUM_ORE, 15)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(50, 30))).squared().count(2));
+
 	public static final ConfiguredFeature<?, ?> ORE_COPPER = register("ore_copper", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.COPPER_ORE, 5)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(72, 32))).squared().count(6));
 	public static final ConfiguredFeature<?, ?> ORE_TIN = register("ore_tin", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.TIN_ORE, 4)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(56, 24))).squared().count(5));
 	public static final ConfiguredFeature<?, ?> ORE_SILVER = register("ore_silver", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.SILVER_ORE, 3)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(32, 20))).squared().count(4));
@@ -158,8 +147,8 @@ public class CAConfiguredFeatures {
 	public static final ConfiguredFeature<?, ?> TERMITE_INFESTED = register("ore_termite_infested", Feature.EMERALD_ORE.configured(new ReplaceBlockConfig(States.STONE, States.TERMITE_INFESTED_ORE)).decorated(Placement.EMERALD_ORE.configured(IPlacementConfig.NONE)));
 
 	// NETHER
-	public static final ConfiguredFeature<?, ?> NETHERRACK_ORE_RUBY_LAVA = register("netherrack_ore_ruby_lava", Feature.NO_SURFACE_ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, States.NETHERRACK_RUBY_ORE, 6)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(26, 8))).squared().chance(2));
-	public static final ConfiguredFeature<?, ?> NETHERRACK_ORE_RUBY = register("netherrack_ore_ruby", Feature.NO_SURFACE_ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, States.NETHERRACK_RUBY_ORE, 8)).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(100, 0, 22))).squared().count(1));
+	public static final ConfiguredFeature<?, ?> NETHERRACK_ORE_RUBY_LAVA = register("netherrack_ore_ruby_lava", Feature.NO_SURFACE_ORE.configured(new OreFeatureConfig(RuleTests.BASE_LAVA, States.NETHERRACK_RUBY_ORE, 12)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(12, 12))).squared().count(5));
+	public static final ConfiguredFeature<?, ?> NETHERRACK_ORE_RUBY = register("netherrack_ore_ruby", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, States.NETHERRACK_RUBY_ORE, 3)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(64, 64))).squared().count(4));
 	public static final ConfiguredFeature<?, ?> BLACKSTONE_ORE_RUBY = register("blackstone_ore_ruby", Feature.ORE.configured(new OreFeatureConfig(RuleTests.BASE_BLACKSTONE, States.BLACKSTONE_RUBY_ORE, 4)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(64, 64))).squared().count(6));
 
 	public static final ConfiguredFeature<?, ?> NETHER_FOSSILISED_CRIMSON_ENT = register("nether_ore_fossilised_crimson_ent", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NETHERRACK, States.FOSSILISED_CRIMSON_ENT, 3)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(64, 64))).squared().count(6));
@@ -184,24 +173,25 @@ public class CAConfiguredFeatures {
 	public static final ConfiguredFeature<?, ?> END_FOSSILISED_SHULKER = register("end_ore_fossilised_shulker", Feature.ORE.configured(new OreFeatureConfig(RuleTests.BASE_END_STONE, States.FOSSILISED_SHULKER, 3)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(37, 27))).squared().count(8));
 
 	// MINING PARADISE
-	public static final ConfiguredFeature<?, ?> STALAGMITE_COMMON = register("stalagmite_common", CAFeatures.STALAGMITE.get().configured(new StalagmiteFeatureConfig(Blocks.STONE.defaultBlockState(), 4, 4, 1.8F, 2, StalagmiteBlockGenType.ORE_COMMON)).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(3));
-	public static final ConfiguredFeature<?, ?> STALAGMITE_COMMON_SHORT = register("stalagmite_common_short", CAFeatures.STALAGMITE.get().configured(new StalagmiteFeatureConfig(Blocks.STONE.defaultBlockState(), 5, 4, 1.25F, 2, StalagmiteBlockGenType.ORE_COMMON)).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(2));
-	public static final ConfiguredFeature<?, ?> STALAGMITE_SKYSCRAPER = register("stalagmite_skyscraper", CAFeatures.STALAGMITE.get().configured(new StalagmiteFeatureConfig(Blocks.STONE.defaultBlockState(), 32, 7, 2.25F, 0.5f, StalagmiteBlockGenType.ORE_COMMON)).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(1));
-	public static final ConfiguredFeature<?, ?> STALAGMITE_CONE = register("stalagmite_cone", CAFeatures.STALAGMITE.get().configured(new StalagmiteFeatureConfig(Blocks.STONE.defaultBlockState(), 6, 7, 0.15F, 1, StalagmiteBlockGenType.ORE_COMMON)).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(3));
+	public static final ConfiguredFeature<?, ?> STALAGMITE_COMMON = register("stalagmite", CAFeatures.STALAGMITE.get().configured(new StalagmiteFeatureConfig(Blocks.STONE.defaultBlockState(), 4, 4, 1.8F, 2, StalagmiteBlockGenType.ORE_COMMON)).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(3));
+	public static final ConfiguredFeature<?, ?> STALAGMITE_COMMON_SHORT = register("stalagmite", CAFeatures.STALAGMITE.get().configured(new StalagmiteFeatureConfig(Blocks.STONE.defaultBlockState(), 5, 4, 1.25F, 2, StalagmiteBlockGenType.ORE_COMMON)).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(2));
+	public static final ConfiguredFeature<?, ?> STALAGMITE_SKYSCRAPER = register("stalagmite", CAFeatures.STALAGMITE.get().configured(new StalagmiteFeatureConfig(Blocks.STONE.defaultBlockState(), 32, 7, 2.25F, 0.5f, StalagmiteBlockGenType.ORE_COMMON)).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(1));
+	public static final ConfiguredFeature<?, ?> STALAGMITE_CONE = register("stalagmite", CAFeatures.STALAGMITE.get().configured(new StalagmiteFeatureConfig(Blocks.STONE.defaultBlockState(), 6, 7, 0.15F, 1, StalagmiteBlockGenType.ORE_COMMON)).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(3));
 	
-	public static final ConfiguredFeature<?, ?> STALAGMITE_COMMON_LIMESTONE = register("stalagmite_common_limestone", CAFeatures.STALAGMITE.get().configured(new StalagmiteFeatureConfig(CABlocks.LIMESTONE.get().defaultBlockState(), 256, 12, 1.35F, 0.5f, StalagmiteBlockGenType.ORE_RARE)).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(1));
+	public static final ConfiguredFeature<?, ?> STALAGMITE_COMMON_LIMESTONE = register("stalagmite", CAFeatures.STALAGMITE.get().configured(new StalagmiteFeatureConfig(CABlocks.LIMESTONE.get().defaultBlockState(), 256, 12, 1.35F, 0.5f, StalagmiteBlockGenType.ORE_RARE)).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(1));
+	
 	
 	public static final ConfiguredFeature<?, ?> MINING_ORE_RUBY_LAVA = register("mining_ore_ruby", Feature.NO_SURFACE_ORE.configured(new OreFeatureConfig(RuleTests.BASE_LAVA, States.RUBY_ORE, 8)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(6, 12))).squared().count(4));
 	public static final ConfiguredFeature<?, ?> MINING_ORE_AMETHYST = register("mining_ore_amethyst", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.AMETHYST_ORE, 4)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(40, 16))).squared().count(4));
 	public static final ConfiguredFeature<?, ?> MINING_ORE_URANIUM = register("mining_ore_uranium", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.URANIUM_ORE, 4)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(1, 18))).squared().count(3));
 	public static final ConfiguredFeature<?, ?> MINING_ORE_TITANIUM = register("mining_ore_titanium", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.TITANIUM_ORE, 4)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(1, 18))).squared().count(3));
-	public static final ConfiguredFeature<?, ?> MINING_ORE_ALUMINUM = register("mining_ore_aluminum", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.ALUMINUM_ORE, 15)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(80, 40))).squared().count(6));
-	public static final ConfiguredFeature<?, ?> MINING_ORE_COPPER = register("mining_ore_copper", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.COPPER_ORE, 5)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(64, 30))).squared().count(6));
-	public static final ConfiguredFeature<?, ?> MINING_ORE_TIN = register("mining_ore_tin", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.TIN_ORE, 4)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(48, 30))).squared().count(5));
+	public static final ConfiguredFeature<?, ?> MINING_ORE_ALUMINUM = register("mining_ore_aluminum", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.ALUMINUM_ORE, 5)).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(8, 64, 80))).squared().count(8));
+	public static final ConfiguredFeature<?, ?> MINING_ORE_COPPER = register("mining_ore_copper", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.COPPER_ORE, 5)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(72, 38))).squared().count(6));
+	public static final ConfiguredFeature<?, ?> MINING_ORE_TIN = register("mining_ore_tin", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.TIN_ORE, 4)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(56, 30))).squared().count(5));
 	public static final ConfiguredFeature<?, ?> MINING_ORE_SILVER = register("mining_ore_silver", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.SILVER_ORE, 3)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(32, 24))).squared().count(4));
 	public static final ConfiguredFeature<?, ?> MINING_ORE_PLATINUM = register("mining_ore_platinum", Feature.NO_SURFACE_ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.PLATINUM_ORE, 3)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(8, 20))).squared().count(3));
 	public static final ConfiguredFeature<?, ?> MINING_ORE_TIGERS_EYE = register("mining_ore_tigers_eye", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.TIGERS_EYE_ORE, 7)).decorated(Placement.RANGE_BIASED.configured(new TopSolidRangeConfig(1, 32, 60))).squared().count(5));
-	public static final ConfiguredFeature<?, ?> MINING_ORE_SALT = register("mining_ore_salt", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.SALT_ORE, 8)).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(32, 24, 144))).squared().count(12));
+	public static final ConfiguredFeature<?, ?> MINING_ORE_SALT = register("mining_ore_salt", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.SALT_ORE, 8)).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(32, 64, 144))).squared().count(14));
 	public static final ConfiguredFeature<?, ?> MINING_ORE_SUNSTONE = register("mining_ore_sunstone", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.SUNSTONE_ORE, 4)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(72, 64))).squared().count(8));
 	public static final ConfiguredFeature<?, ?> MINING_ORE_BLOODSTONE = register("mining_ore_bloodstone", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.BLOODSTONE_ORE, 5)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(72, 64))).squared().count(8));
 	public static final ConfiguredFeature<?, ?> MINING_RED_ANT_INFESTED = register("mining_ore_red_ant_infested", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.RED_ANT_INFESTED_ORE, 8)).range(16).squared());
@@ -261,16 +251,10 @@ public class CAConfiguredFeatures {
 	public static final ConfiguredFeature<?, ?> MINING_LIMESTONE_CAVE_PATCH = register("mining_limestone_cave_patch", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.LIMESTONE, 36)).squared().range(116).count(3));
 	public static final ConfiguredFeature<?, ?> MINING_RHINESTONE_CAVE_PATCH = register("mining_rhinestone_cave_patch", Feature.ORE.configured(new OreFeatureConfig(OreFeatureConfig.FillerBlockType.NATURAL_STONE, States.RHINESTONE, 38)).squared().range(114).count(4));
 	
-	public static final ConfiguredFeature<?, ?> BLOB_TERRA_PRETA = register("blob_terra_preta", Feature.ORE.configured( new OreFeatureConfig(RuleTests.BASE_DIRT, States.TERRA_PRETA, 24)).decorated( Placement.RANGE.configured( new TopSolidRangeConfig(75, 0, 30))).squared().chance(3));
-	public static final ConfiguredFeature<?, ?> BLOB_LATOSOL = register("blob_latosol", Feature.ORE.configured( new OreFeatureConfig(RuleTests.BASE_DIRT, States.LATOSOL, 24)).decorated( Placement.RANGE.configured( new TopSolidRangeConfig(75, 0, 30))).squared());
-	public static final ConfiguredFeature<?, ?> BLOB_TAR = register("blob_tar", Feature.ORE.configured( new OreFeatureConfig(RuleTests.BASE_DIRT, States.TAR, 20)).decorated( Placement.RANGE.configured( new TopSolidRangeConfig(75, 0, 30))).squared());
-	
-	public static final ConfiguredFeature<?, ?> MOUNTAINS_STALAGMITE = register("mountains_stalagmite", CAFeatures.STALAGMITE.get().configured(new StalagmiteFeatureConfig(Blocks.STONE.defaultBlockState(), 20, 4, 0.35F, 1, StalagmiteBlockGenType.NONE)).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(2));
-	
 	// CRYSTAL WORLD
-	public static final ConfiguredFeature<?, ?> CRYSTAL_ORE_ENERGY = register("crystal_ore_energy", Feature.ORE.configured(new OreFeatureConfig(RuleTests.BASE_STONE_CRYSTAL, States.CRYSTAL_ENERGY, 16)).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(16, 0, 80))).squared().count(3));
-	public static final ConfiguredFeature<?, ?> GEODE_PINK_TOURMALINE = register("geode_pink_tourmaline", CAFeatures.GEODE.get().configured(new GeodeFeatureConfig(States.PINK_TOURMALINE, States.KYANITE, FeatureSpread.of(4, 6), FeatureSpread.fixed(4))).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(28, 0, 24))).chance(12));
-	public static final ConfiguredFeature<?, ?> GEODE_CATS_EYE = register("geode_cats_eye", CAFeatures.GEODE.get().configured(new GeodeFeatureConfig(States.CATS_EYE, States.KYANITE, FeatureSpread.of(4, 3), FeatureSpread.fixed(4))).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(6, 0, 24))).chance(18));
+	public static final ConfiguredFeature<?, ?> CRYSTAL_ORE_ENERGY = register("crystal_ore_energy", Feature.ORE.configured(new OreFeatureConfig(RuleTests.BASE_STONE_CRYSTAL, States.CRYSTAL_ENERGY, 5)).decorated(Placement.RANGE.configured(new TopSolidRangeConfig(16, 64, 80))).squared().count(5));
+	public static final ConfiguredFeature<?, ?> GEODE_PINK_TOURMALINE = register("geode_pink_tourmaline", CAFeatures.GEODE.get().configured(new GeodeFeatureConfig(RuleTests.BASE_STONE_CRYSTAL, States.PINK_TOURMALINE, States.CLUSTER_PINK_TOURMALINE, 28, 48, 40)));
+	public static final ConfiguredFeature<?, ?> GEODE_CATS_EYE = register("geode_cats_eye", CAFeatures.GEODE.get().configured(new GeodeFeatureConfig(RuleTests.BASE_STONE_CRYSTAL, States.CATS_EYE, States.CLUSTER_CATS_EYE, 5, 28, 15)));
 
 	public static final ConfiguredFeature<?, ?> CRYSTAL_FOSSILISED_CRYSTAL_APPLE_COW = register("crystal_ore_fossilised_crystal_apple_cow", Feature.ORE.configured(new OreFeatureConfig(RuleTests.BASE_STONE_CRYSTAL, States.CRYSTALISED_CRYSTAL_APPLE_COW, 3)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(37, 27))).squared().count(3));
 	public static final ConfiguredFeature<?, ?> CRYSTAL_FOSSILISED_CRYSTAL_CARROT_PIG = register("crystal_ore_fossilised_crystal_carrot_pig", Feature.ORE.configured(new OreFeatureConfig(RuleTests.BASE_STONE_CRYSTAL, States.CRYSTALISED_CRYSTAL_CARROT_PIG, 2)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(39, 23))).squared().count(2));
@@ -284,22 +268,19 @@ public class CAConfiguredFeatures {
 	public static final ConfiguredFeature<?, ?> PATCH_DENSE_GRASS = register("patch_dense_grass", Feature.RANDOM_PATCH.configured(Configs.DENSE_GRASS_CONFIG).decorated(Features.Placements.HEIGHTMAP_DOUBLE_SQUARE).decorated(Placement.COUNT_NOISE.configured(new NoiseDependant(-0.8D, 5, 10))));
 	public static final ConfiguredFeature<?, ?> PATCH_TALL_DENSE_GRASS = register("patch_tall_dense_grass", Feature.RANDOM_PATCH.configured(Configs.TALL_DENSE_GRASS_CONFIG).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(7));
 	public static final ConfiguredFeature<?, ?> PATCH_THORNY_SUN = register("patch_thorny_sun", Feature.RANDOM_PATCH.configured(Configs.THORNY_SUN_CONFIG).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(7));
-	public static final ConfiguredFeature<?, ?> PATCH_ALSTROEMERIAT = register("patch_alstroemeriat", Feature.RANDOM_PATCH.configured(Configs.ALSTROEMERIAT_CONFIG).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(7));
 	public static final ConfiguredFeature<?, ?> DENSE_BULB_DEFAULT = register("dense_bulb_default", Feature.FLOWER.configured(Configs.DENSE_BULB_CONFIG).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(2));
-	public static final ConfiguredFeature<?, ?> PATCH_MESO_PLANTS = register("patch_meso_plants", Feature.FLOWER.configured(Configs.MESOZOIC_PLANT_CONFIG).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(4));
-	public static final ConfiguredFeature<?, ?> PATCH_DENSE_FLOWER = register("patch_dense_flower", Feature.FLOWER.configured(Configs.DENSE_FLOWER_CONFIG).decorated(Features.Placements.ADD_32).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(4));
-	
+
 	// CROPS
 	public static final ConfiguredFeature<?, ?> PATCH_STRAWBERRY_BUSH = register("patch_strawberry_bush", Feature.RANDOM_PATCH.configured(Configs.STRAWBERRY_BUSH_CONFIG));
 	public static final ConfiguredFeature<?, ?> PATCH_STRAWBERRY_SPARSE = register("patch_strawberry_sparse", PATCH_STRAWBERRY_BUSH.decorated(Features.Placements.HEIGHTMAP_DOUBLE_SQUARE));
 	public static final ConfiguredFeature<?, ?> PATCH_STRAWBERRY_DECORATED = register("patch_strawberry_decorated", PATCH_STRAWBERRY_BUSH.decorated(Features.Placements.HEIGHTMAP_DOUBLE_SQUARE).chance(12));
-	public static final ConfiguredFeature<?, ?> CORN_PATCH = register("patch_corn", Feature.RANDOM_PATCH.configured((new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(States.CORN), new ColumnBlockPlacer(1, 4))).tries(7).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK)).xspread(16).yspread(0).zspread(16).noProjection().build()).decorated(Features.Placements.HEIGHTMAP_DOUBLE_SQUARE));
-	public static final ConfiguredFeature<?, ?> TOMATO_PATCH = register("patch_tomato", Feature.RANDOM_PATCH.configured((new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(States.TOMATO), new ColumnBlockPlacer(1, 3))).tries(7).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK)).xspread(16).yspread(0).zspread(16).noProjection().build()).decorated(Features.Placements.HEIGHTMAP_DOUBLE_SQUARE));
+	public static final ConfiguredFeature<?, ?> CORN_PATCH = register("patch_corn", Feature.RANDOM_PATCH.configured((new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(States.CORN), new ColumnBlockPlacer(3, 8))).tries(8).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK)).xspread(8).yspread(0).zspread(8).noProjection().build()).decorated(Features.Placements.HEIGHTMAP_DOUBLE_SQUARE));
+	public static final ConfiguredFeature<?, ?> TOMATO_PATCH = register("patch_tomato", Feature.RANDOM_PATCH.configured((new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(States.TOMATO), new ColumnBlockPlacer(2, 6))).tries(8).whitelist(ImmutableSet.of(Blocks.GRASS_BLOCK)).xspread(8).yspread(0).zspread(8).noProjection().build()).decorated(Features.Placements.HEIGHTMAP_DOUBLE_SQUARE));
 
 	// TREES
 	public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> GREEN_CRYSTAL_TREE = register("green_crystal_tree", Feature.TREE.configured(new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(States.CRYSTAL_LOG), new SimpleBlockStateProvider(States.GREEN_CRYSTAL_LEAVES), new BlobFoliagePlacer(FeatureSpread.fixed(3), FeatureSpread.fixed(2), 2), new CrystalTrunkPlacer(3, 2, 0, 0, new CrystalBranchConfig()), new TwoLayerFeature(2, 0, 2)).ignoreVines().build()));
-	public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> RED_CRYSTAL_TREE = register("red_crystal_tree", Feature.TREE.configured(new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(States.CRYSTAL_LOG), new SimpleBlockStateProvider(States.RED_CRYSTAL_LEAVES), new BlobFoliagePlacer(FeatureSpread.fixed(3), FeatureSpread.fixed(2), 2), new DirtlessGiantTrunkPlacer(5, 2, 0, States.KYANITE), new TwoLayerFeature(2, 0, 2)).ignoreVines().build()));
-	public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> YELLOW_CRYSTAL_TREE = register("yellow_crystal_tree", Feature.TREE.configured(new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(States.CRYSTAL_LOG), new SimpleBlockStateProvider(States.YELLOW_CRYSTAL_LEAVES), new CubicSkipFoliagePlacer(FeatureSpread.of(1, 1), FeatureSpread.of(1, 2), FeatureSpread.of(0, 1)), new CrystalTrunkPlacer(12, 4, 0, 0, new CrystalBranchConfig()), new TwoLayerFeature(2, 0, 2)).ignoreVines().build()));
+	public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> RED_CRYSTAL_TREE = register("red_crystal_tree", Feature.TREE.configured(new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(States.CRYSTAL_LOG), new SimpleBlockStateProvider(States.RED_CRYSTAL_LEAVES), new BlobFoliagePlacer(FeatureSpread.fixed(3), FeatureSpread.fixed(2), 2), new CrystalTrunkPlacer(5, 2, 0, 0, new CrystalBranchConfig()), new TwoLayerFeature(2, 0, 2)).ignoreVines().build()));
+	public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> YELLOW_CRYSTAL_TREE = register("yellow_crystal_tree", Feature.TREE.configured(new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(States.CRYSTAL_LOG), new SimpleBlockStateProvider(States.YELLOW_CRYSTAL_LEAVES), new BlobFoliagePlacer(FeatureSpread.fixed(4), FeatureSpread.fixed(3), 3), new CrystalTrunkPlacer(7, 2, 0, 0, new CrystalBranchConfig()), new TwoLayerFeature(2, 0, 2)).ignoreVines().build()));
 	public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> PINK_CRYSTAL_TREE = register("pink_crystal_tree", Feature.TREE.configured(new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(States.CRYSTAL_LOG), new SimpleBlockStateProvider(States.PINK_CRYSTAL_LEAVES), new BlobFoliagePlacer(FeatureSpread.fixed(4), FeatureSpread.fixed(3), 3), new CrystalTrunkPlacer(6, 2, 0, 0, new CrystalBranchConfig()), new TwoLayerFeature(2, 0, 2)).ignoreVines().build()));
 	public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> BLUE_CRYSTAL_TREE = register("blue_crystal_tree", Feature.TREE.configured(new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(States.CRYSTAL_LOG), new SimpleBlockStateProvider(States.BLUE_CRYSTAL_LEAVES), new BlobFoliagePlacer(FeatureSpread.fixed(4), FeatureSpread.fixed(2), 2), new CrystalTrunkPlacer(7, 2, 0, 0, new CrystalBranchConfig()), new TwoLayerFeature(2, 0, 2)).ignoreVines().build()));
 	public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> ORANGE_CRYSTAL_TREE = register("orange_crystal_tree", Feature.TREE.configured(new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(States.CRYSTAL_LOG), new SimpleBlockStateProvider(States.ORANGE_CRYSTAL_LEAVES), new BlobFoliagePlacer(FeatureSpread.fixed(5), FeatureSpread.fixed(4), 4), new CrystalTrunkPlacer(5, 3, 0, 0, new CrystalBranchConfig()), new TwoLayerFeature(2, 0, 2)).ignoreVines().build()));
@@ -324,25 +305,11 @@ public class CAConfiguredFeatures {
 	public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> FANCY_PEACH_TREE = register("fancy_peach_tree", Feature.TREE.configured((new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(States.PEACH_LOG), new SimpleBlockStateProvider(States.PEACH_LEAVES), new FancyFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.fixed(1), 4), new FancyTrunkPlacer(8, 5, 0), new TwoLayerFeature(2, 0, 2, OptionalInt.of(4)))).ignoreVines().heightmap(Heightmap.Type.MOTION_BLOCKING).build()));
 	public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> FANCY_PEACH_TREE_BEES_005 = register("fancy_peach_tree_bees_005", Feature.TREE.configured(FANCY_PEACH_TREE.config.withDecorators(ImmutableList.of(Placements.BEEHIVE_005))));
 
-	public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> GINKGO_TREE = register("ginkgo_tree", Feature.TREE.configured(new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(States.GINKGO_LOG), new SimpleBlockStateProvider(States.GINKGO_LEAVES), new SpheroidFoliagePlacer(FeatureSpread.of(2, 1), FeatureSpread.fixed(0), FeatureSpread.of(5, 2)), new StraightTrunkPlacer(7, 2, 2), new TwoLayerFeature(2, 0, 2)).decorators(ImmutableList.of(new LeafCarpetTreeDecorator(States.GINKGO_LEAF_CARPET))).ignoreVines().heightmap(Heightmap.Type.MOTION_BLOCKING).build()));
-	public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> GINKGO_TREE_FANCY = register("ginkgo_tree_fancy", Feature.TREE.configured(new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(States.GINKGO_LOG), new SimpleBlockStateProvider(States.GINKGO_LEAVES), new FancyFoliagePlacer(FeatureSpread.of(2, 1), FeatureSpread.fixed(0), 4), new StraightTrunkPlacer(5, 3, 0), new TwoLayerFeature(2, 0, 2)).decorators(ImmutableList.of(new LeafCarpetTreeDecorator(States.GINKGO_LEAF_CARPET))).ignoreVines().heightmap(Heightmap.Type.MOTION_BLOCKING).build()));
-	public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> GINKGO_TREE_MEGA = register("ginkgo_tree_mega", Feature.TREE.configured(new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(States.GINKGO_LOG), new SimpleBlockStateProvider(States.GINKGO_LEAVES), new SpheroidFoliagePlacer(FeatureSpread.fixed(4), FeatureSpread.fixed(6), FeatureSpread.fixed(10)), new DirtlessGiantTrunkPlacer(12, 2, 4, States.DENSE_DIRT), new TwoLayerFeature(2, 0, 2)).decorators(ImmutableList.of(new LeafCarpetTreeDecorator(States.GINKGO_LEAF_CARPET))).ignoreVines().heightmap(Heightmap.Type.MOTION_BLOCKING).build()));
-	
-	public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> DENSEWOOD_TREE = register("densewood_tree", Feature.TREE.configured(new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(States.DENSEWOOD_LOG), new SimpleBlockStateProvider(States.DENSEWOOD_LEAVES), new ConiferousFoliagePlacer(FeatureSpread.fixed(2), FeatureSpread.of(8, 3)), new StraightTrunkPlacer(12, 2, 2), new TwoLayerFeature(2, 1, 3)).decorators(ImmutableList.of(Features.Placements.BEEHIVE_002, new LeafCarpetTreeDecorator(States.DENSEWOOD_LEAF_CARPET))).ignoreVines().heightmap(Heightmap.Type.MOTION_BLOCKING).build()));
-	public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> DENSEWOOD_TREE_FANCY = register("densewood_tree_fancy", Feature.TREE.configured(new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(States.DENSEWOOD_LOG), new SimpleBlockStateProvider(States.DENSEWOOD_LEAVES), new SpheroidFoliagePlacer(FeatureSpread.of(2, 2), FeatureSpread.fixed(0), FeatureSpread.of(5, 3)), new StraightTrunkPlacer(8, 2, 2), new TwoLayerFeature(1, 0, 2)).decorators(ImmutableList.of(Features.Placements.BEEHIVE_005, new LeafCarpetTreeDecorator(States.DENSEWOOD_LEAF_CARPET))).ignoreVines().heightmap(Heightmap.Type.MOTION_BLOCKING).build()));
-	
-	public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> MESOZOIC_TREE = register("mesozoic_tree", Feature.TREE.configured(new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(States.MESOZOIC_LOG), new SimpleBlockStateProvider(States.MESOZOIC_LEAVES), new SpheroidFoliagePlacer(FeatureSpread.fixed(4), FeatureSpread.fixed(1), FeatureSpread.of(3, 1)), new GiantConiferTrunkPlacer(20, 2, 2, States.DENSE_DIRT), new TwoLayerFeature(1, 0, 2)).decorators(ImmutableList.of(new VinesBelowLeavesTreeDecorator(States.MESOZOIC_VINES))).heightmap(Heightmap.Type.MOTION_BLOCKING).build()));
-	public static final ConfiguredFeature<BaseTreeFeatureConfig, ?> MESOZOIC_TREE_THIN = register("mesozoic_tree_thin", Feature.TREE.configured(new BaseTreeFeatureConfig.Builder(new SimpleBlockStateProvider(States.MESOZOIC_LOG), new SimpleBlockStateProvider(States.MESOZOIC_LEAVES), new SpheroidFoliagePlacer(FeatureSpread.of(4, 0), FeatureSpread.fixed(0), FeatureSpread.fixed(4)), new ThinGiantTrunkPlacer(24, 3, 3, States.DENSE_DIRT), new TwoLayerFeature(1, 0, 2)).decorators(ImmutableList.of(new VinesBelowLeavesTreeDecorator(States.MESOZOIC_VINES))).heightmap(Heightmap.Type.MOTION_BLOCKING).build()));
-	
 	public static final ConfiguredFeature<?, ?> TREES_CRYSTAL_PLAINS = register("trees_crystal_dimension", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(GREEN_CRYSTAL_TREE.weighted(0.4F), RED_CRYSTAL_TREE.weighted(0.3F), YELLOW_CRYSTAL_TREE.weighted(0.1F), PINK_CRYSTAL_TREE.weighted(0.045F), BLUE_CRYSTAL_TREE.weighted(0.2F), ORANGE_CRYSTAL_TREE.weighted(0.035F)), GREEN_CRYSTAL_TREE)).decorated(Features.Placements.HEIGHTMAP_SQUARE).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(2, 0.1F, 1))));
 	public static final ConfiguredFeature<?, ?> TREES_APPLE = register("trees_apple", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(APPLE_TREE.weighted(0.1F), APPLE_TREE_BEES_005.weighted(0.04F), FANCY_APPLE_TREE.weighted(0.09F), FANCY_APPLE_TREE_BEES_005.weighted(0.02F)), Feature.NO_OP.configured(new NoFeatureConfig()))).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(1).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(1, 0.01F, 1))));
 	public static final ConfiguredFeature<?, ?> TREES_CHERRY = register("trees_cherry", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(CHERRY_TREE.weighted(0.1F), CHERRY_TREE_BEES_005.weighted(0.01F), FANCY_CHERRY_TREE.weighted(0.09F), FANCY_CHERRY_TREE_BEES_005.weighted(0.02F)), Feature.NO_OP.configured(new NoFeatureConfig()))).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(1).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(1, 0.01F, 1))));
 	public static final ConfiguredFeature<?, ?> TREES_PEACH = register("trees_peach", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(PEACH_TREE.weighted(0.1F), PEACH_TREE_BEES_005.weighted(0.01F), FANCY_PEACH_TREE.weighted(0.07F), FANCY_PEACH_TREE_BEES_005.weighted(0.01F)), Feature.NO_OP.configured(new NoFeatureConfig()))).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(1).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(1, 0.01F, 1))));
-	public static final ConfiguredFeature<?, ?> TREES_DENSE_PLAINS = register("trees_dense_plains", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(DENSEWOOD_TREE.weighted(0.02F), GINKGO_TREE_FANCY.weighted(0.01F)), Feature.NO_OP.configured(new NoFeatureConfig()))).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(1).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(1, 0.1F, 1))));
-	public static final ConfiguredFeature<?, ?> TREES_DENSE_FOREST = register("trees_dense_forest", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(DENSEWOOD_TREE.weighted(0.9F), DENSEWOOD_TREE_FANCY.weighted(0.1F), GINKGO_TREE_FANCY.weighted(0.4F)), Feature.NO_OP.configured(new NoFeatureConfig()))).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(2).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(2, 0.6F, 2))));
-	public static final ConfiguredFeature<?, ?> TREES_DENSE_GINKGO = register("trees_dense_ginkgo", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(GINKGO_TREE.weighted(0.9F), GINKGO_TREE_FANCY.weighted(0.3F), GINKGO_TREE_MEGA.weighted(0.05F)), Feature.NO_OP.configured(new NoFeatureConfig()))).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(2).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(2, 0.6F, 3))));
-	public static final ConfiguredFeature<?, ?> TREES_MESOZOIC = register("trees_mesozoic", Feature.RANDOM_SELECTOR.configured(new MultipleRandomFeatureConfig(ImmutableList.of(MESOZOIC_TREE.weighted(0.9F), MESOZOIC_TREE_THIN.weighted(0.5F), GINKGO_TREE_MEGA.weighted(0.005F)), Feature.NO_OP.configured(new NoFeatureConfig()))).decorated(Features.Placements.HEIGHTMAP_SQUARE).count(2).decorated(Placement.COUNT_EXTRA.configured(new AtSurfaceWithExtraConfig(2, 0.5F, 4))));
-	
+
 	// NESTS
 	public static final ConfiguredFeature<?, ?> BROWN_ANT_NEST = register("nest_brown_ant", Feature.EMERALD_ORE.configured(new ReplaceBlockConfig(States.GRASS_BLOCK, States.BROWN_ANT_NEST)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(80, 50))));
 	public static final ConfiguredFeature<?, ?> RAINBOW_ANT_NEST = register("nest_rainbow_ant", Feature.EMERALD_ORE.configured(new ReplaceBlockConfig(States.GRASS_BLOCK, States.RAINBOW_ANT_NEST)).decorated(Placement.DEPTH_AVERAGE.configured(new DepthAverageConfig(80, 50))));
@@ -366,9 +333,6 @@ public class CAConfiguredFeatures {
 		private static final BlockState DENSE_GRASS_BLOCK = CABlocks.DENSE_GRASS_BLOCK.get().defaultBlockState();
 		private static final BlockState DENSE_GRASS = CABlocks.DENSE_GRASS.get().defaultBlockState();
 		private static final BlockState TALL_DENSE_GRASS = CABlocks.TALL_DENSE_GRASS.get().defaultBlockState();
-	
-		private static final BlockState DENSE_DIRT = CABlocks.DENSE_DIRT.get().defaultBlockState();
-		private static final BlockState KYANITE = CABlocks.KYANITE.get().defaultBlockState();
 
 		private static final BlockState MARBLE = CABlocks.MARBLE.get().defaultBlockState();
 		private static final BlockState LIMESTONE = CABlocks.LIMESTONE.get().defaultBlockState();
@@ -379,21 +343,14 @@ public class CAConfiguredFeatures {
 		private static final BlockState DUPLICATION_LOG = CABlocks.DUPLICATION_LOG.get().defaultBlockState();
 		private static final BlockState DEAD_DUPLICATION_LOG = CABlocks.DEAD_DUPLICATION_LOG.get().defaultBlockState();
 		private static final BlockState PEACH_LOG = CABlocks.PEACH_LOG.get().defaultBlockState();
-		
+		@SuppressWarnings("unused")
 		private static final BlockState GINKGO_LOG = CABlocks.GINKGO_LOG.get().defaultBlockState();
-		private static final BlockState MESOZOIC_LOG = CABlocks.MESOZOIC_LOG.get().defaultBlockState();
-		private static final BlockState DENSEWOOD_LOG = CABlocks.DENSEWOOD_LOG.get().defaultBlockState();
-		
 		private static final BlockState APPLE_LEAVES = CABlocks.APPLE_LEAVES.get().defaultBlockState();
 		private static final BlockState CHERRY_LEAVES = CABlocks.CHERRY_LEAVES.get().defaultBlockState();
 		private static final BlockState DUPLICATION_LEAVES = CABlocks.DUPLICATION_LEAVES.get().defaultBlockState();
 		private static final BlockState PEACH_LEAVES = CABlocks.PEACH_LEAVES.get().defaultBlockState();
-		
+		@SuppressWarnings("unused")
 		private static final BlockState GINKGO_LEAVES = CABlocks.GINKGO_LEAVES.get().defaultBlockState();
-		private static final BlockState GINKGO_LEAF_CARPET = CABlocks.GINKGO_LEAF_CARPET.get().defaultBlockState();
-		private static final BlockState MESOZOIC_LEAVES = CABlocks.MESOZOIC_LEAVES.get().defaultBlockState();
-		private static final BlockState DENSEWOOD_LEAVES = CABlocks.DENSEWOOD_LEAVES.get().defaultBlockState();
-		private static final BlockState DENSEWOOD_LEAF_CARPET = CABlocks.DENSEWOOD_LEAF_CARPET.get().defaultBlockState();
 
 		private static final BlockState STONE = Blocks.STONE.defaultBlockState();
 		private static final BlockState RUBY_ORE = CABlocks.RUBY_ORE.get().defaultBlockState();
@@ -519,6 +476,8 @@ public class CAConfiguredFeatures {
 		private static final BlockState CRYSTAL_ENERGY = CABlocks.CRYSTAL_ENERGY.get().defaultBlockState();
 		private static final BlockState PINK_TOURMALINE = CABlocks.BUDDING_PINK_TOURMALINE.get().defaultBlockState();
 		private static final BlockState CATS_EYE = CABlocks.BUDDING_CATS_EYE.get().defaultBlockState();
+		private static final BlockState CLUSTER_PINK_TOURMALINE = CABlocks.PINK_TOURMALINE_CLUSTER.get().defaultBlockState();
+		private static final BlockState CLUSTER_CATS_EYE = CABlocks.CATS_EYE_CLUSTER.get().defaultBlockState();
 		private static final BlockState CRYSTAL_LOG = CABlocks.CRYSTAL_LOG.get().defaultBlockState();
 		private static final BlockState GREEN_CRYSTAL_LEAVES = CABlocks.GREEN_CRYSTAL_LEAVES.get().defaultBlockState();
 		private static final BlockState RED_CRYSTAL_LEAVES = CABlocks.RED_CRYSTAL_LEAVES.get().defaultBlockState();
@@ -549,22 +508,7 @@ public class CAConfiguredFeatures {
 		private static final BlockState BLUE_BULB = CABlocks.BLUE_BULB.get().defaultBlockState();
 		private static final BlockState PINK_BULB = CABlocks.PINK_BULB.get().defaultBlockState();
 		private static final BlockState PURPLE_BULB = CABlocks.PURPLE_BULB.get().defaultBlockState();
-		
-		private static final BlockState TERRA_PRETA = CABlocks.TERRA_PRETA.get().defaultBlockState();
-		private static final BlockState LATOSOL = CABlocks.LATOSOL.get().defaultBlockState();
-		private static final BlockState TAR = CABlocks.TAR.get().defaultBlockState();
-		
-		private static final BlockState SWAMP_MILKWEED = CABlocks.SWAMP_MILKWEED.get().defaultBlockState();
-		private static final BlockState PRIMROSE = CABlocks.PRIMROSE.get().defaultBlockState();
-		private static final BlockState DAISY = CABlocks.DAISY.get().defaultBlockState();
-		
-		private static final BlockState DENSE_ORCHID = CABlocks.DENSE_ORCHID.get().defaultBlockState();
-		private static final BlockState ALSTROEMERIAT = CABlocks.ALSTROEMERIAT.get().defaultBlockState();
-		private static final BlockState SMALL_BUSH = CABlocks.SMALL_BUSH.get().defaultBlockState();
-		private static final BlockState SMALL_CARNIVOROUS_PLANT = CABlocks.SMALL_CARNIVOROUS_PLANT.get().defaultBlockState();
-		private static final BlockState BIG_CARNIVOROUS_PLANT = CABlocks.BIG_CARNIVOROUS_PLANT.get().defaultBlockState();
-		private static final BlockState MESOZOIC_VINES = CABlocks.MESOZOIC_VINES.get().defaultBlockState();
-		
+
 		private static final BlockState STRAWBERRY_BUSH = CABlocks.STRAWBERRY_BUSH.get().defaultBlockState().setValue(SweetBerryBushBlock.AGE, 3);
 		private static final BlockState CORN = CABlocks.CORN_BODY_BLOCK.get().defaultBlockState();
 		private static final BlockState TOMATO = CABlocks.TOMATO_BODY_BLOCK.get().defaultBlockState();
@@ -579,14 +523,11 @@ public class CAConfiguredFeatures {
 	}
 
 	public static final class Configs {
-		public static final BlockClusterFeatureConfig CHAOS_FLOWER_CONFIG = (new BlockClusterFeatureConfig.Builder((new WeightedBlockStateProvider()).add(States.CYAN_ROSE, 2).add(States.RED_ROSE, 2).add(States.PAEONIA, 2).add(States.SWAMP_MILKWEED, 2).add(States.PRIMROSE, 2).add(States.DAISY, 2), SimpleBlockPlacer.INSTANCE)).tries(32).build();
+		public static final BlockClusterFeatureConfig CHAOS_FLOWER_CONFIG = (new BlockClusterFeatureConfig.Builder((new WeightedBlockStateProvider()).add(States.CYAN_ROSE, 2).add(States.RED_ROSE, 2).add(States.PAEONIA, 2), SimpleBlockPlacer.INSTANCE)).tries(32).build();
 		public static final BlockClusterFeatureConfig DENSE_GRASS_CONFIG = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(States.DENSE_GRASS), SimpleBlockPlacer.INSTANCE)).tries(32).build();
 		public static final BlockClusterFeatureConfig TALL_DENSE_GRASS_CONFIG = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(States.TALL_DENSE_GRASS), new DoubleDensePlantBlockPlacer())).tries(64).noProjection().build();
 		public static final BlockClusterFeatureConfig THORNY_SUN_CONFIG = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(States.THORNY_SUN), new DoubleDensePlantBlockPlacer())).tries(32).noProjection().build();
 		public static final BlockClusterFeatureConfig DENSE_BULB_CONFIG = (new BlockClusterFeatureConfig.Builder((new WeightedBlockStateProvider()).add(States.BLUE_BULB, 2).add(States.PINK_BULB, 2).add(States.PURPLE_BULB, 2), SimpleBlockPlacer.INSTANCE)).tries(32).build();
-		public static final BlockClusterFeatureConfig MESOZOIC_PLANT_CONFIG = (new BlockClusterFeatureConfig.Builder((new WeightedBlockStateProvider()).add(States.SMALL_BUSH, 2).add(States.SMALL_CARNIVOROUS_PLANT, 2).add(States.BIG_CARNIVOROUS_PLANT, 2), SimpleBlockPlacer.INSTANCE)).tries(32).build();
-		public static final BlockClusterFeatureConfig ALSTROEMERIAT_CONFIG = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(States.ALSTROEMERIAT), new DoubleDensePlantBlockPlacer())).tries(32).noProjection().build();
-		public static final BlockClusterFeatureConfig DENSE_FLOWER_CONFIG = (new BlockClusterFeatureConfig.Builder((new WeightedBlockStateProvider()).add(States.DENSE_ORCHID, 2), SimpleBlockPlacer.INSTANCE)).tries(32).build();
 		public static final BlockClusterFeatureConfig STRAWBERRY_BUSH_CONFIG = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(States.STRAWBERRY_BUSH), SimpleBlockPlacer.INSTANCE)).tries(64).whitelist(ImmutableSet.of(States.GRASS_BLOCK.getBlock())).noProjection().build();
 		public static final BlockClusterFeatureConfig CRYSTAL_GRASS_CONFIG = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(States.CRYSTAL_GRASS), SimpleBlockPlacer.INSTANCE)).tries(32).build();
 		public static final BlockClusterFeatureConfig TALL_CRYSTAL_GRASS_CONFIG = (new BlockClusterFeatureConfig.Builder(new SimpleBlockStateProvider(States.TALL_CRYSTAL_GRASS), new DoubleCrystalPlantBlockPlacer())).tries(64).noProjection().build();
@@ -599,7 +540,6 @@ public class CAConfiguredFeatures {
 	}
 
 	public static final class RuleTests {
-		public static final RuleTest BASE_DIRT= new TagMatchRuleTest(Tags.Blocks.DIRT);
 		public static final RuleTest BASE_STONE_CRYSTAL = new TagMatchRuleTest(CATags.Blocks.BASE_STONE_CRYSTAL);
 		public static final RuleTest BASE_OCEAN_FLOOR = new BlockMatchRuleTest(Blocks.GRAVEL);
 		public static final RuleTest BASE_DESERT = new BlockMatchRuleTest(Blocks.SANDSTONE);

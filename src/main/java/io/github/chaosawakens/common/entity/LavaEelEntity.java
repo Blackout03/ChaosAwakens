@@ -1,7 +1,5 @@
 package io.github.chaosawakens.common.entity;
 
-import javax.annotation.Nullable;
-
 import io.github.chaosawakens.common.entity.ai.LavaMoveHelper;
 import io.github.chaosawakens.common.registry.CAItems;
 import net.minecraft.entity.Entity;
@@ -24,11 +22,12 @@ import net.minecraft.world.World;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
+
+import javax.annotation.Nullable;
 
 public class LavaEelEntity extends AbstractLavaGroupFishEntity implements IAnimatable {
 	private final AnimationFactory factory = new AnimationFactory(this);
@@ -40,6 +39,7 @@ public class LavaEelEntity extends AbstractLavaGroupFishEntity implements IAnima
 		this.setPathfindingMalus(PathNodeType.WATER, -1.0F);
 		this.setPathfindingMalus(PathNodeType.LAVA, 8.0F);
 		this.setPathfindingMalus(PathNodeType.DAMAGE_FIRE, 0.0F);
+		this.setPathfindingMalus(PathNodeType.DANGER_FIRE, 0.0F);
 	}
 
 	@Override
@@ -76,27 +76,27 @@ public class LavaEelEntity extends AbstractLavaGroupFishEntity implements IAnima
 
 	private <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		if (event.isMoving()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.lava_eel.swim", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.lava_eel.swim", true));
 			return PlayState.CONTINUE;
 		}
 		if (!event.isMoving()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.lava_eel.swim", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.lava_eel.swim", true));
 			return PlayState.CONTINUE;
 		}
 		if (this.dead) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.lava_eel.flop", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.lava_eel.flop", true));
 			return PlayState.CONTINUE;
 		}
 		if (this.isSwimming()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.lava_eel.swim", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.lava_eel.swim", true));
 			return PlayState.CONTINUE;
 		}
 		if (this.isDeadOrDying()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.lava_eel.flop", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.lava_eel.flop", true));
 			return PlayState.CONTINUE;
 		}
 		if (this.isInLava()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.lava_eel.swim", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.lava_eel.swim", true));
 			return PlayState.CONTINUE;
 		}
 		return PlayState.CONTINUE;
@@ -115,7 +115,7 @@ public class LavaEelEntity extends AbstractLavaGroupFishEntity implements IAnima
 	@Override
 	public boolean doHurtTarget(Entity livingEntity) {
 		LivingEntity target = this.getTarget();
-		LavaEelEntity attacker = this;
+		LavaEelEntity attacker = (LavaEelEntity) livingEntity;
 		if (target.getLastHurtByMob() == attacker) {
 			if (target instanceof LivingEntity) {
 				float health = attacker.getHealth();

@@ -1,7 +1,6 @@
 package io.github.chaosawakens.common.blocks.tileentities;
 
 import io.github.chaosawakens.common.registry.CABlocks;
-import io.github.chaosawakens.common.registry.CATags;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -155,7 +154,7 @@ public abstract class AbstractCrystalFurnaceContainer extends RecipeBookContaine
 	}
 
 	protected boolean isFuel(ItemStack stack) {
-		return stack.getItem().is(CATags.Items.CRYSTAL_FURNACE_FUEL);
+		return stack.getItem().equals(CABlocks.CRYSTAL_ENERGY.get().asItem());
 	}
 
 	@OnlyIn(Dist.CLIENT)

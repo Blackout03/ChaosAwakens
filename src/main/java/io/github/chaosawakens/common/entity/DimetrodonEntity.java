@@ -36,6 +36,8 @@ import net.minecraft.entity.ai.goal.LookAtGoal;
 import net.minecraft.entity.ai.goal.LookRandomlyGoal;
 import net.minecraft.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.entity.ai.goal.NearestAttackableTargetGoal;
+import net.minecraft.entity.ai.goal.RandomWalkingGoal;
+import net.minecraft.entity.ai.goal.ResetAngerGoal;
 import net.minecraft.entity.ai.goal.SwimGoal;
 import net.minecraft.entity.ai.goal.TemptGoal;
 import net.minecraft.entity.ai.goal.WaterAvoidingRandomWalkingGoal;
@@ -67,7 +69,6 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import software.bernie.geckolib3.core.IAnimatable;
 import software.bernie.geckolib3.core.PlayState;
 import software.bernie.geckolib3.core.builder.AnimationBuilder;
-import software.bernie.geckolib3.core.builder.ILoopType;
 import software.bernie.geckolib3.core.controller.AnimationController;
 import software.bernie.geckolib3.core.event.predicate.AnimationEvent;
 import software.bernie.geckolib3.core.manager.AnimationData;
@@ -119,18 +120,18 @@ public class DimetrodonEntity extends AnimatableAnimalEntity implements IAngerab
 	
 	public <E extends IAnimatable> PlayState predicate(AnimationEvent<E> event) {
 		if (event.isMoving() && !this.isInWater()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.dimetrodon.walking_animation", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.dimetrodon.walking_animation", true));
 			return PlayState.CONTINUE;
 		}
 		if (this.getAttacking()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.dimetrodon.bite_animation", ILoopType.EDefaultLoopTypes.PLAY_ONCE));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.dimetrodon.bite_animation", true));
 			return PlayState.CONTINUE;
 		}
 		if (this.isSwimming() || this.isInWater()) {
-			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.dimetrodon.swim_animation", ILoopType.EDefaultLoopTypes.LOOP));
+			event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.dimetrodon.swim_animation", true));
 			return PlayState.CONTINUE;
 		}
-		event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.dimetrodon.idle_animation", ILoopType.EDefaultLoopTypes.LOOP));
+		event.getController().setAnimation(new AnimationBuilder().addAnimation("animation.dimetrodon.idle_animation", true));
 		return PlayState.CONTINUE;
 	}
 
@@ -236,19 +237,19 @@ public class DimetrodonEntity extends AnimatableAnimalEntity implements IAngerab
 	@Override
 	public void aiStep() {
 		super.aiStep();
-		if (this.getAttacking() && this.getTarget() != null) {
-		//	if (this.getTarget() != null) {
+		if (this.getAttacking()) {
+			if (this.getTarget() != null) {
 				assert this.getTarget() != null;
 				this.lookAt(getTarget(), 100, 100);
 				this.getLookControl().setLookAt(getTarget(), 30F, 30F);
-				if (this.isAngryAt(this.getTarget())) {
+				do {
 					if (this.distanceTo(getTarget()) > AnimatableMeleeGoal.getAttackReachSq(this, getTarget())) this.getNavigation().moveTo(getNavigation().getPath(), 1);
-				}
+				} while (this.isAngryAt(this.getTarget()));
 				if (!this.isAngryAt(this.getTarget()) && !this.getTarget().isDeadOrDying()) {
 					this.setTarget(this.getTarget());
 					this.setRemainingPersistentAngerTime(1200);
 				}
-	//		}
+			}
 		}
 		
 	}

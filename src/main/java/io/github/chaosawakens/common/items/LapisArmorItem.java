@@ -1,7 +1,6 @@
 package io.github.chaosawakens.common.items;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 import io.github.chaosawakens.client.config.CAClientConfig;
 import io.github.chaosawakens.common.config.CACommonConfig;
@@ -18,7 +17,7 @@ import net.minecraft.world.World;
 
 public class LapisArmorItem extends EnchantedArmorItem {
 
-	public LapisArmorItem(IArmorMaterial material, EquipmentSlotType type, Properties properties, Supplier<EnchantmentData[]> enchantments) {
+	public LapisArmorItem(IArmorMaterial material, EquipmentSlotType type, Properties properties, EnchantmentData[] enchantments) {
 		super(material, type, properties, enchantments);
 	}
 	

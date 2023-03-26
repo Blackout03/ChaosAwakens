@@ -1,7 +1,6 @@
 package io.github.chaosawakens.common.items;
 
 import java.util.List;
-import java.util.function.Supplier;
 
 import io.github.chaosawakens.api.IUtilityHelper;
 import io.github.chaosawakens.client.config.CAClientConfig;
@@ -24,7 +23,7 @@ import net.minecraftforge.event.entity.player.PlayerXpEvent;
 
 public class ExperienceArmorItem extends EnchantedArmorItem {
 
-	public ExperienceArmorItem(IArmorMaterial materialIn, EquipmentSlotType slot, Properties builderIn,	Supplier<EnchantmentData[]> enchantments) {
+	public ExperienceArmorItem(IArmorMaterial materialIn, EquipmentSlotType slot, Properties builderIn,	EnchantmentData[] enchantments) {
 		super(materialIn, slot, builderIn, enchantments);
 	}
 	

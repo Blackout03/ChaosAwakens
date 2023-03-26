@@ -1,8 +1,7 @@
 package io.github.chaosawakens.common.util;
 
-import java.util.function.Supplier;
-
 import io.github.chaosawakens.ChaosAwakens;
+
 import io.github.chaosawakens.common.registry.CABlocks;
 import io.github.chaosawakens.common.registry.CAItems;
 import net.minecraft.block.Blocks;
@@ -15,6 +14,8 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.SoundEvents;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
+
+import java.util.function.Supplier;
 
 public class EnumUtils {
 	public enum CAItemTier implements IItemTier {
@@ -215,7 +216,6 @@ public class EnumUtils {
 		ORE_ALL,
 		ORE_RARE,
 		ORE_COMMON,
-		FOSSIL,
-		NONE
+		FOSSIL
 	}
 }

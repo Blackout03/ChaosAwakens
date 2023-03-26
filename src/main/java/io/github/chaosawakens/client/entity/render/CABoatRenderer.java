@@ -22,8 +22,6 @@ public class CABoatRenderer extends EntityRenderer<CABoatEntity> {
 	public static final ResourceLocation CHERRY_BOAT = new ResourceLocation(ChaosAwakens.MODID, "textures/entity/boats/cherry_boat.png");
 	public static final ResourceLocation DUPLICATOR_BOAT = new ResourceLocation(ChaosAwakens.MODID, "textures/entity/boats/duplication_boat.png");
 	public static final ResourceLocation GINKGO_BOAT = new ResourceLocation(ChaosAwakens.MODID, "textures/entity/boats/ginkgo_boat.png");
-	public static final ResourceLocation MESOZOIC_BOAT = new ResourceLocation(ChaosAwakens.MODID, "textures/entity/boats/mesozoic_boat.png");
-	public static final ResourceLocation DENSEWOOD_BOAT = new ResourceLocation(ChaosAwakens.MODID, "textures/entity/boats/densewood_boat.png");
 	public static final ResourceLocation PEACH_BOAT = new ResourceLocation(ChaosAwakens.MODID, "textures/entity/boats/peach_boat.png");
 	public static final ResourceLocation SKYWOOD_BOAT = new ResourceLocation(ChaosAwakens.MODID, "textures/entity/boats/skywood_boat.png");
 	protected final BoatModel model = new BoatModel();
@@ -76,10 +74,6 @@ public class CABoatRenderer extends EntityRenderer<CABoatEntity> {
 			return DUPLICATOR_BOAT;
 		case "ginkgo":
 			return GINKGO_BOAT;
-		case "mesozoic":
-			return MESOZOIC_BOAT;
-		case "densewood":
-			return DENSEWOOD_BOAT;
 		case "peach":
 			return PEACH_BOAT;
 		case "skywood":

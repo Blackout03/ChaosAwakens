@@ -2,6 +2,7 @@ package io.github.chaosawakens.common.util;
 
 import java.util.Random;
 
+
 import javax.annotation.Nullable;
 
 import com.mojang.datafixers.util.Pair;

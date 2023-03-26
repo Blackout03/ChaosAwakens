@@ -1,7 +1,5 @@
 package io.github.chaosawakens.common.items;
 
-import java.util.function.Supplier;
-
 import io.github.chaosawakens.api.IAutoEnchantable;
 import io.github.chaosawakens.common.config.CACommonConfig;
 import net.minecraft.enchantment.EnchantmentData;
@@ -16,9 +14,9 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.world.World;
 
 public class EnchantedArmorItem extends ArmorItem implements IAutoEnchantable {
-	private final Supplier<EnchantmentData[]> enchantments;
+	private final EnchantmentData[] enchantments;
 
-	public EnchantedArmorItem(IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties builderIn, Supplier<EnchantmentData[]> enchantments) {
+	public EnchantedArmorItem(IArmorMaterial materialIn, EquipmentSlotType slot, Item.Properties builderIn, EnchantmentData[] enchantments) {
 		super(materialIn, slot, builderIn);
 		this.enchantments = enchantments;
 	}
@@ -28,7 +26,7 @@ public class EnchantedArmorItem extends ArmorItem implements IAutoEnchantable {
 		if (allowdedIn(group)) {
 			ItemStack stack = new ItemStack(this);
 			if (CACommonConfig.COMMON.enableAutoEnchanting.get()) {
-				for (EnchantmentData enchant : enchantments.get()) {
+				for (EnchantmentData enchant : enchantments) {
 					stack.enchant(enchant.enchantment, enchant.level);
 				}
 			}
@@ -39,7 +37,7 @@ public class EnchantedArmorItem extends ArmorItem implements IAutoEnchantable {
 	@Override
 	public void onCraftedBy(ItemStack itemStack, World world, PlayerEntity playerEntity) {
 		if (CACommonConfig.COMMON.enableAutoEnchanting.get()) {
-			for (EnchantmentData enchant : enchantments.get()) {
+			for (EnchantmentData enchant : enchantments) {
 				itemStack.enchant(enchant.enchantment, enchant.level);
 			}
 		}
@@ -52,6 +50,6 @@ public class EnchantedArmorItem extends ArmorItem implements IAutoEnchantable {
 
 	@Override
 	public EnchantmentData[] enchantments() {
-		return this.enchantments.get();
+		return this.enchantments;
 	}
 }

@@ -1,9 +1,5 @@
 package io.github.chaosawakens.common.blocks;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.DirectionalBlock;
@@ -24,6 +20,10 @@ import net.minecraft.util.math.shapes.VoxelShapes;
 import net.minecraft.world.IBlockReader;
 import net.minecraft.world.IWorldReader;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
+
 public class CrystalClusterBlock extends DirectionalBlock {
 	public static final IntegerProperty AGE = BlockStateProperties.AGE_3;
 	protected static final Map<String, VoxelShape> SHAPES = Util.make(new HashMap<>(), (map) -> {
@@ -35,12 +35,12 @@ public class CrystalClusterBlock extends DirectionalBlock {
 		map.put("[age=1,facing=down]", Block.box(5.0D, 9.0D, 5.0D, 11.0D, 16.0D, 11.0D));
 		map.put("[age=2,facing=down]", Block.box(4.0D, 6.0D, 4.0D, 12.0D, 16.0D, 12.0D));
 		map.put("[age=3,facing=down]", Block.box(3.0D, 4.0D, 3.0D, 13.0D, 16.0D, 13.0D));
-		map.put("[age=0,facing=north]", Block.box(5.0D, 5.0D, 10.0D, 11.0D, 11.0D, 16.0D));
+		map.put("[age=0,facing=north]", Block.box(5.0D, 10.0D, 5.0D, 10.0D, 16.0D, 10.0D));
 		map.put("[age=1,facing=north]", Block.box(5.0D, 5.0D, 9.0D, 11.0D, 11.0D, 16.0D));
 		map.put("[age=2,facing=north]", Block.box(4.0D, 4.0D, 6.0D, 12.0D, 12.0D, 16.0D));
 		map.put("[age=3,facing=north]", Block.box(3.0D, 3.0D, 4.0D, 13.0D, 13.0D, 16.0D));
 		map.put("[age=0,facing=south]", Block.box(5.0D, 5.0D, 0.0D, 10.0D, 10.0D, 6.0D));
-		map.put("[age=1,facing=south]", Block.box(5.0D, 5.0D, 0.0D, 11.0D, 11.0D, 7.0D));
+		map.put("[age=1,facing=south]", Block.box(5.0D, 5.0D, 0.0D, 11.0D, 7.0D, 11.0D));
 		map.put("[age=2,facing=south]", Block.box(4.0D, 4.0D, 0.0D, 12.0D, 12.0D, 10.0D));
 		map.put("[age=3,facing=south]", Block.box(3.0D, 3.0D, 0.0D, 13.0D, 13.0D, 12.0D));
 		map.put("[age=0,facing=east]", Block.box(0.0D, 5.0D, 5.0D, 6.0D, 10.0D, 10.0D));

@@ -2,6 +2,7 @@ package io.github.chaosawakens.common.entity.ai;
 
 import java.util.EnumSet;
 
+
 import javax.annotation.Nullable;
 
 import net.minecraft.entity.CreatureEntity;

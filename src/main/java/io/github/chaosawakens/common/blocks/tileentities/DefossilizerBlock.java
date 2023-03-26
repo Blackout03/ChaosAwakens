@@ -1,7 +1,6 @@
 package io.github.chaosawakens.common.blocks.tileentities;
 
-import javax.annotation.Nullable;
-
+import io.github.chaosawakens.ChaosAwakens;
 import io.github.chaosawakens.common.registry.CABlocks;
 import io.github.chaosawakens.common.registry.CAStats;
 import net.minecraft.block.Block;
@@ -25,6 +24,8 @@ import net.minecraft.world.IBlockReader;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.network.NetworkHooks;
 
+import javax.annotation.Nullable;
+
 @SuppressWarnings("unused")
 public class DefossilizerBlock extends Block {
 	public static final DirectionProperty FACING = HorizontalBlock.FACING;
@@ -46,9 +47,6 @@ public class DefossilizerBlock extends Block {
 		}
 		if (state.is(CABlocks.DEFOSSILIZER_BLOCKS.get(CABlocks.DefossilizerType.byId(CABlocks.DefossilizerType.IRON.getId())).get())) {
 			return new DefossilizerIronTileEntity();
-		}
-		if (state.is(CABlocks.DEFOSSILIZER_BLOCKS.get(CABlocks.DefossilizerType.byId(CABlocks.DefossilizerType.CRYSTAL.getId())).get())) {
-			return new DefossilizerCrystalTileEntity();
 		}
 		return null;
 	}
@@ -72,10 +70,6 @@ public class DefossilizerBlock extends Block {
 			DefossilizerIronTileEntity te = (DefossilizerIronTileEntity) tileEntity;
 			NetworkHooks.openGui((ServerPlayerEntity) player, te, te::encodeExtraData);
 		}
-		if (world.getBlockState(pos).is(CABlocks.DEFOSSILIZER_BLOCKS.get(CABlocks.DefossilizerType.byId(CABlocks.DefossilizerType.CRYSTAL.getId())).get()) && tileEntity instanceof DefossilizerCrystalTileEntity) {
-			DefossilizerCrystalTileEntity te = (DefossilizerCrystalTileEntity) tileEntity;
-			NetworkHooks.openGui((ServerPlayerEntity) player, te, te::encodeExtraData);
-		}
 	}
 
 	@Nullable
@@ -94,10 +88,6 @@ public class DefossilizerBlock extends Block {
 				world.updateNeighbourForOutputSignal(pos, this);
 			}
 			if (state.is(CABlocks.DEFOSSILIZER_BLOCKS.get(CABlocks.DefossilizerType.byId(CABlocks.DefossilizerType.IRON.getId())).get()) && tileEntity instanceof DefossilizerIronTileEntity) {
-				InventoryHelper.dropContents(world, pos, (IInventory) tileEntity);
-				world.updateNeighbourForOutputSignal(pos, this);
-			}
-			if (state.is(CABlocks.DEFOSSILIZER_BLOCKS.get(CABlocks.DefossilizerType.byId(CABlocks.DefossilizerType.CRYSTAL.getId())).get()) && tileEntity instanceof DefossilizerCrystalTileEntity) {
 				InventoryHelper.dropContents(world, pos, (IInventory) tileEntity);
 				world.updateNeighbourForOutputSignal(pos, this);
 			}
