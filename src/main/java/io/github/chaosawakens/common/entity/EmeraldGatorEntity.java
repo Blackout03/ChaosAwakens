@@ -3,10 +3,12 @@ package io.github.chaosawakens.common.entity;
 import io.github.chaosawakens.common.entity.base.AnimatableAnimalEntity;
 import io.github.chaosawakens.common.registry.CAEntityTypes;
 import io.github.chaosawakens.common.registry.CASoundEvents;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.passive.AnimalEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.projectile.AbstractArrowEntity;
 import net.minecraft.item.ItemStack;
@@ -20,7 +22,9 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.RangedInteger;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.TickRangeConverter;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.vector.Vector3d;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
@@ -34,6 +38,7 @@ import software.bernie.geckolib3.core.manager.AnimationData;
 import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 import java.util.UUID;
 
 public class EmeraldGatorEntity extends AnimatableAnimalEntity implements IAngerable {
@@ -97,6 +102,10 @@ public class EmeraldGatorEntity extends AnimatableAnimalEntity implements IAnger
 		this.targetSelector.addGoal(3, new HurtByTargetGoal(this));
 		this.targetSelector.addGoal(4, new NearestAttackableTargetGoal<>(this, PlayerEntity.class, 10, true, false, this::isAngryAt));
 		this.targetSelector.addGoal(8, new ResetAngerGoal<>(this, true));
+	}
+
+	public static boolean checkEmeraldGatorSpawnRules(EntityType<? extends EmeraldGatorEntity> entityType, IWorld world, SpawnReason spawnReason, BlockPos blockPos, Random random) {
+		return (world.getBlockState(blockPos.below()).is(Blocks.GRASS_BLOCK) || world.getBlockState(blockPos.below()).is(Blocks.STONE)) && world.getRawBrightness(blockPos, 0) > 8 && world.canSeeSky(blockPos);
 	}
 
 	public boolean isFood(ItemStack stack) {

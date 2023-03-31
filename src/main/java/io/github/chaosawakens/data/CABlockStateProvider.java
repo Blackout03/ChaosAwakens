@@ -39,6 +39,9 @@ public class CABlockStateProvider extends BlockStateProvider {
 
 	@Override
 	protected void registerStatesAndModels() {
+		// April Fools
+		this.simpleBlock(CABlocks.CHERRY_COBBLESTONE.get());
+
 		this.cubeBottomTopBlock(CABlocks.DENSE_GRASS_BLOCK.get(), chaosRL("dense_grass_block_side"), chaosRL("dense_dirt"), chaosRL("dense_grass_block_top"));
 		this.simpleBlock(CABlocks.DENSE_DIRT.get());
 		this.cubeBottomTopBlock(CABlocks.DENSE_RED_ANT_NEST.get(), chaosRL("dense_grass_block_side"), chaosRL("dense_dirt"), chaosRL("dense_red_ant_nest"));

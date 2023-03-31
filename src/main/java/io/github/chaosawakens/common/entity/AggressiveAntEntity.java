@@ -9,6 +9,7 @@ import net.minecraft.entity.MobEntity;
 import net.minecraft.entity.ai.attributes.AttributeModifierMap;
 import net.minecraft.entity.ai.attributes.Attributes;
 import net.minecraft.entity.ai.goal.*;
+import net.minecraft.entity.item.ExperienceOrbEntity;
 import net.minecraft.entity.monster.MonsterEntity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.entity.player.ServerPlayerEntity;
@@ -21,6 +22,7 @@ import net.minecraft.util.Hand;
 import net.minecraft.util.RegistryKey;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
+import net.minecraft.world.GameRules;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.common.ForgeConfigSpec.ConfigValue;
@@ -34,6 +36,7 @@ import software.bernie.geckolib3.core.manager.AnimationFactory;
 
 public class AggressiveAntEntity extends MonsterEntity implements IAnimatable {
 	private final AnimationFactory factory = new AnimationFactory(this);
+	private final ITextComponent inaccessibleMessage = new TranslationTextComponent("misc." + ChaosAwakens.MODID + ".inaccessible_dimension");
 	private final ITextComponent emptyInventoryMessage = new TranslationTextComponent("misc." + ChaosAwakens.MODID + ".empty_inventory");
 	private final ConfigValue<Boolean> tpConfig;
 	private final RegistryKey<World> targetDimension;
@@ -47,10 +50,10 @@ public class AggressiveAntEntity extends MonsterEntity implements IAnimatable {
 
 	public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
 		return MobEntity.createLivingAttributes()
-				.add(Attributes.MAX_HEALTH, 2)
+				.add(Attributes.MAX_HEALTH, 60)
 				.add(Attributes.ATTACK_SPEED, 1)
 				.add(Attributes.MOVEMENT_SPEED, 0.15D)
-				.add(Attributes.ATTACK_DAMAGE, 1)
+				.add(Attributes.ATTACK_DAMAGE, 5)
 				.add(Attributes.ATTACK_KNOCKBACK, 0.5D)
 				.add(Attributes.FOLLOW_RANGE, 8);
 	}
@@ -84,23 +87,28 @@ public class AggressiveAntEntity extends MonsterEntity implements IAnimatable {
 		ItemStack itemstack = playerIn.getItemInHand(hand);
 
 		if (tpConfig.get() && !this.level.isClientSide && itemstack.getItem() == Items.AIR) {
-			if (CACommonConfig.COMMON.crystalWorldRequiresEmptyInventory.get()
-					&& playerIn.level.dimension() != CADimensions.CRYSTAL_WORLD
-					&& targetDimension == CADimensions.CRYSTAL_WORLD) {
-				if (playerIn.inventory.isEmpty() || playerIn.isCreative()) {
+			if (targetDimension == null) {
+				playerIn.displayClientMessage(this.inaccessibleMessage, true);
+				return ActionResultType.PASS;
+			} else {
+				if (CACommonConfig.COMMON.crystalWorldRequiresEmptyInventory.get()
+						&& playerIn.level.dimension() != CADimensions.CRYSTAL_WORLD
+						&& targetDimension == CADimensions.CRYSTAL_WORLD) {
+					if (playerIn.inventory.isEmpty() || playerIn.isCreative()) {
+						MinecraftServer minecraftServer = ((ServerWorld) this.level).getServer();
+						ServerWorld targetWorld = minecraftServer.getLevel(this.level.dimension() == this.targetDimension ? World.OVERWORLD : this.targetDimension);
+						ServerPlayerEntity serverPlayer = (ServerPlayerEntity) playerIn;
+						if (targetWorld != null) serverPlayer.changeDimension(targetWorld, new HeightmapTeleporter());
+					} else {
+						playerIn.displayClientMessage(this.emptyInventoryMessage, true);
+						return ActionResultType.PASS;
+					}
+				} else {
 					MinecraftServer minecraftServer = ((ServerWorld) this.level).getServer();
 					ServerWorld targetWorld = minecraftServer.getLevel(this.level.dimension() == this.targetDimension ? World.OVERWORLD : this.targetDimension);
 					ServerPlayerEntity serverPlayer = (ServerPlayerEntity) playerIn;
 					if (targetWorld != null) serverPlayer.changeDimension(targetWorld, new HeightmapTeleporter());
-				} else {
-					playerIn.displayClientMessage(this.emptyInventoryMessage, true);
-					return ActionResultType.PASS;
 				}
-			} else {
-				MinecraftServer minecraftServer = ((ServerWorld) this.level).getServer();
-				ServerWorld targetWorld = minecraftServer.getLevel(this.level.dimension() == this.targetDimension ? World.OVERWORLD : this.targetDimension);
-				ServerPlayerEntity serverPlayer = (ServerPlayerEntity) playerIn;
-				if (targetWorld != null) serverPlayer.changeDimension(targetWorld, new HeightmapTeleporter());
 			}
 		}
 		return super.mobInteract(playerIn, hand);
@@ -121,8 +129,18 @@ public class AggressiveAntEntity extends MonsterEntity implements IAnimatable {
 	}
 
 	@Override
-	protected boolean shouldDropExperience() {
-		return false;
+	protected void dropExperience() {
+		if (!this.level.isClientSide && (this.isAlwaysExperienceDropper() || this.lastHurtByPlayerTime > 0 && this.shouldDropExperience() && this.level.getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT))) {
+			assert this.lastHurtByPlayer != null;
+			int i = this.getExperienceReward(this.lastHurtByPlayer);
+
+			i = net.minecraftforge.event.ForgeEventFactory.getExperienceDrop(this, this.lastHurtByPlayer, i);
+			while(i > 0) {
+				int j = ExperienceOrbEntity.getExperienceValue(i * 15);
+				i -= j;
+				this.level.addFreshEntity(new ExperienceOrbEntity(this.level, this.getX(), this.getY(), this.getZ(), j));
+			}
+		}
 	}
 
 	@Override

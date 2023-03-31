@@ -63,6 +63,8 @@ public class CABlockModelProvider extends BlockModelProvider {
 				this.gateBlock(name, chaosRL("gate_block_top"));
 			}
 		}
+		// April Fools
+		this.cubeAll("cherry_cobblestone", chaosRL("cherry_cobblestone"));
 
 		this.orientable("copper_defossilizer", chaosRL("copper_block"), chaosRL("copper_defossilizer_front"), chaosRL("copper_defossilizer_top"));
 		this.orientable("iron_defossilizer", mcRL("iron_block"), chaosRL("iron_defossilizer_front"), chaosRL("iron_defossilizer_top"));

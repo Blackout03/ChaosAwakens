@@ -53,6 +53,9 @@ public class CATagProvider extends BlockTagsProvider {
 			this.tag(CATags.Blocks.CRYSTAL_SAPLING).add(CABlocks.RED_CRYSTAL_SAPLING.get(), CABlocks.GREEN_CRYSTAL_SAPLING.get(), CABlocks.YELLOW_CRYSTAL_SAPLING.get());
 			this.tag(CATags.Blocks.RUBY_ORES).add(CABlocks.RUBY_ORE.get(), CABlocks.NETHERRACK_RUBY_ORE.get(), CABlocks.BLACKSTONE_RUBY_ORE.get());
 
+			this.tag(CATags.Blocks.CHERRY_FIRE_BASE_BLOCKS).add(CABlocks.CHERRY_COBBLESTONE.get());
+			this.tag(BlockTags.CAMPFIRES).add(CABlocks.CHERRY_CAMPFIRE.get());
+
 			this.tag(CATags.Blocks.BASE_STONE_CRYSTAL).add(CABlocks.KYANITE.get());
 			this.tag(CATags.Blocks.BASE_STONE_MINING).addTags(BlockTags.BASE_STONE_OVERWORLD);
 			this.tag(CATags.Blocks.BASE_STONE_VILLAGE).addTags(BlockTags.BASE_STONE_OVERWORLD);
@@ -107,6 +110,8 @@ public class CATagProvider extends BlockTagsProvider {
 
 		@Override
 		protected void addTags() {
+			this.tag(CATags.Items.UNDROPPABLE).add(Blocks.BEDROCK.asItem(), Blocks.BARRIER.asItem(), Blocks.COMMAND_BLOCK.asItem(), Blocks.CHAIN_COMMAND_BLOCK.asItem(), Blocks.REPEATING_COMMAND_BLOCK.asItem(), Blocks.STRUCTURE_BLOCK.asItem(), Blocks.STRUCTURE_VOID.asItem(), Blocks.JIGSAW.asItem(), Items.DEBUG_STICK, CAItems.ENDER_DRAGON_SPAWN_EGG.get(), CAItems.WITHER_SPAWN_EGG.get(), CAItems.DEV_ITEM1.get(), CAItems.DEV_ITEM16.get(), CAItems.DEV_ITEM64.get(), CAItems.DEV_ITEM_DAMAGE.get());
+
 			this.tag(CATags.Items.APPLE_LOGS).add(CABlocks.APPLE_LOG.get().asItem(), CABlocks.STRIPPED_APPLE_LOG.get().asItem(), CABlocks.APPLE_WOOD.get().asItem(), CABlocks.STRIPPED_APPLE_WOOD.get().asItem());
 			this.tag(CATags.Items.CHERRY_LOGS).add(CABlocks.CHERRY_LOG.get().asItem(), CABlocks.STRIPPED_CHERRY_LOG.get().asItem(), CABlocks.CHERRY_WOOD.get().asItem(), CABlocks.STRIPPED_CHERRY_WOOD.get().asItem());
 			this.tag(CATags.Items.DUPLICATION_LOGS).add(CABlocks.DUPLICATION_LOG.get().asItem(), CABlocks.STRIPPED_DUPLICATION_LOG.get().asItem(), CABlocks.DEAD_DUPLICATION_LOG.get().asItem(), CABlocks.DUPLICATION_WOOD.get().asItem(), CABlocks.STRIPPED_DUPLICATION_WOOD.get().asItem(), CABlocks.DEAD_DUPLICATION_WOOD.get().asItem());
@@ -125,6 +130,8 @@ public class CATagProvider extends BlockTagsProvider {
 			this.tag(CATags.Items.INGOTS).add(CAItems.ALUMINUM_INGOT.get(), CAItems.TITANIUM_INGOT.get(), CAItems.URANIUM_INGOT.get(), CAItems.CATS_EYE_INGOT.get(), CAItems.PINK_TOURMALINE_INGOT.get());
 			this.tag(CATags.Items.MINERAL_LUMPS).add(CAItems.COPPER_LUMP.get(), CAItems.PLATINUM_LUMP.get(), CAItems.SILVER_LUMP.get(), CAItems.TIN_LUMP.get());
 			this.tag(CATags.Items.RUBY_ORES).add(CABlocks.RUBY_ORE.get().asItem(), CABlocks.NETHERRACK_RUBY_ORE.get().asItem(), CABlocks.BLACKSTONE_RUBY_ORE.get().asItem());
+			this.tag(CATags.Items.CHERRY_FIRE_BASE_BLOCKS).add(CABlocks.CHERRY_COBBLESTONE.get().asItem());
+
 			this.tag(CATags.Items.LEAF_CARPETS).add(CABlocks.ACACIA_LEAF_CARPET.get().asItem(), CABlocks.BIRCH_LEAF_CARPET.get().asItem(), CABlocks.DARK_OAK_LEAF_CARPET.get().asItem(), CABlocks.JUNGLE_LEAF_CARPET.get().asItem(), CABlocks.OAK_LEAF_CARPET.get().asItem(), CABlocks.SPRUCE_LEAF_CARPET.get().asItem(), CABlocks.APPLE_LEAF_CARPET.get().asItem(), CABlocks.CHERRY_LEAF_CARPET.get().asItem(), CABlocks.DUPLICATION_LEAF_CARPET.get().asItem(), CABlocks.GINKGO_LEAF_CARPET.get().asItem(), CABlocks.PEACH_LEAF_CARPET.get().asItem(), CABlocks.SKYWOOD_LEAF_CARPET.get().asItem());
 
 			this.tag(ItemTags.LOGS).addTags(CATags.Items.DUPLICATION_LOGS);

@@ -34,6 +34,8 @@ public class CATags {
 		public static final ITag.INamedTag<Block> CRYSTAL_SAPLING = tag("crystal_sapling");
 		public static final ITag.INamedTag<Block> RUBY_ORES = tag("ruby_ores");
 
+		public static final ITag.INamedTag<Block> CHERRY_FIRE_BASE_BLOCKS = tag("cherry_fire_base_blocks");
+
 		public static final ITag.INamedTag<Block> WHITELIST = tag("whitelist");
 		public static final ITag.INamedTag<Block> BLACKLIST = tag("blacklist");
 	}
@@ -42,6 +44,8 @@ public class CATags {
 		public static ITag.INamedTag<Item> tag(String name) {
 			return ItemTags.bind(ChaosAwakens.MODID + ":" + name);
 		}
+
+		public static final ITag.INamedTag<Item> UNDROPPABLE = tag("undroppable");
 
 		public static final ITag.INamedTag<Item> APPLE_LOGS = tag("apple_logs");
 		public static final ITag.INamedTag<Item> CHERRY_LOGS = tag("cherry_logs");
@@ -53,6 +57,7 @@ public class CATags {
 		public static final ITag.INamedTag<Item> CRYSTAL_LEAVES = tag("crystal_leaves");
 		public static final ITag.INamedTag<Item> CRYSTAL_SAPLING = tag("crystal_sapling");
 		public static final ITag.INamedTag<Item> ULTIMATE_GEAR_HANDLES = tag("ultimate_gear_handles");
+
 		public static final ITag.INamedTag<Item> FISH = tag("fish");
 		public static final ITag.INamedTag<Item> GEMSTONES = tag("gemstones");
 		public static final ITag.INamedTag<Item> NUGGETS = tag("nuggets");
@@ -62,6 +67,9 @@ public class CATags {
 		public static final ITag.INamedTag<Item> RUBY_ORES = tag("ruby_ores");
 		public static final ITag.INamedTag<Item> SEEDS = tag("seeds");
 		public static final ITag.INamedTag<Item> LEAF_CARPETS = tag("leaf_carpets");
+
+		public static final ITag.INamedTag<Item> CHERRY_FIRE_BASE_BLOCKS = tag("cherry_fire_base_blocks");
+
 		public static final ITag.INamedTag<Item> FOSSILS = tag("fossils");
 		public static final ITag.INamedTag<Item> FOSSILS_STONE = tag("fossils/stone");
 		public static final ITag.INamedTag<Item> FOSSILS_STONE_VANILLA = tag("fossils/stone/vanilla");
@@ -101,6 +109,7 @@ public class CATags {
 		public static final ITag.INamedTag<Item> ARCHAEOLOGIST_SPAWN_EGGS_UNCOMMON = tag("villager_trades/archaeologist/spawn_eggs/uncommon");
 		public static final ITag.INamedTag<Item> ARCHAEOLOGIST_SPAWN_EGGS_RARE = tag("villager_trades/archaeologist/spawn_eggs/rare");
 		public static final ITag.INamedTag<Item> ARCHAEOLOGIST_SPAWN_EGGS_EPIC = tag("villager_trades/archaeologist/spawn_eggs/epic");
+
 		public static final ITag.INamedTag<Item> SPAWNER_SPAWN_EGGS = tag("spawner_spawn_eggs");
 	}
 

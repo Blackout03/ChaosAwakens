@@ -3,19 +3,22 @@
 	"package": "io.github.chaosawakens.mixins",
 	"compatibilityLevel": "JAVA_8",
 	"mixins": [
-		"RabbitEntityMixin",
-		"SpawnEggItemMixin",
-		"LivingEntityMixin",
-		"VillagerEntityMixin",
+		"AbstractFireBlockMixin",
 		"IForgeBlockMixin",
-		"PlayerAdvancementMixin",
-		"WolfEntityMixin",
+		"LivingEntityMixin",
 		"NoiseChunkGeneratorAccessor",
 		"NoiseChunkGeneratorMixin",
-		"PlayerEntityMixin"
+		"PlayerAdvancementMixin",
+		"PlayerEntityMixin",
+		"RabbitEntityMixin",
+		"ServerWorldInfoMixin",
+		"SpawnEggItemMixin",
+		"VillagerEntityMixin",
+		"WolfEntityMixin"
 	],
 	"client": [
-		"RabbitEntityRendererMixin"
+		"RabbitEntityRendererMixin",
+		"SplashesMixin"
 	],
 	"refmap": "chaosawakens.refmap.json",
 	"injectors": {

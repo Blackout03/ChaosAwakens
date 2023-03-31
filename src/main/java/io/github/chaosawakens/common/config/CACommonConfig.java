@@ -32,6 +32,7 @@ public class CACommonConfig {
 	}
 
 	public static class Common {
+		public final ConfigValue<Integer> roseSwordDamage;
 		public final ConfigValue<Integer> ultimateSwordDamage;
 		public final ConfigValue<Integer> ultimateAxeDamage;
 		public final ConfigValue<Integer> ultimatePickaxeDamage;
@@ -220,6 +221,9 @@ public class CACommonConfig {
 		public final ConfigValue<AITargetingSystemType> herculesBeetleTargetingSystemType;
 
 		Common(ForgeConfigSpec.Builder builder) {
+			builder.push("April Fools");
+			roseSwordDamage = builder.define("Damage of the Rose Sword", 10);
+			builder.pop();
 			builder.push("Log messages");
 			terraforgedCheckMsg = builder.define("Terraforged check message active", true);
 			builder.pop();
@@ -516,7 +520,7 @@ public class CACommonConfig {
 							+ "BLOCK_CHAOS_AWAKENS - Only Spawn Eggs from Chaos Awakens will be blocked from being used on a Spawner in Survival."
 							+ "TAG_BLACKLISTED - Only Spawn Eggs which aren't tagged with the 'SPAWNER_SPAWN_EGG' tag can be used on a Spawner in Survival."
 							+ "TAG_WHITELISTED - Only Spawn Eggs which are tagged with the 'SPAWNER_SPAWN_EGG' tag can be used on a Spawner in Survival.")
-					.define("Spawn Eggs on Spawners in Survival?", SurvivalSpawnerManipulationType.NO_BLOCKING);
+					.define("Spawn Eggs on Spawners in Survival?", SurvivalSpawnerManipulationType.BLOCK_ALL);
 			builder.pop();
 			builder.pop();
 			builder.push("World Generation");
@@ -580,14 +584,14 @@ public class CACommonConfig {
 					.comment("Will Wasp Nests be generated?")
 					.define("Generate Wasp Nests", true);
 			builder.pop();
-			builder.push("Dimensioms");
+			builder.push("Dimensions");
 			builder.push("Mining Paradise");
 			builder.push("Biomes");
 			builder.push("Stalagmite Valley");
 			enableStalagmiteOreGen = builder
 					.comment("Enable/Disable ores generating on the stalagmites in Stalagmite Valley. Note that this may require a more powerful computer, \n"
 							+ "until further optimization is made.")
-					.define("Enable Stalamite Ore Gen", true);
+					.define("Enable Stalagmite Ore Gen", false);
 			builder.pop();
 			builder.pop();
 			builder.pop();

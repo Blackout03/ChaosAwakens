@@ -110,6 +110,24 @@ public class CAAdvancementProvider extends AdvancementProvider {
 				.addCriterion("root", PositionTrigger.Instance.located(LocationPredicate.ANY))
 				.save(t, advancementId("root"));
 
+		// April Fools Advancements | Start
+		ChaosAwakens.LOGGER.warn(ChaosAwakens.MODNAME + ": April Fools Advancements | Start");
+		Advancement cyanRoseSword = registerAdvancement("cyan_rose_sword", FrameType.GOAL, CAItems.CYAN_ROSE_SWORD.get()).parent(root).addCriterion("cyan_rose_sword",
+				InventoryChangeTrigger.Instance.hasItems(CAItems.CYAN_ROSE_SWORD.get())).save(t, advancementId("cyan_rose_sword"));
+		Advancement redRoseSword = registerAdvancement("red_rose_sword", FrameType.GOAL, CAItems.RED_ROSE_SWORD.get()).parent(root).addCriterion("red_rose_sword",
+				InventoryChangeTrigger.Instance.hasItems(CAItems.RED_ROSE_SWORD.get())).save(t, advancementId("red_rose_sword"));
+		Advancement crystalRoseSword = registerAdvancement("crystal_rose_sword", FrameType.GOAL, CAItems.CRYSTAL_ROSE_SWORD.get()).parent(root).addCriterion("crystal_rose_sword",
+				InventoryChangeTrigger.Instance.hasItems(CAItems.CRYSTAL_ROSE_SWORD.get())).save(t, advancementId("crystal_rose_sword"));
+
+		Advancement antAnnihilator = registerAdvancement("ant_annihilator", FrameType.TASK, CAItems.UNSTABLE_ANT_SPAWN_EGG.get()).parent(root).addCriterion("brown_ant",
+				KilledTrigger.Instance.playerKilledEntity(EntityPredicate.Builder.entity().of(CAEntityTypes.BROWN_ANT.get()))).addCriterion("rainbow_ant",
+				KilledTrigger.Instance.playerKilledEntity(EntityPredicate.Builder.entity().of(CAEntityTypes.RAINBOW_ANT.get()))).addCriterion("red_ant",
+				KilledTrigger.Instance.playerKilledEntity(EntityPredicate.Builder.entity().of(CAEntityTypes.RED_ANT.get()))).addCriterion("unstable_ant",
+				KilledTrigger.Instance.playerKilledEntity(EntityPredicate.Builder.entity().of(CAEntityTypes.UNSTABLE_ANT.get()))).addCriterion("termite",
+				KilledTrigger.Instance.playerKilledEntity(EntityPredicate.Builder.entity().of(CAEntityTypes.TERMITE.get()))).save(t, advancementId("ant_annihilator"));
+		// April Fools Advancements | End
+		ChaosAwakens.LOGGER.warn(ChaosAwakens.MODNAME + ": April Fools Advancements | End");
+
 		// ARMOR
 		// Cat's Eye Armor
 		Advancement catsEyeArmor = registerAdvancement("cats_eye_armor", FrameType.TASK, CAItems.CATS_EYE_CHESTPLATE.get()).parent(root)

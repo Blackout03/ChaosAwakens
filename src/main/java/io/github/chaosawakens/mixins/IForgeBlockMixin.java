@@ -16,7 +16,6 @@ import net.minecraftforge.common.extensions.IForgeBlock;
 
 @Mixin(IForgeBlock.class)
 public interface IForgeBlockMixin {
-	
 	@Overwrite(remap = false)
 	default float getEnchantPowerBonus(BlockState state, IWorldReader world, BlockPos pos) {		
 		if (!world.isClientSide()) {
@@ -30,5 +29,4 @@ public interface IForgeBlockMixin {
 		}	
 		return state.is(Blocks.BOOKSHELF) ? 1 : 0;
 	}
-
 }

@@ -100,14 +100,13 @@ public class EntEntity extends AnimatableMonsterEntity implements IEntityAdditio
 
 	public static AttributeModifierMap.MutableAttribute setCustomAttributes() {
 		return MobEntity.createLivingAttributes()
-				.add(Attributes.MAX_HEALTH, 150)
-				.add(Attributes.ARMOR, 8)
-				.add(Attributes.MOVEMENT_SPEED, 0.15D)
+				.add(Attributes.MAX_HEALTH, 15)
+				.add(Attributes.MOVEMENT_SPEED, 0.3D)
 				.add(Attributes.KNOCKBACK_RESISTANCE, 0.5D)
 	//			.add(Attributes.ATTACK_SPEED, 10)
-				.add(Attributes.ATTACK_DAMAGE, 15)
-				.add(Attributes.ATTACK_KNOCKBACK, 3.5D)
-				.add(Attributes.FOLLOW_RANGE, 54);
+				.add(Attributes.ATTACK_DAMAGE, 2.5D)
+				.add(Attributes.ATTACK_KNOCKBACK, 0.35D)
+				.add(Attributes.FOLLOW_RANGE, 24);
 	}
 	
 	public <E extends IAnimatable> PlayState deathPredicate(AnimationEvent<E> event) {
@@ -164,7 +163,7 @@ public class EntEntity extends AnimatableMonsterEntity implements IEntityAdditio
 		this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, VillagerEntity.class, true));
 		this.goalSelector.addGoal(2, new WaterAvoidingRandomWalkingGoal(this, 1.0D, 8.0F));
 	}
-	
+
 	@Override
 	protected void defineSynchedData() {
 		super.defineSynchedData();

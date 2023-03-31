@@ -46,6 +46,13 @@ public class CABlockLootTables extends BlockLootTables {
 
 	@Override
 	protected void addTables() {
+		// April Fools
+		dropSelf(CABlocks.CHERRY_COBBLESTONE.get());
+		add(CABlocks.CHERRY_FIRE.get(), noDrop());
+		add(CABlocks.CHERRY_CAMPFIRE.get(), (p_218538_0_) -> createSilkTouchDispatchTable(p_218538_0_, applyExplosionCondition(p_218538_0_, ItemLootEntry.lootTableItem(CABlocks.CHERRY_COBBLESTONE.get()).apply(SetCount.setCount(ConstantRange.exactly(1))))));
+		dropSelf(CABlocks.CHERRY_LANTERN.get());
+		add(CABlocks.CHERRY_TORCH.get(), (block) -> createSingleItemTable(CABlocks.CHERRY_TORCH.get()));
+
 		// Ores
 		add(CABlocks.AMETHYST_ORE.get(), (ore) -> createOreDrop(ore, CAItems.AMETHYST.get()));
 		add(CABlocks.BLOODSTONE_ORE.get(), (ore) -> createOreDrop(ore, CAItems.BLOODSTONE.get()));

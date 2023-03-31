@@ -32,26 +32,18 @@ public class EntEntityModel extends AnimatedTickingGeoModel<EntEntity> {
 		return new ResourceLocation(ChaosAwakens.MODID, "animations/ent.animation.json");
 	}
 
-	@SuppressWarnings({ "unchecked", "unused" })
+	@SuppressWarnings("unchecked")
 	@Override
 	public void setLivingAnimations(EntEntity entity, Integer uniqueID, @SuppressWarnings("rawtypes") AnimationEvent customPredicate) {
 		super.setLivingAnimations(entity, uniqueID, customPredicate);
 
+		IBone root = this.getAnimationProcessor().getBone("root");
 		IBone head = this.getAnimationProcessor().getBone("Head");
-		
-		IBone rightLeg = this.getAnimationProcessor().getBone("Right_Leg");
-		IBone rightArm = this.getAnimationProcessor().getBone("RightArm");
-		
-		IBone leftLeg = this.getAnimationProcessor().getBone("Left_Leg");
-		IBone leftArm = this.getAnimationProcessor().getBone("LeftArm");
-		
 		EntityModelData extraData = (EntityModelData) customPredicate.getExtraDataOfType(EntityModelData.class).get(0);
+		root.setScaleX(0.1f);
+		root.setScaleY(0.1f);
+		root.setScaleZ(0.1f);
 		head.setRotationX((extraData.headPitch) * ((float) Math.PI / 180F));
 		head.setRotationY((extraData.netHeadYaw) * ((float) Math.PI / 270F));
-	}
-	
-	@Override
-	public void codeAnimations(EntEntity entity, Integer uniqueID, AnimationEvent<?> customPredicate) {
-		
 	}
 }

@@ -1,0 +1,108 @@
+{
+  "parent": "chaosawakens:root/root",
+  "display": {
+    "icon": {
+      "item": "chaosawakens:unstable_ant_spawn_egg"
+    },
+    "title": {
+      "translate": "advancements.chaosawakens.ant_annihilator.title"
+    },
+    "description": {
+      "translate": "advancements.chaosawakens.ant_annihilator.description"
+    },
+    "frame": "task",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "chaosawakens:textures/gui/advancement_bg.png"
+  },
+  "criteria": {
+    "brown_ant": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "chaosawakens:brown_ant"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "rainbow_ant": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "chaosawakens:rainbow_ant"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "red_ant": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "chaosawakens:red_ant"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "unstable_ant": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "chaosawakens:unstable_ant"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    },
+    "termite": {
+      "trigger": "minecraft:player_killed_entity",
+      "conditions": {
+        "entity": [
+          {
+            "condition": "minecraft:entity_properties",
+            "predicate": {
+              "type": "chaosawakens:termite"
+            },
+            "entity": "this"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "brown_ant"
+    ],
+    [
+      "rainbow_ant"
+    ],
+    [
+      "red_ant"
+    ],
+    [
+      "unstable_ant"
+    ],
+    [
+      "termite"
+    ]
+  ]
+}

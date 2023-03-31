@@ -6,6 +6,7 @@ import io.github.chaosawakens.client.entity.render.AggressiveAntEntityRenderer;
 import io.github.chaosawakens.client.entity.render.AntEntityRenderer;
 import io.github.chaosawakens.client.entity.render.AppleCowEntityRenderer;
 import io.github.chaosawakens.client.entity.render.BeaverEntityRenderer;
+import io.github.chaosawakens.client.entity.render.ManMemeCoinEntityRenderer;
 import io.github.chaosawakens.client.entity.render.BirdEntityRenderer;
 import io.github.chaosawakens.client.entity.render.CABoatRenderer;
 import io.github.chaosawakens.client.entity.render.CAEmptyRenderer;
@@ -298,6 +299,7 @@ public class ClientSetupEvent {
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.GOLDEN_CARROT_PIG.get(), GoldenCarrotPigEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.ENCHANTED_GOLDEN_CARROT_PIG.get(), EnchantedGoldenCarrotPigEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.BEAVER.get(), BeaverEntityRenderer::new);
+		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.MAN_MEME_COIN.get(), ManMemeCoinEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.GAZELLE.get(), GazelleEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.LEAFY_CHICKEN.get(), LeafyChickenEntityRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.DIMETRODON.get(), DimetrodonEntityRenderer::new);
@@ -318,6 +320,13 @@ public class ClientSetupEvent {
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.FALLING_BLOCK.get(), CAFallingBlockRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.SCREEN_SHAKE.get(), CAEmptyRenderer::new);
 		RenderingRegistry.registerEntityRenderingHandler(CAEntityTypes.LEAFY_CHICKEN_EGG.get(), (manager) -> new SpriteRenderer<CALeafyChickenEggEntity>(manager, Minecraft.getInstance().getItemRenderer()));
+
+		// April Fools
+		RenderTypeLookup.setRenderLayer(CABlocks.CHERRY_FIRE.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(CABlocks.CHERRY_CAMPFIRE.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(CABlocks.CHERRY_LANTERN.get(), RenderType.cutout());
+		RenderTypeLookup.setRenderLayer(CABlocks.CHERRY_TORCH.get(), RenderType.cutoutMipped());
+		RenderTypeLookup.setRenderLayer(CABlocks.WALL_CHERRY_TORCH.get(), RenderType.cutoutMipped());
 
 		RenderTypeLookup.setRenderLayer(CABlocks.TUBE_WORM.get(), RenderType.cutoutMipped());
 		RenderTypeLookup.setRenderLayer(CABlocks.TUBE_WORM_PLANT.get(), RenderType.cutoutMipped());

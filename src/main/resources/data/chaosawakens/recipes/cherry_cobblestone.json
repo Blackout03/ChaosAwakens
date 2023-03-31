@@ -1,0 +1,19 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		"XY",
+		"YX"
+	],
+	"key": {
+		"X": {
+			"item": "chaosawakens:cherry_planks"
+		},
+		"Y": {
+			"item": "minecraft:cobblestone"
+		}
+	},
+	"result": {
+		"item": "chaosawakens:cherry_cobblestone",
+		"count": 4
+	}
+}

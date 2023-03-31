@@ -1,0 +1,37 @@
+{
+  "parent": "chaosawakens:root/root",
+  "display": {
+    "icon": {
+      "item": "chaosawakens:red_rose_sword",
+      "nbt": "{Damage:0}"
+    },
+    "title": {
+      "translate": "advancements.chaosawakens.red_rose_sword.title"
+    },
+    "description": {
+      "translate": "advancements.chaosawakens.red_rose_sword.description"
+    },
+    "frame": "goal",
+    "show_toast": true,
+    "announce_to_chat": true,
+    "hidden": false,
+    "background": "chaosawakens:textures/gui/advancement_bg.png"
+  },
+  "criteria": {
+    "red_rose_sword": {
+      "trigger": "minecraft:inventory_changed",
+      "conditions": {
+        "items": [
+          {
+            "item": "chaosawakens:red_rose_sword"
+          }
+        ]
+      }
+    }
+  },
+  "requirements": [
+    [
+      "red_rose_sword"
+    ]
+  ]
+}

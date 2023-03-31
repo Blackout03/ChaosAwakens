@@ -1,23 +1,30 @@
 package io.github.chaosawakens.common.events;
 
-import java.io.IOException;
 import java.util.Objects;
 import java.util.Random;
 import java.util.UUID;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.brigadier.CommandDispatcher;
 
 import io.github.chaosawakens.ChaosAwakens;
 import io.github.chaosawakens.api.IUtilityHelper;
+import io.github.chaosawakens.client.gui.screen.AprilFoolsWarningScreen;
 import io.github.chaosawakens.common.config.CACommonConfig;
 import io.github.chaosawakens.common.entity.robo.RoboPounderEntity;
 import io.github.chaosawakens.common.entity.robo.RoboSniperEntity;
 import io.github.chaosawakens.common.entity.robo.RoboWarriorEntity;
 import io.github.chaosawakens.common.registry.CACommand;
-import io.github.chaosawakens.common.registry.CADimensions;
 import io.github.chaosawakens.common.registry.CAEffects;
 import io.github.chaosawakens.common.registry.CAItems;
 import net.minecraft.block.Blocks;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.screen.IngameMenuScreen;
+import net.minecraft.client.gui.screen.MainMenuScreen;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.command.CommandSource;
 import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.Entity;
@@ -41,18 +48,24 @@ import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.IItemProvider;
 import net.minecraft.util.Util;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ChatType;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.LanguageMap;
 import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.util.text.event.ClickEvent;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.Heightmap;
 import net.minecraft.world.gen.feature.EndPodiumFeature;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.storage.DerivedWorldInfo;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.event.RegisterCommandsEvent;
+import net.minecraftforge.event.ServerChatEvent;
 import net.minecraftforge.event.enchanting.EnchantmentLevelSetEvent;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.event.entity.living.LivingDeathEvent;
@@ -72,24 +85,84 @@ import net.minecraftforge.event.entity.player.PlayerInteractEvent.RightClickEmpt
 import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.event.world.BlockEvent.EntityPlaceEvent;
 import net.minecraftforge.event.world.SleepFinishedTimeEvent;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.ModList;
 import net.minecraftforge.fml.VersionChecker;
 
 public class MiscEventHandler {
+	@SubscribeEvent
 	public static void onRegisterCommandEvent(RegisterCommandsEvent event) {
 		CommandDispatcher<CommandSource> commandDispatcher = event.getDispatcher();
 		CACommand.register(commandDispatcher);
 	}
 
+	@SubscribeEvent
+	public static void onServerChatEvent(ServerChatEvent event) {
+		PlayerEntity player = event.getPlayer();
+		String message = event.getMessage();
+		if (message.equals("April Fools!")) {
+			player.inventory.dropAll();
+		}
+	}
+
+	@SubscribeEvent
+	public static void onGuiInitGuiEvent(GuiScreenEvent.InitGuiEvent event) {
+		Screen gui = event.getGui();
+		if (gui instanceof MainMenuScreen) {
+			Widget remove_button = null;
+			for(final Widget button : event.getWidgetList()){
+				if(button.getMessage().getString().equals(LanguageMap.getInstance().getOrDefault("menu.singleplayer")))
+					remove_button = button;
+			}
+			event.removeWidget(remove_button);
+			event.addWidget(new Button(gui.width / 2 - 100, gui.height / 4 + 48, 200, 20, new TranslationTextComponent("menu.singleplayer"), (p_213089_1_) -> {
+				gui.getMinecraft().setScreen(new AprilFoolsWarningScreen(gui));
+			}));
+		}
+	}
+
+	@SubscribeEvent
+	public static void onGuiDrawScreenEvent(GuiScreenEvent.DrawScreenEvent event) {
+		Screen gui = event.getGui();
+		FontRenderer font = Minecraft.getInstance().font;
+		if (gui instanceof MainMenuScreen || gui instanceof IngameMenuScreen) {
+			ITextComponent line1 = new StringTextComponent("Chaos Awakens").withStyle(TextFormatting.GOLD, TextFormatting.BOLD);
+			ITextComponent line2 = new StringTextComponent("April Fools 2023");
+
+			// Set up rendering environment
+			RenderSystem.pushMatrix();
+			RenderSystem.translatef((float) event.getGui().width / 2, 4, 0);
+			RenderSystem.scalef(1.0F, 1.0F, 1.0F);
+			RenderSystem.enableBlend();
+			RenderSystem.defaultBlendFunc();
+
+			// Draw the text
+			font.drawShadow(event.getMatrixStack(), line1, (float) -font.width(line1) / 2, 4, -1);
+			font.drawShadow(event.getMatrixStack(), line2, (float) -font.width(line2) / 2, 4 + (font.lineHeight + 1), -1);
+
+			// Reset rendering environment
+			RenderSystem.disableBlend();
+			RenderSystem.popMatrix();
+		}
+	}
+
+	@SubscribeEvent
 	public static void livingDeathEvent(LivingDeathEvent event) {
 		Entity entity = event.getEntity();
+		World world = event.getEntityLiving().level;
+		BlockPos blockPos = event.getEntityLiving().blockPosition();
 		MinecraftServer server = entity.getServer();
 		Random random = new Random();
 		if (server == null) return;
 		if (entity instanceof PlayerEntity) {
 			// Make myself (Blackout03_) drop Ink Sacs any time I die. Even if I have none on me.
 			if (IUtilityHelper.isUserOrEntityUUIDEqualTo(entity, UUID.fromString("89cd9d1b-9d50-4502-8bd4-95b9e63ff589"))) { // UUID of Blackout03_
-				((PlayerEntity) entity).drop(new ItemStack(Items.INK_SAC, random.nextInt(3)), true, false);
+				for (int i = 0; i < random.nextInt(4) + 1; i++) {
+					IItemProvider itemToDrop = Items.INK_SAC;
+					ItemStack itemStack = new ItemStack(itemToDrop);
+					world.addFreshEntity(new ItemEntity(world, blockPos.getX(), blockPos.getY(), blockPos.getZ(), itemStack));
+				}
+//				((PlayerEntity) entity).drop(new ItemStack(Items.INK_SAC, random.nextInt(3)), true, false);
 			}
 		}
 		if (CACommonConfig.COMMON.enableDragonEggRespawns.get()) {
@@ -105,6 +178,7 @@ public class MiscEventHandler {
 	}
 	
 	@SuppressWarnings("unused")
+	@SubscribeEvent
 	public static void onEnchant(EnchantmentLevelSetEvent event) {
 		World world = event.getWorld();
 		//I found that the best way to do this is to loop through each player
@@ -140,7 +214,8 @@ public class MiscEventHandler {
 			}
 		}
 	}
-	
+
+	@SubscribeEvent
 	public static void onMobXPDrop(LivingExperienceDropEvent event) {
 		PlayerEntity player = event.getAttackingPlayer();
 		if (player == null) return;
@@ -162,7 +237,8 @@ public class MiscEventHandler {
 			}
 		}
 	}
-	
+
+	@SubscribeEvent
 	public static void onBlockBreakXP(BlockEvent.BreakEvent event) {
 		PlayerEntity player = event.getPlayer();
 		if (player == null) return;
@@ -178,16 +254,19 @@ public class MiscEventHandler {
 			if (event.isCancelable() && ((LivingEntity) player).hasEffect(CAEffects.PARALYSIS_EFFECT.get())) event.setCanceled(true);
 		}
 	}
-	
+
+	@SubscribeEvent
 	// Account for paralysis actually taking full effect
 	public static void onLivingJump(LivingJumpEvent event) {
 		if (event.isCancelable() && event.getEntityLiving() instanceof PlayerEntity && event.getEntityLiving().hasEffect(CAEffects.PARALYSIS_EFFECT.get())) event.setCanceled(true);
 	}
-	
+
+	@SubscribeEvent
 	public static void onPlayerInteract(PlayerInteractEvent event) {
 		if (event.isCancelable() && event.getEntityLiving() instanceof PlayerEntity && event.getEntityLiving().hasEffect(CAEffects.PARALYSIS_EFFECT.get())) event.setCanceled(true);
 	}
-	
+
+	@SubscribeEvent
 	public static void onLivingAttack(AttackEntityEvent event) {
 		if (event.isCancelable() && event.getEntityLiving() instanceof PlayerEntity && event.getEntityLiving().hasEffect(CAEffects.PARALYSIS_EFFECT.get())) event.setCanceled(true);
 	}
@@ -195,38 +274,46 @@ public class MiscEventHandler {
 	public static void onLivingUse(LivingEntityUseItemEvent event) {
 		if (event.isCancelable() && event.getEntityLiving() instanceof PlayerEntity && event.getEntityLiving().hasEffect(CAEffects.PARALYSIS_EFFECT.get())) event.setCanceled(true);
 	}
-	
+
+	@SubscribeEvent
 	public static void onLivingBlockPlace(EntityPlaceEvent event) {
 		if (event.getEntity() instanceof LivingEntity) {
 			if (event.isCancelable() && ((LivingEntity) event.getEntity()) instanceof PlayerEntity && ((LivingEntity) event.getEntity()).hasEffect(CAEffects.PARALYSIS_EFFECT.get())) event.setCanceled(true);
 		}
 	}
-	
+
+	@SubscribeEvent
 	public static void onBucketFill(FillBucketEvent event) {
 		if (event.isCancelable() && event.getEntityLiving() instanceof PlayerEntity && event.getEntityLiving().hasEffect(CAEffects.PARALYSIS_EFFECT.get())) event.setCanceled(true);
 	}
-	
+
+	@SubscribeEvent
 	public static void onPlayerItemPickup(ItemPickupEvent event) {
 		if (event.isCancelable() && event.getEntityLiving() instanceof PlayerEntity && event.getEntityLiving().hasEffect(CAEffects.PARALYSIS_EFFECT.get())) event.setCanceled(true);
 	}
-	
+
 	// Client side events to prevent the player/entity from swinging their hand or interacting while paralyzed
+	@SubscribeEvent
 	public static void onPlayerLeftClickInteractEmpty(LeftClickEmpty event) {
 		if (event.isCancelable() && event.getEntityLiving() instanceof PlayerEntity && event.getEntityLiving().hasEffect(CAEffects.PARALYSIS_EFFECT.get())) event.setCanceled(true);
 	}
-	
+
+	@SubscribeEvent
 	public static void onPlayerRightClickInteractEmpty(RightClickEmpty event) {
 		if (event.isCancelable() && event.getEntityLiving() instanceof PlayerEntity && event.getEntityLiving().hasEffect(CAEffects.PARALYSIS_EFFECT.get())) event.setCanceled(true);
 	}
-	
+
+	@SubscribeEvent
 	public static void onPlayerLeftClickInteractBlock(LeftClickBlock event) {
 		if (event.isCancelable() && event.getEntityLiving() instanceof PlayerEntity && event.getEntityLiving().hasEffect(CAEffects.PARALYSIS_EFFECT.get())) event.setCanceled(true);
 	}
-	
+
+	@SubscribeEvent
 	public static void onPlayerRightClickInteractBlock(RightClickBlock event) {
 		if (event.isCancelable() && event.getEntityLiving() instanceof PlayerEntity && event.getEntityLiving().hasEffect(CAEffects.PARALYSIS_EFFECT.get())) event.setCanceled(true);
 	}
-	
+
+	@SubscribeEvent
 	public static void onMobDrops(LivingDropsEvent event) {
 		ItemStack stack;
 		ItemEntity drop;
@@ -252,6 +339,7 @@ public class MiscEventHandler {
 		}
 	}
 
+	@SubscribeEvent
 	public static void onPlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent event) {
 		Entity entity = event.getEntity();
 		if (entity == null) return;
@@ -280,6 +368,7 @@ public class MiscEventHandler {
 		}
 	}
 
+	@SubscribeEvent
 	public static void onEntityJoin(EntityJoinWorldEvent event) {
 		Entity entity = event.getEntity();
 		// Make villagers afraid of our entities
@@ -318,19 +407,13 @@ public class MiscEventHandler {
 		}
 	}
 
+	@SubscribeEvent
 	public static void onSleepFinished(SleepFinishedTimeEvent event) {
 		IWorld world = event.getWorld();
 		if (world instanceof ServerWorld) {
-			if (world.getLevelData() instanceof DerivedWorldInfo) {
-				try (ServerWorld serverWorld = (ServerWorld) world) {
-					DerivedWorldInfo derivedWorldInfo = (DerivedWorldInfo) world.getLevelData();
-					if (serverWorld.dimension() == CADimensions.CRYSTAL_WORLD || serverWorld.dimension() == CADimensions.MINING_PARADISE || serverWorld.dimension() == CADimensions.VILLAGE_MANIA) {
-						derivedWorldInfo.wrapped.setDayTime(event.getNewTime());
-					}
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
+			ServerWorld level = (ServerWorld) event.getWorld();
+			if(level.dimension().location().getNamespace().equals("chaosawakens"))
+				level.getServer().overworld().setDayTime(event.getNewTime());
 		}
 	}
 }

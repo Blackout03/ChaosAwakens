@@ -41,6 +41,7 @@ public class EntitySetAttributeEventSubscriber {
 		event.put(CAEntityTypes.GOLDEN_CARROT_PIG.get(), GoldenCarrotPigEntity.setCustomAttributes().build());
 		event.put(CAEntityTypes.ENCHANTED_GOLDEN_CARROT_PIG.get(), EnchantedGoldenCarrotPigEntity.setCustomAttributes().build());
 		event.put(CAEntityTypes.BEAVER.get(), BeaverEntity.setCustomAttributes().build());
+		event.put(CAEntityTypes.MAN_MEME_COIN.get(), ManMemeCoinEntity.setCustomAttributes().build());
 		event.put(CAEntityTypes.DIMETRODON.get(), DimetrodonEntity.setCustomAttributes().build());
 		event.put(CAEntityTypes.GAZELLE.get(), GazelleEntity.setCustomAttributes().build());
 		event.put(CAEntityTypes.LEAFY_CHICKEN.get(), LeafyChickenEntity.setCustomAttributes().build());

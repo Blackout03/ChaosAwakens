@@ -1,0 +1,22 @@
+{
+	"type": "minecraft:crafting_shaped",
+	"pattern": [
+		" S ",
+		"S#S",
+		"LLL"
+	],
+	"key": {
+		"L": {
+			"tag": "minecraft:logs"
+		},
+		"S": {
+			"item": "minecraft:stick"
+		},
+		"#": {
+			"tag": "chaosawakens:cherry_fire_base_blocks"
+		}
+	},
+	"result": {
+		"item": "chaosawakens:cherry_campfire"
+	}
+}

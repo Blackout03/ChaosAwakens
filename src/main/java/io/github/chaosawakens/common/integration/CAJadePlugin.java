@@ -19,6 +19,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import snownee.jade.JadePlugin;
 
 import java.util.List;
+import java.util.Objects;
 
 @WailaPlugin
 public class CAJadePlugin implements IWailaPlugin {
@@ -43,14 +44,14 @@ public class CAJadePlugin implements IWailaPlugin {
 				try {
 					ITextComponent name = CACHE.get(accessor.getBlock(), () -> {
 						if (accessor.getBlockState().is(CABlocks.RED_ANT_INFESTED_ORE.get())) {
-							ResourceLocation infestedOreName = new ResourceLocation("minecraft", Items.DIAMOND_ORE.getRegistryName().getPath());
+							ResourceLocation infestedOreName = new ResourceLocation("minecraft", Objects.requireNonNull(Items.DIAMOND_ORE.getRegistryName()).getPath());
 							ChaosAwakens.LOGGER.debug(infestedOreName);
 							Block block = ForgeRegistries.BLOCKS.getValue(infestedOreName);
 							if (block != null) {
 								return block.getName();
 							}
 						} else if (accessor.getBlockState().is(CABlocks.TERMITE_INFESTED_ORE.get())) {
-							ResourceLocation infestedOreName = new ResourceLocation("minecraft", Items.EMERALD_ORE.getRegistryName().getPath());
+							ResourceLocation infestedOreName = new ResourceLocation("minecraft", Objects.requireNonNull(Items.EMERALD_ORE.getRegistryName()).getPath());
 							ChaosAwakens.LOGGER.debug(infestedOreName);
 							Block block = ForgeRegistries.BLOCKS.getValue(infestedOreName);
 							if (block != null) {

@@ -2,6 +2,7 @@ package io.github.chaosawakens.common.entity;
 
 import java.util.EnumSet;
 import java.util.List;
+import java.util.Random;
 import java.util.UUID;
 import java.util.function.BiFunction;
 
@@ -16,6 +17,7 @@ import io.github.chaosawakens.common.entity.ai.pathfinding.CAStrictGroundPathNav
 import io.github.chaosawakens.common.entity.base.AnimatableAnimalEntity;
 import io.github.chaosawakens.common.registry.CAEntityTypes;
 import io.github.chaosawakens.common.registry.CAItems;
+import net.minecraft.block.Blocks;
 import net.minecraft.entity.AgeableEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityType;
@@ -58,10 +60,12 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntityPredicates;
 import net.minecraft.util.RangedInteger;
 import net.minecraft.util.TickRangeConverter;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.IServerWorld;
+import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
 import net.minecraftforge.api.distmarker.Dist;
@@ -150,6 +154,10 @@ public class DimetrodonEntity extends AnimatableAnimalEntity implements IAngerab
 		this.goalSelector.addGoal(4, new LookAtGoal(this, PlayerEntity.class, 8.0F));
 		this.goalSelector.addGoal(4, new LookRandomlyGoal(this));
 //		this.targetSelector.addGoal(8, new ResetAngerGoal<>(this, true));
+	}
+
+	public static boolean checkDimetrodonSpawnRules(EntityType<? extends DimetrodonEntity> entityType, IWorld world, SpawnReason spawnReason, BlockPos blockPos, Random random) {
+		return world.getBlockState(blockPos.below()).is(Blocks.STONE) && world.canSeeSky(blockPos);
 	}
 	
 	@Override

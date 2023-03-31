@@ -49,6 +49,14 @@ public class CABlocks {
 
 	private static final Function<Integer, ToIntFunction<BlockState>> lightValueFunction = (lightValue) -> (state) -> state.getValue(BlockStateProperties.LIT) ? lightValue : 0;
 
+	// APRIL FOOLS BLOCKS
+	public static final RegistryObject<Block> CHERRY_COBBLESTONE = registerBlock("cherry_cobblestone", () -> new Block(AbstractBlock.Properties.of(Material.STONE, MaterialColor.COLOR_PINK).harvestTool(ToolType.PICKAXE).harvestLevel(1).requiresCorrectToolForDrops().strength(100.0F, 2400.0F)), CAItemGroups.BLOCKS);
+	public static final RegistryObject<CherryCampfireBlock> CHERRY_CAMPFIRE = registerBlock("cherry_campfire", () -> new CherryCampfireBlock(AbstractBlock.Properties.of(Material.WOOD, MaterialColor.PODZOL).strength(2.0F).sound(SoundType.WOOD).randomTicks().noOcclusion().lightLevel((state) -> 14), true), CAItemGroups.BLOCKS);
+	public static final RegistryObject<CherryFireBlock> CHERRY_FIRE = registerBlock("cherry_fire", () -> new CherryFireBlock(AbstractBlock.Properties.of(Material.FIRE, MaterialColor.COLOR_PINK).noCollission().instabreak().lightLevel((state) -> 14).sound(SoundType.WOOL)), null);
+	public static final RegistryObject<LanternBlock> CHERRY_LANTERN = registerBlock("cherry_lantern", () -> new LanternBlock(AbstractBlock.Properties.of(Material.METAL).requiresCorrectToolForDrops().strength(3.5F).sound(SoundType.LANTERN).lightLevel((state) -> 14).noOcclusion()), CAItemGroups.BLOCKS);
+	public static final RegistryObject<CherryTorchBlock> CHERRY_TORCH = registerBlock("cherry_torch", () -> new CherryTorchBlock(AbstractBlock.Properties.of(Material.DECORATION).noCollission().instabreak().lightLevel((state) -> 14).sound(SoundType.WOOD)), null, false);
+	public static final RegistryObject<WallCherryTorchBlock> WALL_CHERRY_TORCH = registerBlock("wall_cherry_torch", () -> new WallCherryTorchBlock(AbstractBlock.Properties.of(Material.DECORATION).noCollission().instabreak().lightLevel((state) -> 14).sound(SoundType.WOOD).lootFrom(CABlocks.CHERRY_TORCH)), null, false);
+
 	// TREES
 	public static final RegistryObject<Block> APPLE_PLANKS = registerBlock("apple_planks", () -> new Block(AbstractBlock.Properties.of(Material.WOOD, MaterialColor.WOOD).strength(2.0F, 3.0F).sound(SoundType.WOOD)), CAItemGroups.BLOCKS);
 	public static final RegistryObject<SaplingBlock> APPLE_SAPLING = registerBlock("apple_sapling", () -> new SaplingBlock(new FancyableTree(() -> CAConfiguredFeatures.FANCY_APPLE_TREE, () -> CAConfiguredFeatures.FANCY_APPLE_TREE_BEES_005, () -> CAConfiguredFeatures.APPLE_TREE, () -> CAConfiguredFeatures.APPLE_TREE_BEES_005), AbstractBlock.Properties.of(Material.PLANT).noCollission().randomTicks().instabreak().sound(SoundType.GRASS)), CAItemGroups.BLOCKS);
@@ -612,11 +620,11 @@ public class CABlocks {
 	public static final RegistryObject<Block> EMPEROR_SCORPION_SCALE_BLOCK = registerRareBlock("emperor_scorpion_scale_block", () -> new Block(Block.Properties.copy(Blocks.DIAMOND_BLOCK).harvestLevel(3).harvestTool(ToolType.PICKAXE).requiresCorrectToolForDrops().sound(SoundType.SHROOMLIGHT)), CAItemGroups.BLOCKS);
 	
 	// ANT NESTS
-	public static final RegistryObject<AntNestBlock> BROWN_ANT_NEST = registerBlock("brown_ant_nest", () -> new AntNestBlock(CAEntityTypes.BROWN_ANT, Block.Properties.copy(Blocks.GRASS_BLOCK).harvestTool(ToolType.SHOVEL).randomTicks()), CAItemGroups.BLOCKS);
-	public static final RegistryObject<AntNestBlock> RAINBOW_ANT_NEST = registerBlock("rainbow_ant_nest", () -> new AntNestBlock(CAEntityTypes.RAINBOW_ANT, Block.Properties.copy(Blocks.GRASS_BLOCK).harvestTool(ToolType.SHOVEL).randomTicks()), CAItemGroups.BLOCKS);
-	public static final RegistryObject<AntNestBlock> RED_ANT_NEST = registerBlock("red_ant_nest", () -> new AntNestBlock(CAEntityTypes.RED_ANT, Block.Properties.copy(Blocks.GRASS_BLOCK).harvestTool(ToolType.SHOVEL).randomTicks()), CAItemGroups.BLOCKS);
-	public static final RegistryObject<AntNestBlock> UNSTABLE_ANT_NEST = registerBlock("unstable_ant_nest", () -> new AntNestBlock(CAEntityTypes.UNSTABLE_ANT, Block.Properties.copy(Blocks.GRASS_BLOCK).harvestTool(ToolType.SHOVEL).randomTicks()), CAItemGroups.BLOCKS);
-	public static final RegistryObject<AntNestBlock> TERMITE_NEST = registerBlock("termite_nest", () -> new AntNestBlock(CAEntityTypes.TERMITE, Block.Properties.copy(Blocks.GRASS_BLOCK).harvestTool(ToolType.SHOVEL).randomTicks()), CAItemGroups.BLOCKS);
+	public static final RegistryObject<AntNestBlock> BROWN_ANT_NEST = registerBlock("brown_ant_nest", () -> new AntNestBlock(CAEntityTypes.RAINBOW_ANT, Block.Properties.copy(Blocks.GRASS_BLOCK).harvestTool(ToolType.SHOVEL).randomTicks()), CAItemGroups.BLOCKS);
+	public static final RegistryObject<AntNestBlock> RAINBOW_ANT_NEST = registerBlock("rainbow_ant_nest", () -> new AntNestBlock(CAEntityTypes.BROWN_ANT, Block.Properties.copy(Blocks.GRASS_BLOCK).harvestTool(ToolType.SHOVEL).randomTicks()), CAItemGroups.BLOCKS);
+	public static final RegistryObject<AntNestBlock> RED_ANT_NEST = registerBlock("red_ant_nest", () -> new AntNestBlock(CAEntityTypes.TERMITE, Block.Properties.copy(Blocks.GRASS_BLOCK).harvestTool(ToolType.SHOVEL).randomTicks()), CAItemGroups.BLOCKS);
+	public static final RegistryObject<AntNestBlock> UNSTABLE_ANT_NEST = registerBlock("unstable_ant_nest", () -> new AntNestBlock(CAEntityTypes.RED_ANT, Block.Properties.copy(Blocks.GRASS_BLOCK).harvestTool(ToolType.SHOVEL).randomTicks()), CAItemGroups.BLOCKS);
+	public static final RegistryObject<AntNestBlock> TERMITE_NEST = registerBlock("termite_nest", () -> new AntNestBlock(CAEntityTypes.UNSTABLE_ANT, Block.Properties.copy(Blocks.GRASS_BLOCK).harvestTool(ToolType.SHOVEL).randomTicks()), CAItemGroups.BLOCKS);
 
 	// TORCHES
 	public static final RegistryObject<TorchBlock> CRYSTAL_TORCH = registerBlock("crystal_torch", () -> new TorchBlock(AbstractBlock.Properties.of(Material.DECORATION).noCollission().instabreak().lightLevel((state) -> 14).sound(SoundType.WOOD), ParticleTypes.FLAME), null, false);
@@ -637,7 +645,7 @@ public class CABlocks {
 	
 	// CRYSTAL WORLD DIMENSION
 	public static final RegistryObject<CrystalGrassBlock> CRYSTAL_GRASS_BLOCK = registerBlock("crystal_grass_block", () -> new CrystalGrassBlock(Block.Properties.of(Material.GRASS).randomTicks().strength(0.6F).sound(SoundType.GRASS).harvestTool(ToolType.SHOVEL).requiresCorrectToolForDrops().isRedstoneConductor(isFalse).noOcclusion()), CAItemGroups.BLOCKS);
-	public static final RegistryObject<CrystalAntNestBlock> CRYSTAL_TERMITE_NEST = registerBlock("crystal_termite_nest", () -> new CrystalAntNestBlock(CAEntityTypes.TERMITE, Block.Properties.copy(CABlocks.CRYSTAL_GRASS_BLOCK.get()).harvestTool(ToolType.SHOVEL).randomTicks().isRedstoneConductor(isFalse).noOcclusion()), CAItemGroups.BLOCKS);
+	public static final RegistryObject<CrystalAntNestBlock> CRYSTAL_TERMITE_NEST = registerBlock("crystal_termite_nest", () -> new CrystalAntNestBlock(CAEntityTypes.UNSTABLE_ANT, Block.Properties.copy(CABlocks.CRYSTAL_GRASS_BLOCK.get()).harvestTool(ToolType.SHOVEL).randomTicks().isRedstoneConductor(isFalse).noOcclusion()), CAItemGroups.BLOCKS);
 	public static final RegistryObject<CrystalBlock> KYANITE = registerBlock("kyanite", () -> new CrystalBlock(Block.Properties.copy(Blocks.STONE).requiresCorrectToolForDrops().isRedstoneConductor(isFalse).noOcclusion()), CAItemGroups.BLOCKS);
 	public static final RegistryObject<RotatedPillarCrystalBlock> CRYSTAL_LOG = registerBlock("crystal_log", () -> new RotatedPillarCrystalBlock(Block.Properties.copy(Blocks.OAK_LOG).isRedstoneConductor(isFalse).noOcclusion()), CAItemGroups.BLOCKS);
 	public static final RegistryObject<RotatedPillarCrystalBlock> CRYSTAL_WOOD = registerBlock("crystal_wood", () -> new RotatedPillarCrystalBlock(Block.Properties.copy(Blocks.OAK_WOOD).isRedstoneConductor(isFalse).noOcclusion()), CAItemGroups.BLOCKS);
@@ -688,7 +696,7 @@ public class CABlocks {
 	// MINING PARADISE DIMENSION
 	public static final RegistryObject<DenseGrassBlock> DENSE_GRASS_BLOCK = registerBlock("dense_grass_block", () -> new DenseGrassBlock(AbstractBlock.Properties.of(Material.GRASS).randomTicks().harvestTool(ToolType.SHOVEL).strength(0.9F).sound(SoundType.GRASS)), CAItemGroups.BLOCKS);
 	public static final RegistryObject<Block> DENSE_DIRT = registerBlock("dense_dirt", () -> new Block(AbstractBlock.Properties.of(Material.DIRT, MaterialColor.DIRT).harvestTool(ToolType.SHOVEL).strength(0.75F).sound(SoundType.GRAVEL)), CAItemGroups.BLOCKS);
-	public static final RegistryObject<AntNestBlock> DENSE_RED_ANT_NEST = registerBlock("dense_red_ant_nest", () -> new AntNestBlock(CAEntityTypes.RED_ANT, Block.Properties.copy(DENSE_GRASS_BLOCK.get()).harvestTool(ToolType.SHOVEL).randomTicks()), CAItemGroups.BLOCKS);
+	public static final RegistryObject<AntNestBlock> DENSE_RED_ANT_NEST = registerBlock("dense_red_ant_nest", () -> new AntNestBlock(CAEntityTypes.TERMITE, Block.Properties.copy(DENSE_GRASS_BLOCK.get()).harvestTool(ToolType.SHOVEL).randomTicks()), CAItemGroups.BLOCKS);
 	public static final RegistryObject<TallDenseGrassBlock> DENSE_GRASS = registerBlock("dense_grass", () -> new TallDenseGrassBlock(AbstractBlock.Properties.of(Material.REPLACEABLE_PLANT).noCollission().instabreak().sound(SoundType.GRASS)), CAItemGroups.BLOCKS);
 	public static final RegistryObject<DoubleDensePlantBlock> TALL_DENSE_GRASS = registerBlock("tall_dense_grass", () -> new DoubleDensePlantBlock(AbstractBlock.Properties.of(Material.REPLACEABLE_PLANT).noCollission().instabreak().sound(SoundType.GRASS).lightLevel((state) -> 8)), CAItemGroups.BLOCKS);
 	public static final RegistryObject<DoubleDensePlantBlock> THORNY_SUN = registerBlock("thorny_sun", () -> new DoubleDensePlantBlock(AbstractBlock.Properties.of(Material.REPLACEABLE_PLANT).noCollission().instabreak().sound(SoundType.GRASS).lightLevel((state) -> 15)), CAItemGroups.BLOCKS);

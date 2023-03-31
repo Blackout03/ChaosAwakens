@@ -31,6 +31,7 @@ public class EnumUtils {
 		TOOL_PINK_TOURMALINE(2, 1100, 7, 8, 6, () -> Ingredient.of(CAItems.PINK_TOURMALINE_INGOT.get())),
 		TOOL_CATS_EYE(3, 1600, 8, 8, 20, () -> Ingredient.of(CAItems.CATS_EYE_INGOT.get())),
 		TOOL_ULTIMATE(6, 6000, 25, 36, 64, () -> Ingredient.of(CAItems.TITANIUM_INGOT.get(), CAItems.URANIUM_INGOT.get())),
+		TOOL_ROSE(50, 30000, 100, 40, 100, () -> Ingredient.of(Items.EMERALD)),
 		TOOL_NIGHTMARE(3, 3000, 12, 26, 24, () -> Ingredient.of(CAItems.NIGHTMARE_SCALE.get())),
 		TOOL_COPPER(2, 150, 4, 2, 6, () -> Ingredient.of(CAItems.COPPER_LUMP.get())),
 		TOOL_BASILISK(3, 3000, 12, 26, 24, () -> Ingredient.of(CAItems.BASILISK_SCALE.get())),

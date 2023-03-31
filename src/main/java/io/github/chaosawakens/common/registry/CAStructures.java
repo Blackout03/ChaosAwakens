@@ -9,6 +9,7 @@ import com.google.common.collect.ImmutableMap;
 import io.github.chaosawakens.ChaosAwakens;
 import io.github.chaosawakens.common.worldgen.structures.DarkOakEntStructureOverworld;
 import io.github.chaosawakens.common.worldgen.structures.SurfaceDungeonStructure;
+import io.github.chaosawakens.common.worldgen.structures.UltimateHouseDungeonStructure;
 import io.github.chaosawakens.common.worldgen.structures.WaspDungeonMiningDimensionStructure;
 import io.github.chaosawakens.common.worldgen.structures.WaspDungeonStructure;
 import net.minecraft.util.registry.WorldGenRegistries;
@@ -34,7 +35,9 @@ public class CAStructures {
 
 	public static final RegistryObject<Structure<NoFeatureConfig>> WASP_DUNGEON = STRUCTURES.register("wasp_dungeon", () -> new WaspDungeonStructure(NoFeatureConfig.CODEC));
 	public static final RegistryObject<Structure<NoFeatureConfig>> MINING_WASP_DUNGEON = STRUCTURES.register("mining_wasp_dungeon", () -> new WaspDungeonMiningDimensionStructure(NoFeatureConfig.CODEC));
-	
+
+	public static final RegistryObject<Structure<NoFeatureConfig>> ULTIMATE_HOUSE = STRUCTURES.register("ultimate_house", () -> new UltimateHouseDungeonStructure(NoFeatureConfig.CODEC));
+
 	public static void setupStructures() {
 		setupMapSpacingAndLand(ACACIA_ENT_TREE.get(), new StructureSeparationSettings(27, 25, 32034987), true);
 		setupMapSpacingAndLand(BIRCH_ENT_TREE.get(), new StructureSeparationSettings(27, 25, 32034987), true);
@@ -46,6 +49,7 @@ public class CAStructures {
 		setupMapSpacingAndLand(WARPED_ENT_TREE.get(), new StructureSeparationSettings(27, 25, 32034987), true);
 		setupMapSpacingAndLand(WASP_DUNGEON.get(), new StructureSeparationSettings(21, 19, 159332311), false);
 		setupMapSpacingAndLand(MINING_WASP_DUNGEON.get(), new StructureSeparationSettings(38, 34, 159342356), false);
+		setupMapSpacingAndLand(ULTIMATE_HOUSE.get(), new StructureSeparationSettings(24, 23, 97388236), false);
 	}
 
 	public static <F extends Structure<?>> void setupMapSpacingAndLand(F structure, StructureSeparationSettings structureSeparationSettings, boolean transformSurroundingLand) {

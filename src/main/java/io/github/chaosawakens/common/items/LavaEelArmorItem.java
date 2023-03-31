@@ -5,7 +5,6 @@ import java.util.List;
 import io.github.chaosawakens.api.IAutoEnchantable;
 import io.github.chaosawakens.client.config.CAClientConfig;
 import io.github.chaosawakens.common.config.CACommonConfig;
-import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.enchantment.EnchantmentData;
 import net.minecraft.entity.player.PlayerEntity;
@@ -47,17 +46,8 @@ public class LavaEelArmorItem extends EnchantedArmorItem implements IAutoEnchant
 		if (!CAClientConfig.CLIENT.enableTooltips.get()) return;
 		super.appendHoverText(stack, world, tooltip, flag);
 		
-		tooltip.add(new StringTextComponent("Full set bonus: ").withStyle(TextFormatting.GOLD).append(new StringTextComponent("Eel-Like").withStyle(TextFormatting.DARK_RED)).append(new StringTextComponent(" (...)").withStyle(TextFormatting.GREEN)));
-		
-		if (Screen.hasShiftDown() || Screen.hasControlDown()) {
-			tooltip.removeIf((s) -> s.toString().contains("(...)"));
-			tooltip.add(new StringTextComponent("Full set bonus: ").withStyle(TextFormatting.GOLD).append(new StringTextComponent("Eel-Like").withStyle(TextFormatting.DARK_RED))
-					.append(new StringTextComponent("\nMakes lava act like water, allowing for fully-fledged swimming and swimming movement. Also grants better vision inside lava.").withStyle(TextFormatting.GREEN)));
-		}
-		
-		if (!CACommonConfig.COMMON.enableLavaEelArmorSetBonus.get()) {
-			tooltip.add(new StringTextComponent("This full set bonus is disabled in the config!").withStyle(TextFormatting.RED).withStyle(TextFormatting.BOLD));
-		}
+		tooltip.add(new StringTextComponent("Full set bonus: ").withStyle(TextFormatting.GOLD, TextFormatting.BOLD).append(new StringTextComponent("Eel-Like").withStyle(TextFormatting.DARK_RED)));
+		tooltip.add(new StringTextComponent("This full set bonus has mysteriously stopped working in this version!").withStyle(TextFormatting.RED));
 	}
 
 	@Override

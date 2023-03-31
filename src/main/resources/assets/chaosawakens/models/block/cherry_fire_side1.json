@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/template_fire_side",
+  "textures": {
+    "fire": "chaosawakens:block/cherry_fire_1"
+  }
+}

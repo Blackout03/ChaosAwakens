@@ -1,0 +1,19 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "###",
+    "#X#",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "chaosawakens:cyan_rose"
+    },
+    "X": {
+      "item": "chaosawakens:emerald_sword"
+    }
+  },
+  "result": {
+    "item": "chaosawakens:cyan_rose_sword"
+  }
+}

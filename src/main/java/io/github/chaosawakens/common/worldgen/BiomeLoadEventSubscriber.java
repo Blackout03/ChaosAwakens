@@ -27,7 +27,9 @@ public class BiomeLoadEventSubscriber {
 
 	private static class MobSpawnHandler {
 		// Mobs that appear in any biome, but only in the overworld
-//		private static final Consumer<MobSpawnInfoBuilder> OVERWORLD_MOBS = (builder) -> { };
+		private static final Consumer<MobSpawnInfoBuilder> OVERWORLD_MOBS = (builder) -> {
+			builder.addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(CAEntityTypes.MAN_MEME_COIN.get(), 6, 1, 1));
+		};
 
 		private static final Consumer<MobSpawnInfoBuilder> SWAMP_MOBS = (builder) -> {
 			builder.addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(CAEntityTypes.RUBY_BUG.get(), 20, 3, 6));
@@ -49,10 +51,12 @@ public class BiomeLoadEventSubscriber {
 		};
 		
 		private static final Consumer<MobSpawnInfoBuilder> MOUNTAIN_MOBS = (builder) -> {
+			builder.addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(CAEntityTypes.MAN_MEME_COIN.get(), 10, 1, 1));
 			builder.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(CAEntityTypes.THROWBACK_HERCULES_BEETLE.get(), 27, 1, 2));
 		};
 		
 		private static final Consumer<MobSpawnInfoBuilder> FOREST_MOBS = (builder) -> {
+			builder.addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(CAEntityTypes.MAN_MEME_COIN.get(), 10, 1, 1));
 			builder.addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(CAEntityTypes.BEAVER.get(), 10, 1, 2));
 			builder.addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(CAEntityTypes.STINK_BUG.get(), 20, 3, 5));
 			builder.addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(CAEntityTypes.BIRD.get(), 6, 2, 4));
@@ -60,6 +64,7 @@ public class BiomeLoadEventSubscriber {
 		};
 
 		private static final Consumer<MobSpawnInfoBuilder> PLAINS_MOBS = (builder) -> {
+			builder.addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(CAEntityTypes.MAN_MEME_COIN.get(), 12, 1, 1));
 			builder.addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(CAEntityTypes.APPLE_COW.get(), 7, 4, 4));
 			builder.addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(CAEntityTypes.GOLDEN_APPLE_COW.get(), 4, 3, 3));
 			builder.addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(CAEntityTypes.ENCHANTED_GOLDEN_APPLE_COW.get(), 1, 1, 1));
@@ -77,14 +82,15 @@ public class BiomeLoadEventSubscriber {
 		};
 
 		private static final Consumer<MobSpawnInfoBuilder> VILLAGE_MANIA_MOBS = (builder) -> {
+			builder.addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(CAEntityTypes.MAN_MEME_COIN.get(), 6, 1, 1));
 			builder.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(CAEntityTypes.ROBO_POUNDER.get(), 20, 1, 2));
 			builder.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(CAEntityTypes.ROBO_WARRIOR.get(), 55, 1, 4));
 			builder.addSpawn(EntityClassification.MONSTER, new MobSpawnInfo.Spawners(CAEntityTypes.ROBO_SNIPER.get(), 60, 1, 3));
 		};
 		
 		private static final Consumer<MobSpawnInfoBuilder> STALAGMITE_VALLEY_MOBS = (builder) -> {
-			builder.addSpawn(EntityClassification.AMBIENT, new MobSpawnInfo.Spawners(CAEntityTypes.DIMETRODON.get(), 1, 1, 3));
-			builder.addSpawn(EntityClassification.AMBIENT, new MobSpawnInfo.Spawners(CAEntityTypes.EMERALD_GATOR.get(), 1, 1, 4));
+			builder.addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(CAEntityTypes.DIMETRODON.get(), 3, 1, 3));
+			builder.addSpawn(EntityClassification.CREATURE, new MobSpawnInfo.Spawners(CAEntityTypes.EMERALD_GATOR.get(), 3, 1, 4));
 		};
 		
 		private static final Consumer<MobSpawnInfoBuilder> DENSE_MOUNTAIN_MOBS = (builder) -> {
@@ -136,7 +142,7 @@ public class BiomeLoadEventSubscriber {
 						DENSE_MOUNTAIN_MOBS.accept(spawnInfoBuilder);
 					if ((BiomeDictionary.hasType(biome, BiomeDictionary.Type.MOUNTAIN) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.SAVANNA) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.MESA) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.JUNGLE)) || (BiomeDictionary.hasType(biome, BiomeDictionary.Type.MOUNTAIN) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.MODIFIED) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.SAVANNA) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.MESA) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.JUNGLE)) || (BiomeDictionary.hasType(biome, BiomeDictionary.Type.MOUNTAIN) && BiomeDictionary.hasType(biome, BiomeDictionary.Type.SNOWY) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.SAVANNA) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.MESA) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.JUNGLE)))
 						MOUNTAIN_MOBS.accept(spawnInfoBuilder);
-//					if (!BiomeDictionary.hasType(biome, BiomeDictionary.Type.OCEAN) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.RIVER)) OVERWORLD_MOBS.accept(spawnInfoBuilder);
+					if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.OVERWORLD) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.OCEAN) && !BiomeDictionary.hasType(biome, BiomeDictionary.Type.RIVER)) OVERWORLD_MOBS.accept(spawnInfoBuilder);
 			}
 		}
 	}
@@ -171,6 +177,7 @@ public class BiomeLoadEventSubscriber {
 			if (BiomeDictionary.hasType(biome, BiomeDictionary.Type.OVERWORLD)
 					&& BiomeDictionary.hasType(biome, BiomeDictionary.Type.PLAINS)
 					&& !BiomeDictionary.hasType(biome, BiomeDictionary.Type.SAVANNA)) {
+				gen.getStructures().add(() -> CAConfiguredStructures.CONFIGURED_ULTIMATE_HOUSE);
 				gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.CORN_PATCH);
 				gen.addFeature(GenerationStage.Decoration.VEGETAL_DECORATION, CAConfiguredFeatures.TOMATO_PATCH);
 				if (CACommonConfig.COMMON.enableOreGen.get())
@@ -351,10 +358,12 @@ public class BiomeLoadEventSubscriber {
 		}
 
 		private static void addOverworldOres(BiomeGenerationSettingsBuilder gen) {
+			if (CACommonConfig.COMMON.enableOreAluminumGen.get())
+				gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, CAConfiguredFeatures.ORE_ALUMINUM);
 			if (CACommonConfig.COMMON.enableOreRubyGen.get())
 				gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, CAConfiguredFeatures.ORE_RUBY_LAVA);
 			if (CACommonConfig.COMMON.enableOreAmethystGen.get())
-				gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, CAConfiguredFeatures.ORE_AMETHYST);
+				gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, CAConfiguredFeatures.GEODE_AMETHYST);
 			if (CACommonConfig.COMMON.enableOreUraniumGen.get())
 				gen.addFeature(GenerationStage.Decoration.UNDERGROUND_ORES, CAConfiguredFeatures.ORE_URANIUM);
 			if (CACommonConfig.COMMON.enableOreTitaniumGen.get())

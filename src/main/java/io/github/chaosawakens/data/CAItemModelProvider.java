@@ -8,7 +8,6 @@ import io.github.chaosawakens.ChaosAwakens;
 import io.github.chaosawakens.common.blocks.CrystalBushBlock;
 import io.github.chaosawakens.common.blocks.DenseBushBlock;
 import io.github.chaosawakens.common.blocks.LeafCarpetBlock;
-import io.github.chaosawakens.common.items.MobestiaryItem;
 import io.github.chaosawakens.common.registry.CABlocks;
 import io.github.chaosawakens.common.registry.CAItems;
 import net.minecraft.block.Block;
@@ -163,10 +162,12 @@ public class CAItemModelProvider extends ItemModelProvider {
 	            .override().predicate(zombieVillagerRL, 1.0F).model(zombieVillager).end()
 	            .override().predicate(zombieRL, 1.0F).model(zombie).end();
             } else if (item.getId().getPath().contains("_spawn_egg")) {
-				getBuilder(item.getId().getPath()).parent(parentGenerated).texture("layer0", ItemModelProvider.ITEM_FOLDER + "/spawn_eggs/" + name.replaceAll("_spawn_egg", ""));
-            } else if (item.get() instanceof MobestiaryItem) {
-				getBuilder(item.getId().getPath()).parent(parentGenerated).texture("layer0", ItemModelProvider.ITEM_FOLDER + "/book_" + name);
-			} else if (item.getId().getPath().contains("boat")) {
+	            if (item.getId().getPath().contains("man_meme_coin")) {
+		            getBuilder(item.getId().getPath()).parent(parentGenerated).texture("layer0", ItemModelProvider.ITEM_FOLDER + "/spawn_eggs/unknown");
+	            } else {
+		            getBuilder(item.getId().getPath()).parent(parentGenerated).texture("layer0", ItemModelProvider.ITEM_FOLDER + "/spawn_eggs/" + name.replaceAll("_spawn_egg", ""));
+	            }
+            } else if (item.getId().getPath().contains("boat")) {
             	getBuilder(item.getId().getPath()).parent(parentGenerated).texture("layer0", ItemModelProvider.ITEM_FOLDER + "/boats/" + name.replaceAll("_boat", ""));
             } else {
                 if (!existingFileHelper.exists(getItemResourceLocation(name), TEXTURE) || existingFileHelper.exists(getItemResourceLocation(name), MODEL)) continue;

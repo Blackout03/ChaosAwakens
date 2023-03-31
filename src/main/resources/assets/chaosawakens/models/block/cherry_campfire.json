@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_campfire",
+  "textures": {
+    "fire": "chaosawakens:block/cherry_campfire_fire",
+    "lit_log": "chaosawakens:block/cherry_campfire_log_lit"
+  }
+}

@@ -1,0 +1,10 @@
+{
+	"variants": {
+		"hanging=false": {
+			"model": "chaosawakens:block/cherry_lantern"
+		},
+		"hanging=true": {
+			"model": "chaosawakens:block/hanging_cherry_lantern"
+		}
+	}
+}
