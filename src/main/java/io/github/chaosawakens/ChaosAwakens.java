@@ -126,6 +126,8 @@ public class ChaosAwakens {
 			eventBus.addListener(ClientEventsHelper::onParticleRegistrationEvent);
 			eventBus.addListener(EventPriority.NORMAL, ClientSetupEvent.ClientEventsHelper::onClientLoadComplete);
 			MinecraftForge.EVENT_BUS.addListener(ToolTipEventSubscriber::onToolTipEvent);
+			MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, ClientEventsHelper::onGuiInitGuiEvent);
+			MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, ClientEventsHelper::onGuiDrawScreenEvent);
 			MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, ClientEventsHelper::onCameraSetup);
 	/*		MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, ClientEventsHelper::onPreRenderPlayer);
 			MinecraftForge.EVENT_BUS.addListener(EventPriority.HIGH, ClientEventsHelper::onPostRenderPlayer);
@@ -136,7 +138,7 @@ public class ChaosAwakens {
 			MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, ClientEventsHelper::renderFogColor);
 			MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, ClientEventsHelper::renderFog);
 			MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, ClientEventsHelper::renderParticles);
-			MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, ClientEventsHelper::handleOverlay);
+//			MinecraftForge.EVENT_BUS.addListener(EventPriority.NORMAL, ClientEventsHelper::handleOverlay);
 			eventBus.addListener(EventPriority.NORMAL, CABlockItemColors::registerBlockColors);
 			eventBus.addListener(EventPriority.NORMAL, CABlockItemColors::registerItemColors);
 		}

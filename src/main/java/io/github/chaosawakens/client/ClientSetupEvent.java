@@ -1,5 +1,6 @@
 package io.github.chaosawakens.client;
 
+import com.mojang.blaze3d.systems.RenderSystem;
 import io.github.chaosawakens.api.IUtilityHelper;
 import io.github.chaosawakens.client.config.CAClientConfig;
 import io.github.chaosawakens.client.entity.render.AggressiveAntEntityRenderer;
@@ -45,6 +46,7 @@ import io.github.chaosawakens.client.entity.render.UltimateBobberProjectileRende
 import io.github.chaosawakens.client.entity.render.WaspEntityRenderer;
 import io.github.chaosawakens.client.entity.render.WhaleEntityRenderer;
 import io.github.chaosawakens.client.entity.render.WoodFishEntityRenderer;
+import io.github.chaosawakens.client.gui.screen.AprilFoolsWarningScreen;
 import io.github.chaosawakens.common.config.CACommonConfig;
 import io.github.chaosawakens.common.entity.EntEntity;
 import io.github.chaosawakens.common.entity.HerculesBeetleEntity;
@@ -63,6 +65,12 @@ import io.github.chaosawakens.common.registry.CAParticleTypes;
 import io.github.chaosawakens.common.registry.CATileEntities;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.player.ClientPlayerEntity;
+import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.gui.screen.IngameMenuScreen;
+import net.minecraft.client.gui.screen.MainMenuScreen;
+import net.minecraft.client.gui.screen.Screen;
+import net.minecraft.client.gui.widget.Widget;
+import net.minecraft.client.gui.widget.button.Button;
 import net.minecraft.client.renderer.Atlases;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.RenderTypeLookup;
@@ -73,13 +81,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemModelsProperties;
 import net.minecraft.particles.ParticleTypes;
-import net.minecraft.potion.Effects;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.ITextComponent;
+import net.minecraft.util.text.LanguageMap;
+import net.minecraft.util.text.StringTextComponent;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraftforge.client.event.EntityViewRenderEvent;
+import net.minecraftforge.client.event.GuiScreenEvent;
 import net.minecraftforge.client.event.ParticleFactoryRegisterEvent;
-import net.minecraftforge.client.event.RenderBlockOverlayEvent;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.client.event.RenderHandEvent;
 import net.minecraftforge.client.event.RenderLivingEvent;
@@ -94,6 +105,45 @@ public class ClientSetupEvent {
 	public static boolean def = false;
 
 	public static class ClientEventsHelper {
+		public static void onGuiInitGuiEvent(GuiScreenEvent.InitGuiEvent event) {
+			Screen gui = event.getGui();
+			if (gui instanceof MainMenuScreen) {
+				Widget remove_button = null;
+				for(final Widget button : event.getWidgetList()){
+					if(button.getMessage().getString().equals(LanguageMap.getInstance().getOrDefault("menu.singleplayer")))
+						remove_button = button;
+				}
+				event.removeWidget(remove_button);
+				event.addWidget(new Button(gui.width / 2 - 100, gui.height / 4 + 48, 200, 20, new TranslationTextComponent("menu.singleplayer"), (p_213089_1_) -> {
+					gui.getMinecraft().setScreen(new AprilFoolsWarningScreen(gui));
+				}));
+			}
+		}
+
+		public static void onGuiDrawScreenEvent(GuiScreenEvent.DrawScreenEvent event) {
+			Screen gui = event.getGui();
+			FontRenderer font = Minecraft.getInstance().font;
+			if (gui instanceof MainMenuScreen || gui instanceof IngameMenuScreen) {
+				ITextComponent line1 = new StringTextComponent("Chaos Awakens").withStyle(TextFormatting.GOLD, TextFormatting.BOLD);
+				ITextComponent line2 = new StringTextComponent("April Fools 2023");
+
+				// Set up rendering environment
+				RenderSystem.pushMatrix();
+				RenderSystem.translatef((float) event.getGui().width / 2, 4, 0);
+				RenderSystem.scalef(1.0F, 1.0F, 1.0F);
+				RenderSystem.enableBlend();
+				RenderSystem.defaultBlendFunc();
+
+				// Draw the text
+				font.drawShadow(event.getMatrixStack(), line1, (float) -font.width(line1) / 2, 4, -1);
+				font.drawShadow(event.getMatrixStack(), line2, (float) -font.width(line2) / 2, 4 + (font.lineHeight + 1), -1);
+
+				// Reset rendering environment
+				RenderSystem.disableBlend();
+				RenderSystem.popMatrix();
+			}
+		}
+
 		public static void renderFogColor(EntityViewRenderEvent.FogColors event) {
 			Entity entity = event.getRenderer().getMainCamera().getEntity();
 
@@ -147,16 +197,16 @@ public class ClientSetupEvent {
 			}
 		}
 		
-		public static void handleOverlay(RenderBlockOverlayEvent event) {
-			if (CACommonConfig.COMMON.enableLavaEelArmorSetBonus.get()) {
-				PlayerEntity player = event.getPlayer();
-				if (IUtilityHelper.isFullArmorSet(player, CAItems.LAVA_EEL_HELMET.get(), CAItems.LAVA_EEL_CHESTPLATE.get(), CAItems.LAVA_EEL_LEGGINGS.get(), CAItems.LAVA_EEL_BOOTS.get())) {
-					if (player.isEyeInFluid(FluidTags.LAVA) && player.hasEffect(Effects.FIRE_RESISTANCE) || player.isInLava() || player.isOnFire()) {
-						event.getMatrixStack().translate(0, CAClientConfig.CLIENT.lavaEelSetFireStackTranslation.get(), 0);
-					}
-				}
-			}
-		}
+//		public static void handleOverlay(RenderBlockOverlayEvent event) {
+//			if (CACommonConfig.COMMON.enableLavaEelArmorSetBonus.get()) {
+//				PlayerEntity player = event.getPlayer();
+//				if (IUtilityHelper.isFullArmorSet(player, CAItems.LAVA_EEL_HELMET.get(), CAItems.LAVA_EEL_CHESTPLATE.get(), CAItems.LAVA_EEL_LEGGINGS.get(), CAItems.LAVA_EEL_BOOTS.get())) {
+//					if (player.isEyeInFluid(FluidTags.LAVA) && player.hasEffect(Effects.FIRE_RESISTANCE) || player.isInLava() || player.isOnFire()) {
+//						event.getMatrixStack().translate(0, CAClientConfig.CLIENT.lavaEelSetFireStackTranslation.get(), 0);
+//					}
+//				}
+//			}
+//		}
 		
 		public static void onClientLoadComplete(FMLLoadCompleteEvent event) {
 	        EntityRendererManager rendererManager = Minecraft.getInstance().getEntityRenderDispatcher();
