@@ -11,14 +11,14 @@
 		"PlayerAdvancementMixin",
 		"PlayerEntityMixin",
 		"RabbitEntityMixin",
-		"ServerWorldInfoMixin",
 		"SpawnEggItemMixin",
 		"VillagerEntityMixin",
 		"WolfEntityMixin"
 	],
 	"client": [
-		"RabbitEntityRendererMixin",
-		"SplashesMixin"
+		"client.RabbitEntityRendererMixin",
+		"client.SplashesMixin",
+		"client.ServerWorldInfoMixin"
 	],
 	"refmap": "chaosawakens.refmap.json",
 	"injectors": {

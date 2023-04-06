@@ -1,4 +1,4 @@
-package io.github.chaosawakens.mixins;
+package io.github.chaosawakens.mixins.client;
 
 import com.mojang.serialization.Lifecycle;
 import net.minecraft.world.storage.ServerWorldInfo;

@@ -1,4 +1,4 @@
-package io.github.chaosawakens.mixins;
+package io.github.chaosawakens.mixins.client;
 
 
 import net.minecraft.client.util.Splashes;
